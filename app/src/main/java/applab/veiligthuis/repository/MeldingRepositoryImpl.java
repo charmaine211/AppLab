@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,5 +49,23 @@ public class MeldingRepositoryImpl implements MeldingRepository {
             }
         });
         return meldingenLiveData;
+    }
+
+    @Override
+    public LiveData<Melding> getMeldingById(String id) {
+        MutableLiveData<Melding> meldingLiveData = new MutableLiveData<>();
+        meldingenRef.child(id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    Melding m = task.getResult().getValue(Melding.class);
+                    meldingLiveData.setValue(m);
+                }
+                else{
+                    System.out.println("NEITS GEVONDEN");
+                }
+            }
+        });
+                return meldingLiveData;
     }
 }

@@ -15,16 +15,18 @@ import applab.veiligthuis.model.Melding;
 
 public class MeldingenAdapter extends RecyclerView.Adapter<MeldingenAdapter.MeldingViewHolder> {
 
+    private final RecyclerViewInterface recyclerViewInterface;
     List<Melding> meldingen;
 
-    public MeldingenAdapter(List<Melding> meldingen){
+    public MeldingenAdapter(List<Melding> meldingen, RecyclerViewInterface recyclerViewInterface){
         this.meldingen = meldingen;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
     @Override
     public MeldingenAdapter.MeldingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MeldingViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.melding_item, parent, false));
+        return new MeldingViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.melding_item, parent, false), recyclerViewInterface);
     }
 
     @Override
@@ -47,10 +49,20 @@ public class MeldingenAdapter extends RecyclerView.Adapter<MeldingenAdapter.Meld
         TextView idTextView;
         TextView infoTextView;
 
-        public MeldingViewHolder(@NonNull View itemView) {
+        public MeldingViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             idTextView = itemView.findViewById(R.id.meldingId);
             infoTextView = itemView.findViewById(R.id.meldingInfo);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterface != null){
+                        int pos = Integer.parseInt(idTextView.getText().toString());
+                        recyclerViewInterface.onMeldingClick(pos);
+                    }
+                }
+            });
         }
     }
 }

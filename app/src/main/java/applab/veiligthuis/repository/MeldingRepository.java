@@ -9,5 +9,6 @@ import applab.veiligthuis.model.Melding;
 public interface MeldingRepository {
 
     LiveData<List<Melding>> getMeldingenListLiveData();
+    LiveData<Melding> getMeldingById(String id);
 
 }

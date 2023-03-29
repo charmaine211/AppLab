@@ -14,6 +14,7 @@ import applab.veiligthuis.repository.MeldingRepositoryImpl;
 public class MeldingenLijstViewModel extends ViewModel {
     private MeldingRepository meldingRepository;
     private LiveData<List<Melding>> meldingenLijstLiveData;
+    private LiveData<Melding> meldingLiveData;
 
     public MeldingenLijstViewModel(){
         meldingRepository = new MeldingRepositoryImpl();
@@ -25,4 +26,22 @@ public class MeldingenLijstViewModel extends ViewModel {
         }
         return meldingenLijstLiveData;
     }
+
+    public LiveData<Melding> getMeldingByIdLiveData(int id){
+        if(meldingLiveData == null){
+            meldingLiveData = meldingRepository.getMeldingById("melding"+id);
+        }
+        return meldingLiveData;
+    }
+
+    public Melding getMeldingById(int id){
+        for(Melding m : meldingenLijstLiveData.getValue()){
+            if(m.getId() == id){
+                return m;
+            }
+        }
+        return null;
+    }
+
+
 }

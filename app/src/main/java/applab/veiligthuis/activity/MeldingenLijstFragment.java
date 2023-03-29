@@ -1,5 +1,6 @@
 package applab.veiligthuis.activity;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import applab.veiligthuis.R;
 import applab.veiligthuis.model.Melding;
 import applab.veiligthuis.viewmodel.MeldingenLijstViewModel;
 
-public class MeldingenLijstFragment extends Fragment {
+public class MeldingenLijstFragment extends Fragment implements RecyclerViewInterface {
 
     private MeldingenLijstViewModel mViewModel;
     private RecyclerView recyclerView;
@@ -36,14 +37,14 @@ public class MeldingenLijstFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MeldingenLijstViewModel.class);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mViewModel = new ViewModelProvider(getActivity()).get(MeldingenLijstViewModel.class);
 
         recyclerView = getView().findViewById(R.id.meldingenRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Melding> start = new ArrayList<>();
-        MeldingenAdapter meldingAdapter = new MeldingenAdapter(start);
+        MeldingenAdapter meldingAdapter = new MeldingenAdapter(start, this);
         recyclerView.setAdapter(meldingAdapter);
 
         mViewModel.getMeldingenLijst().observe(getViewLifecycleOwner(), meldingen -> {
@@ -54,4 +55,16 @@ public class MeldingenLijstFragment extends Fragment {
 
     }
 
+    @Override
+    public void onMeldingClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("melding_id", position);
+
+        FragmentManager fm  = getParentFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.fragmentContainerView, MeldingBekijkenFragment.class, bundle)
+                .setReorderingAllowed(true)
+                .addToBackStack("name")
+                .commit();
+    }
 }

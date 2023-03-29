@@ -2,17 +2,16 @@ package applab.veiligthuis.activity;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.Melding;
 import applab.veiligthuis.viewmodel.MeldingenLijstViewModel;
 
 public class MeldingenActivity extends AppCompatActivity {
 
+    private MeldingenLijstViewModel mViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +19,7 @@ public class MeldingenActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragmentContainerView, MeldingenLijstFragment.class, null).commit();
         }
-
-
+        mViewModel = new ViewModelProvider(this).get(MeldingenLijstViewModel.class);
     }
 
 }
