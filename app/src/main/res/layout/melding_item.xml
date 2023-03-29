@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/meldingId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:textSize="10pt"
+        android:layout_marginLeft="2pt"/>
+
+    <TextView
+        android:id="@+id/meldingInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/meldingId"
+        android:layout_marginLeft="2pt"
+        android:layout_marginBottom="2pt"
+        android:textSize="6pt"
+        android:text="info" />
+</RelativeLayout>

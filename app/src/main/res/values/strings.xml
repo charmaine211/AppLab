@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VeiligThuis</string>
+    <string name="meldingenLijstButton">Meldingen</string>
 </resources>
