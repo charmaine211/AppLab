@@ -2,7 +2,7 @@ package applab.veiligthuis.model;
 
 import java.util.Date;
 
-public class Melding {
+public class Melding implements MeldingDisplay {
     private int id;
     private boolean anomiem;
     private String meldingInfo;
@@ -34,5 +34,15 @@ public class Melding {
 
     public String toString(){
         return "id: " + id + ", meldingInfo: " + meldingInfo;
+    }
+
+    @Override
+    public int getDisplayId() {
+        return getId();
+    }
+
+    @Override
+    public String getDisplayMeldingInfo() {
+        return getMeldingInfo();
     }
 }

@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.Melding;
+import applab.veiligthuis.model.MeldingDisplay;
 import applab.veiligthuis.viewmodel.MeldingenLijstViewModel;
 
 public class MeldingenLijstFragment extends Fragment implements RecyclerViewInterface {
@@ -43,8 +43,7 @@ public class MeldingenLijstFragment extends Fragment implements RecyclerViewInte
 
         recyclerView = getView().findViewById(R.id.meldingenRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Melding> start = new ArrayList<>();
-        MeldingenAdapter meldingAdapter = new MeldingenAdapter(start, this);
+        MeldingenAdapter meldingAdapter = new MeldingenAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(meldingAdapter);
 
         mViewModel.getMeldingenLijst().observe(getViewLifecycleOwner(), meldingen -> {
@@ -59,7 +58,6 @@ public class MeldingenLijstFragment extends Fragment implements RecyclerViewInte
     public void onMeldingClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("melding_id", position);
-
         FragmentManager fm  = getParentFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.fragmentContainerView, MeldingBekijkenFragment.class, bundle)

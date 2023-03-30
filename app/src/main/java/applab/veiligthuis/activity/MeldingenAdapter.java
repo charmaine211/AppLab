@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.Melding;
+import applab.veiligthuis.model.MeldingDisplay;
 
 public class MeldingenAdapter extends RecyclerView.Adapter<MeldingenAdapter.MeldingViewHolder> {
 
     private final RecyclerViewInterface recyclerViewInterface;
-    List<Melding> meldingen;
+    List<MeldingDisplay> meldingen;
 
-    public MeldingenAdapter(List<Melding> meldingen, RecyclerViewInterface recyclerViewInterface){
+    public MeldingenAdapter(List<MeldingDisplay> meldingen, RecyclerViewInterface recyclerViewInterface){
         this.meldingen = meldingen;
         this.recyclerViewInterface = recyclerViewInterface;
     }
@@ -31,8 +31,8 @@ public class MeldingenAdapter extends RecyclerView.Adapter<MeldingenAdapter.Meld
 
     @Override
     public void onBindViewHolder(@NonNull MeldingenAdapter.MeldingViewHolder holder, int position) {
-        holder.idTextView.setText(""+meldingen.get(position).getId());
-        holder.infoTextView.setText(meldingen.get(position).getMeldingInfo());
+        holder.idTextView.setText(""+meldingen.get(position).getDisplayId());
+        holder.infoTextView.setText(meldingen.get(position).getDisplayMeldingInfo());
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MeldingenAdapter extends RecyclerView.Adapter<MeldingenAdapter.Meld
         return meldingen.size();
     }
 
-    public void setMeldingenList(List<Melding> meldingen){
+    public void setMeldingenList(List<MeldingDisplay> meldingen){
         this.meldingen = meldingen;
     }
 
