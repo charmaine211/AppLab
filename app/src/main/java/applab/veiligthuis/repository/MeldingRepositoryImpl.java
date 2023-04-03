@@ -66,6 +66,6 @@ public class MeldingRepositoryImpl implements MeldingRepository {
                 }
             }
         });
-                return meldingLiveData;
+        return meldingLiveData;
     }
 }

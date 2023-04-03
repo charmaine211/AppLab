@@ -20,26 +20,18 @@ public class MeldingenLijstViewModel extends ViewModel {
 
     public MeldingenLijstViewModel(){
         meldingRepository = new MeldingRepositoryImpl();
-    }
+            }
 
-    public LiveData<List<MeldingDisplay>> getMeldingenLijst(){
+    public LiveData<List<Melding>> getMeldingenLijst(){
         if(meldingenLijstLiveData == null){
             meldingenLijstLiveData = meldingRepository.getMeldingenListLiveData();
-
         }
         return Transformations.map(meldingRepository.getMeldingenListLiveData(), meldingenList -> {
-            List<MeldingDisplay> displayList = new ArrayList<>();
+            List<Melding> displayList = new ArrayList<>();
             for(Melding m: meldingenList){
                 displayList.add(m);
             }
             return displayList;
         });
     }
-
-    public LiveData<MeldingDisplay> getMeldingByIdLiveData(int id){
-        return Transformations.map(meldingRepository.getMeldingById("melding"+id), melding -> {
-            return melding;
-        });
-    }
-
 }

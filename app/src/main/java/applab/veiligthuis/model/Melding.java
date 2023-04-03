@@ -20,6 +20,10 @@ public class Melding implements MeldingDisplay {
         this.meldingInfo = meldingInfo;
     }
 
+    public void setAnoniem(boolean anoniem){
+        this.anomiem = anoniem;
+    }
+
     public int getId(){
         return id;
     }
@@ -34,6 +38,10 @@ public class Melding implements MeldingDisplay {
 
     public String toString(){
         return "id: " + id + ", meldingInfo: " + meldingInfo;
+    }
+
+    public Date getDatum(){
+        return datum;
     }
 
     @Override

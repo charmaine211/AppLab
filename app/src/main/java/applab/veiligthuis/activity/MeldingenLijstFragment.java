@@ -47,8 +47,8 @@ public class MeldingenLijstFragment extends Fragment implements RecyclerViewInte
         recyclerView.setAdapter(meldingAdapter);
 
         mViewModel.getMeldingenLijst().observe(getViewLifecycleOwner(), meldingen -> {
-            meldingAdapter.setMeldingenList(meldingen);
-            meldingAdapter.notifyDataSetChanged();
+            //meldingAdapter.setMeldingenList(meldingen);
+            //meldingAdapter.notifyDataSetChanged();
         });
 
 

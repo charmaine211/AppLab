@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import applab.veiligthuis.activity.MeldingLijstActivity;
 import applab.veiligthuis.activity.MeldingenActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         meldingenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent meldingenIntent = new Intent(MainActivity.this, MeldingenActivity.class);
+                Intent meldingenIntent = new Intent(MainActivity.this, MeldingLijstActivity.class);
                 startActivity(meldingenIntent);
             }
         });
