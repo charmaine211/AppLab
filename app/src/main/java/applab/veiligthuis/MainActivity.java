@@ -1,23 +1,17 @@
 package applab.veiligthuis;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import applab.veiligthuis.activity.MeldingenActivity;
+import applab.veiligthuis.activity.tip.TipInzien;
+import applab.veiligthuis.activity.tip.TipMaken;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initMeldingenButton();
+        initTipsInzienButton();
+        initTipsMakenButton();
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
@@ -37,6 +33,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent meldingenIntent = new Intent(MainActivity.this, MeldingenActivity.class);
                 startActivity(meldingenIntent);
+            }
+        });
+    }
+
+    public void initTipsMakenButton(){
+        Button meldingenBtn = findViewById(R.id.tipsMakenButton);
+        meldingenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tipsIntent = new Intent(MainActivity.this, TipMaken.class);
+                startActivity(tipsIntent);
+            }
+        });
+    }
+
+    public void initTipsInzienButton(){
+        Button meldingenBtn = findViewById(R.id.tipsInzienButton);
+        meldingenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tipsIntent = new Intent(MainActivity.this, TipInzien.class);
+                startActivity(tipsIntent);
             }
         });
     }

@@ -11,4 +11,13 @@
     <string name="plaatsnaam_text">Plaatsnaam</string>
     <string name="melding_voor_werk_text">Doet u deze melding vanwege uw werk?</string>
     <string name="maak_melding_button">Maak een melding</string>
+    <string name="tipMakenButton">tip aanmaken</string>
+    <string name="tip_categorie_prompt">Select a category</string>
+    <string-array name="tip_categorie_options">
+        <item>LichamelijkGeweld</item>
+        <item>FysiekGeweld</item>
+        <item>FinancieelMisbruik</item>
+        <item>Stalking</item>
+        <item>PsychischGeweld</item>
+    </string-array>
 </resources>
