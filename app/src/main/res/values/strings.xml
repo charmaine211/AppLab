@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">VeiligThuis</string>
     <string name="meldingenLijstButton">Meldingen</string>
+    <string name="tipMakenButton">tip aanmaken</string>
+    <string name="tip_categorie_prompt">Select a category</string>
+    <string-array name="tip_categorie_options">
+        <item>LichamelijkGeweld</item>
+        <item>FysiekGeweld</item>
+        <item>FinancieelMisbruik</item>
+        <item>Stalking</item>
+        <item>PsychischGeweld</item>
+    </string-array>
 </resources>
