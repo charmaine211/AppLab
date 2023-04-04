@@ -16,4 +16,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/tipsMakenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tipMakenButton"
+        app:layout_constraintTop_toBottomOf="@id/meldingenButton"
+        app:layout_constraintStart_toStartOf="@id/meldingenButton"
+        app:layout_constraintEnd_toEndOf="@id/meldingenButton"
+        app:layout_constraintVertical_bias="0.2"/>
+
+    <Button
+        android:id="@+id/tipsInzienButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tips"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="31dp"
+        app:layout_constraintTop_toBottomOf="@id/tipsMakenButton"
+        app:layout_constraintStart_toStartOf="@id/tipsMakenButton"
+        app:layout_constraintEnd_toEndOf="@id/tipsMakenButton"
+        app:layout_constraintVertical_bias="0.2"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

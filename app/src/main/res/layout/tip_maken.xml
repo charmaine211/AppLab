@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:text=""
+        android:hint="titel"
+        android:id="@+id/editTextTitel"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:hint="beschrijving"
+        android:id="@+id/editTextBeschrijving"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_categorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/tip_categorie_prompt"
+        android:entries="@array/tip_categorie_options" />
+
+
+    <Button
+        android:id="@+id/btn_tipSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</LinearLayout>
