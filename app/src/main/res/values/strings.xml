@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">VeiligThuis</string>
     <string name="meldingenLijstButton">Meldingen</string>
+
+    <string name="risico_text_fragment">Verkeert u, of iemand in uw omgeving in direct gevaar?</string>
+    <string name="ja_button">Ja</string>
+    <string name="nee_button">Nee</string>
+    <string name="twijfel_button">Ik twijfel</string>
+    <string name="melding_formulier_text">Waar wilt u een melding van doen?</string>
+    <string name="melding_text">Omschrijf hier de situatie</string>
+    <string name="plaatsnaam_text">Plaatsnaam</string>
+    <string name="melding_voor_werk_text">Doet u deze melding vanwege uw werk?</string>
+    <string name="maak_melding_button">Maak een melding</string>
 </resources>

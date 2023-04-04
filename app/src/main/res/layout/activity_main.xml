@@ -8,12 +8,22 @@
 
 
     <Button
+        android:id="@+id/maakMeldingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/maak_melding_button"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="341dp" />
+
+    <Button
         android:id="@+id/meldingenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/meldingenLijstButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.871"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048" />
 </androidx.constraintlayout.widget.ConstraintLayout>
