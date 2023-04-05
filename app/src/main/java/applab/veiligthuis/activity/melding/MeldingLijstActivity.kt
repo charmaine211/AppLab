@@ -53,6 +53,7 @@ private fun meldingLijstScreen(meldingenLijstViewModel: MeldingLijstViewModel = 
         topBar = { topBar(meldingenLijstUiState.filterMeldingenInkomend,
             { meldingenLijstViewModel.swapFilterMeldingenInkomend() }) },
         content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) { meldingList(
+            filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
             meldingen = meldingenLijstUiState.meldingen
         ) } },
         bottomBar = {
@@ -129,10 +130,20 @@ private fun topBar(
 
 
 @Composable
-private fun meldingList(meldingen: List<Melding?>, modifier: Modifier = Modifier){
+private fun meldingList(
+    filterInkomendSelected: Boolean,
+    meldingen: List<Melding?>,
+    modifier: Modifier = Modifier){
     Log.i("ACT", "Lijst aanmaken")
+    val filterMeldingen : List<Melding?>
+    if(filterInkomendSelected){
+        filterMeldingen = meldingen.filter { melding -> melding?.status != MeldingStatus.AFGEROND }
+    } else {
+        filterMeldingen = meldingen.filter { melding -> melding?.status == MeldingStatus.AFGEROND }
+    }
+
     LazyColumn() {
-        items(meldingen){ melding ->
+        items(filterMeldingen){ melding ->
             if(melding != null) {
                 meldingCard(datum = "placeholder", shortDescription = melding.info, status = melding.status, anoniem = melding.anoniem)
                 Log.i("ACT", "Kaart gemaakt")
