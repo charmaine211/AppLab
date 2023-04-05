@@ -15,6 +15,9 @@
             android:name=".MeldingMaken"
             android:exported="false" />
         <activity
+            android:name=".activity.tip.TipMaken"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -24,6 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MeldingLijstActivity">
+
+        </activity>
+        <activity android:name=".activity.tip.TipInzien">
 
         </activity>
     </application>
