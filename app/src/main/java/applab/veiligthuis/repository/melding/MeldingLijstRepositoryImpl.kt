@@ -12,6 +12,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.mapLatest
 
 class MeldingLijstRepositoryImpl : MeldingLijstRepository {
     val database = Firebase.database
@@ -39,6 +40,12 @@ class MeldingLijstRepositoryImpl : MeldingLijstRepository {
             }
             ref.addValueEventListener(postListener)
             awaitClose { ref.removeEventListener(postListener) }
+        }
+    }
+
+    fun getOnbehandeld(flowList: Flow<List<Melding?>>) : Flow<List<Melding?>> {
+        return flowList.mapLatest { list ->
+            list.filter { it?.status == MeldingStatus.ONBEHANDELD }
         }
     }
 }

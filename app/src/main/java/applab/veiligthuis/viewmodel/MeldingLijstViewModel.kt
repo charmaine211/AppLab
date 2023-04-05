@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class MeldingenLijstUiState(
-    val meldingen : List<Melding?> = listOf()
+    val meldingen : List<Melding?> = listOf(),
+    val filterMeldingenInkomend : Boolean = true
 )
 
 class MeldingLijstViewModel(
@@ -33,6 +34,14 @@ class MeldingLijstViewModel(
                     }
                 }
                 Log.i("VM", "Meldingen geladen")
+            }
+        }
+
+        fun swapFilterMeldingenInkomend(){
+            _uiState.update { currentState ->
+                currentState.copy(
+                    filterMeldingenInkomend = currentState.filterMeldingenInkomend.not()
+                )
             }
         }
 }

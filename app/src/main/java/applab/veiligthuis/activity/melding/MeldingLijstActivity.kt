@@ -11,13 +11,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +30,7 @@ import applab.veiligthuis.model.Melding
 import applab.veiligthuis.model.MeldingStatus
 import applab.veiligthuis.ui.theme.*
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
-import applab.veiligthuis.viewmodel.MeldingenLijstUiState
+import kotlinx.coroutines.flow.asFlow
 
 class MeldingLijstActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +44,14 @@ class MeldingLijstActivity : ComponentActivity() {
 }
 
 @Composable
-fun meldingLijstScreen(meldingenLijstViewModel: MeldingLijstViewModel = MeldingLijstViewModel(), modifier: Modifier = Modifier.padding(1.dp)) {
+private fun meldingLijstScreen(meldingenLijstViewModel: MeldingLijstViewModel = MeldingLijstViewModel(), modifier: Modifier = Modifier.padding(1.dp)) {
 
     meldingenLijstViewModel.loadMeldingen()
     val meldingenLijstUiState by meldingenLijstViewModel.uiState.collectAsState()
 
     Scaffold(
-        topBar = { topBar() },
+        topBar = { topBar(meldingenLijstUiState.filterMeldingenInkomend,
+            { meldingenLijstViewModel.swapFilterMeldingenInkomend() }) },
         content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) { meldingList(
             meldingen = meldingenLijstUiState.meldingen
         ) } },
@@ -71,7 +70,11 @@ fun meldingLijstScreen(meldingenLijstViewModel: MeldingLijstViewModel = MeldingL
 }
 
 @Composable
-fun topBar(modifier: Modifier = Modifier) {
+private fun topBar(
+    filterInkomendSelected: Boolean,
+    onClickFilterChange: () -> Unit,
+    modifier: Modifier = Modifier
+) {
         Column(
             modifier = modifier
                 .padding(5.dp)
@@ -105,30 +108,13 @@ fun topBar(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .padding(4.dp)
             ){
-                Row {
-                     Text(
-                        text = "Inkomend",
-                        fontSize = 12.sp,
-                        color = Color.White,
-                        modifier = modifier
-                            .background(color = blue_rect, shape = RoundedCornerShape(50))
-                            .padding(15.dp, 5.dp)
-                    )
-                    Text(
-                        text = "Afgesloten",
-                        fontSize = 12.sp,
-                        color = Color.White,
-                        modifier = modifier
-                            .background(color = grey_rect, shape = RoundedCornerShape(50))
-                            .padding(15.dp, 5.dp)
-                    )
-                }
+                meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = onClickFilterChange)
                 Text(
                     text = "Filter",
                     fontSize = 12.sp,
                     color = Color.White,
                     modifier = modifier
-                        .background(color = blue_filter, shape = RoundedCornerShape(50))
+                        .background(color = filter_blue, shape = RoundedCornerShape(50))
                         .padding(15.dp, 5.dp)
                 )
             }
@@ -143,21 +129,20 @@ fun topBar(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun meldingList(meldingen: List<Melding?>, modifier: Modifier = Modifier){
+private fun meldingList(meldingen: List<Melding?>, modifier: Modifier = Modifier){
     Log.i("ACT", "Lijst aanmaken")
-    LazyColumn {
+    LazyColumn() {
         items(meldingen){ melding ->
             if(melding != null) {
                 meldingCard(datum = "placeholder", shortDescription = melding.info, status = melding.status, anoniem = melding.anoniem)
                 Log.i("ACT", "Kaart gemaakt")
             }
-            Log.i("ACT", "Volgende kaart")
         }
     }
 }
 
 @Composable
-fun meldingCard(
+private fun meldingCard(
     datum: String?,
     shortDescription: String?,
     status: MeldingStatus?,
@@ -202,10 +187,40 @@ fun meldingCard(
         }
     }
 }
-
+@Composable
+private fun meldingFilterButtons(
+    inkomendSelected: Boolean,
+    onClick: () -> Unit
+){
+    Row(
+    ){
+        meldingFilterButton("Inkomend", inkomendSelected, onClick )
+        meldingFilterButton("Afgesloten", !inkomendSelected, onClick )
+    }
+}
 
 @Composable
-fun statusMelding(meldingStatus: MeldingStatus?){
+private fun meldingFilterButton(
+    buttonText: String,
+    enabledButton: Boolean,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(45),
+        colors = ButtonDefaults.buttonColors(disabledBackgroundColor = filter_blue, backgroundColor = filter_grey),
+        modifier = Modifier.minimumInteractiveComponentSize(),
+        enabled = !enabledButton
+    ) {
+        Text(
+            text = buttonText,
+            color = Color.White,
+            fontSize = 12.sp
+        )
+    }
+}
+@Composable
+private fun statusMelding(meldingStatus: MeldingStatus?){
     if (meldingStatus != null) {
         Text (
             text = meldingStatus.status,
@@ -230,24 +245,23 @@ fun previewMeldingCard() {
 @Composable
 fun previewTopbar() {
     AppTheme {
-        topBar()
+        //topBar(true)
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun previewMeldingList() {
-//    AppTheme {
-//        var meldingen : List<Melding_Kot> = listOf(Melding(), Melding(), Melding(), Melding(), Melding(), Melding(), Melding())
-//        meldingList(meldingList = meldingen)
-//    }
-//}
 
 @Preview(showBackground = true)
 @Composable
 fun previewMeldingenScreen() {
     AppTheme {
         meldingLijstScreen(meldingenLijstViewModel = MeldingLijstViewModel())
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun previewMeldingFilterButton(){
+    AppTheme {
+        meldingFilterButtons(true, { Unit })
     }
 }
 
