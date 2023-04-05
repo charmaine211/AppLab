@@ -9,8 +9,7 @@ import android.widget.Button;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-import applab.veiligthuis.activity.MeldingLijstActivity;
-import applab.veiligthuis.activity.MeldingenActivity;
+import applab.veiligthuis.activity.melding.MeldingLijstActivity;
 import applab.veiligthuis.activity.tip.TipInzien;
 import applab.veiligthuis.activity.tip.TipMaken;
 

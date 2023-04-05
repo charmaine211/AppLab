@@ -1,4 +1,4 @@
-package applab.veiligthuis.activity
+package applab.veiligthuis.activity.melding
 
 
 
@@ -106,7 +106,7 @@ fun topBar(modifier: Modifier = Modifier) {
                     .padding(4.dp)
             ){
                 Row {
-                    Text(
+                     Text(
                         text = "Inkomend",
                         fontSize = 12.sp,
                         color = Color.White,

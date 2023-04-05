@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MeldingLijstActivity">
+        <activity android:name=".activity.melding.MeldingLijstActivity">
 
         </activity>
         <activity android:name=".activity.tip.TipInzien">
