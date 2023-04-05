@@ -1,21 +1,38 @@
 package applab.veiligthuis.viewmodel
 
-import androidx.lifecycle.LiveData
+
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import applab.veiligthuis.model.Melding
-import applab.veiligthuis.repository.MeldingRepository
-import applab.veiligthuis.repository.MeldingRepositoryImpl
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import applab.veiligthuis.repository.MeldingLijstRepositoryImpl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 data class MeldingenLijstUiState(
-    val meldingen : List<Melding> = listOf()
+    val meldingen : List<Melding?> = listOf()
 )
 
-class MeldingLijstViewModel() : ViewModel() {
-    val meldingRepo : MeldingRepository =  MeldingRepositoryImpl()
+class MeldingLijstViewModel(
+    private val meldingLijstRepository: MeldingLijstRepositoryImpl = MeldingLijstRepositoryImpl(Dispatchers.Default)
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(MeldingenLijstUiState())
+        val uiState: StateFlow<MeldingenLijstUiState> = _uiState.asStateFlow()
 
-    val meldingen: LiveData<List<Melding>> = meldingRepo.meldingenListLiveData
-
+        fun loadMeldingen() {
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    meldingLijstRepository.getMeldingen().collect() {
+                        _uiState.update { currentState ->
+                            currentState.copy(
+                                meldingen = it
+                            )
+                        }
+                    }
+                }
+                Log.i("VM", "Meldingen geladen")
+            }
+        }
 }

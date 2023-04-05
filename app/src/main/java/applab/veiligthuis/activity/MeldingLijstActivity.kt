@@ -3,6 +3,7 @@ package applab.veiligthuis.activity
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -15,7 +16,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -25,30 +29,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingStatus
 import applab.veiligthuis.ui.theme.*
-import applab.veiligthuis.viewmodel.MeldingenLijstViewModel
+import applab.veiligthuis.viewmodel.MeldingLijstViewModel
+import applab.veiligthuis.viewmodel.MeldingenLijstUiState
 
 class MeldingLijstActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                meldingLijstScreen(MeldingenLijstViewModel())
+                meldingLijstScreen(MeldingLijstViewModel())
             }
         }
     }
 }
 
 @Composable
-fun meldingLijstScreen(meldingenLijstViewModel: MeldingenLijstViewModel = MeldingenLijstViewModel(), modifier: Modifier = Modifier.padding(1.dp)) {
+fun meldingLijstScreen(meldingenLijstViewModel: MeldingLijstViewModel = MeldingLijstViewModel(), modifier: Modifier = Modifier.padding(1.dp)) {
 
-    val viewModel = meldingenLijstViewModel
-
-    val meldingenLijst = viewModel.meldingenLijst.observeAsState()
+    meldingenLijstViewModel.loadMeldingen()
+    val meldingenLijstUiState by meldingenLijstViewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = { topBar() },
-        content = { padding -> meldingenLijst.value?.let { meldingList(meldingList = it, modifier = modifier.padding(padding)) } },
+        content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) { meldingList(
+            meldingen = meldingenLijstUiState.meldingen
+        ) } },
         bottomBar = {
             BottomAppBar(modifier = modifier.fillMaxHeight(0.1F), backgroundColor = Color.White, elevation = 0.dp) {
                 Row(horizontalArrangement = Arrangement.Center, modifier = modifier.fillMaxWidth()){
@@ -98,7 +105,7 @@ fun topBar(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .padding(4.dp)
             ){
-                Row() {
+                Row {
                     Text(
                         text = "Inkomend",
                         fontSize = 12.sp,
@@ -106,7 +113,6 @@ fun topBar(modifier: Modifier = Modifier) {
                         modifier = modifier
                             .background(color = blue_rect, shape = RoundedCornerShape(50))
                             .padding(15.dp, 5.dp)
-
                     )
                     Text(
                         text = "Afgesloten",
@@ -116,8 +122,6 @@ fun topBar(modifier: Modifier = Modifier) {
                             .background(color = grey_rect, shape = RoundedCornerShape(50))
                             .padding(15.dp, 5.dp)
                     )
-
-
                 }
                 Text(
                     text = "Filter",
@@ -126,7 +130,6 @@ fun topBar(modifier: Modifier = Modifier) {
                     modifier = modifier
                         .background(color = blue_filter, shape = RoundedCornerShape(50))
                         .padding(15.dp, 5.dp)
-
                 )
             }
             Divider(
@@ -136,25 +139,29 @@ fun topBar(modifier: Modifier = Modifier) {
                 thickness = 1.dp
             )
         }
-
 }
 
 
 @Composable
-fun meldingList(meldingList: List<Melding>, modifier: Modifier = Modifier){
-    LazyColumn(){
-        items(meldingList){ melding ->
-            meldingCard(datum = "placeholder", shortDescription = melding.meldingInfo, status = "Onbehandeld", anoniem = melding.isAnomiem)
+fun meldingList(meldingen: List<Melding?>, modifier: Modifier = Modifier){
+    Log.i("ACT", "Lijst aanmaken")
+    LazyColumn {
+        items(meldingen){ melding ->
+            if(melding != null) {
+                meldingCard(datum = "placeholder", shortDescription = melding.info, status = melding.status, anoniem = melding.anoniem)
+                Log.i("ACT", "Kaart gemaakt")
+            }
+            Log.i("ACT", "Volgende kaart")
         }
     }
 }
 
 @Composable
 fun meldingCard(
-    datum: String,
-    shortDescription: String,
-    status: String,
-    anoniem: Boolean,
+    datum: String?,
+    shortDescription: String?,
+    status: MeldingStatus?,
+    anoniem: Boolean?,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -164,60 +171,58 @@ fun meldingCard(
         elevation = 4.dp
 
     ) {
-        Column(
-            modifier = modifier.padding(4.dp),
-            //horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth(0.6F)
-                    .padding(start = 5.dp)){
-                Text(
-                    text = datum,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                var anoniemText: String
-                if (anoniem){
-                    anoniemText = "Anoniem"
-                } else {
-                    anoniemText = "Niet Anoniem"
+        Column(modifier = modifier.padding(10.dp)){
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
+                Column(modifier = modifier.fillMaxWidth(0.6F)){
+                    if (datum != null) {
+                        Text(
+                            text = datum,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Text(
+                        text = "Anoniem",
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(bottom = 15.dp)
+                    )
+                    if (shortDescription != null) {
+                        Text(
+                            text = shortDescription,
+                            fontSize = 12.sp,
+                        )
+                    }
                 }
-
-                Text(
-                    text = anoniemText,
-                    fontSize = 12.sp,
-                    modifier = Modifier.padding(bottom = 15.dp)
-                )
-                Text(
-                    text = shortDescription,
-                    fontSize = 12.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column(modifier = modifier
-                .padding(end = 5.dp)
-                //.align(Alignment.CenterVertically)
-                ){
-                Text(
-                    text = status,
-                    fontSize = 10.sp,
-                    color = Color.White,
+                Column(
                     modifier = Modifier
-                        .background(color = status_onbehandeld, shape = RoundedCornerShape(45))
-                        .padding(8.dp, 2.dp),
-                )
+                        .align(Alignment.CenterVertically)){
+                    statusMelding(status)
+                }
             }
         }
     }
+}
 
+
+@Composable
+fun statusMelding(meldingStatus: MeldingStatus?){
+    if (meldingStatus != null) {
+        Text (
+            text = meldingStatus.status,
+            fontSize = 12.sp,
+            color = Color.White,
+            modifier = Modifier
+                .background(color = meldingStatus.color, shape = RoundedCornerShape(45))
+                .padding(8.dp, 2.dp),
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun previewMeldingCard() {
     AppTheme {
-        meldingCard(datum = "23 maart 2023 - 18.19", shortDescription = "Mijn melding gaat over...", status = "Onbehandeld", anoniem = true)
+        meldingCard(datum = "23 maart 2023 - 18.19", shortDescription = "Mijn melding gaat over...", status = MeldingStatus.AFGEROND, anoniem = true)
     }
 }
 
@@ -229,20 +234,20 @@ fun previewTopbar() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun previewMeldingList() {
-    AppTheme {
-        var meldingen : List<Melding> = listOf(Melding(), Melding(), Melding(), Melding(), Melding(), Melding(), Melding())
-        meldingList(meldingList = meldingen)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun previewMeldingList() {
+//    AppTheme {
+//        var meldingen : List<Melding_Kot> = listOf(Melding(), Melding(), Melding(), Melding(), Melding(), Melding(), Melding())
+//        meldingList(meldingList = meldingen)
+//    }
+//}
 
 @Preview(showBackground = true)
 @Composable
 fun previewMeldingenScreen() {
     AppTheme {
-        meldingLijstScreen(meldingenLijstViewModel = MeldingenLijstViewModel())
+        meldingLijstScreen(meldingenLijstViewModel = MeldingLijstViewModel())
     }
 }
 

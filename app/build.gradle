@@ -48,6 +48,8 @@ task prepareKotlinBuildScriptModel {
 
 dependencies {
 
+    implementation platform('com.google.firebase:firebase-bom:31.4.0')
+
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -66,5 +68,6 @@ dependencies {
     implementation 'androidx.compose.material:material:1.4.0'
     implementation 'androidx.compose.ui:ui-tooling:1.4.0'
     implementation 'androidx.compose.runtime:runtime-livedata:1.4.0'
+    implementation 'com.google.firebase:firebase-database-ktx'
 
 }
