@@ -3,21 +3,16 @@ package applab.veiligthuis.activity.melding
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
-
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -27,10 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.model.Melding
-import applab.veiligthuis.model.MeldingStatus
+import applab.veiligthuis.ui.meldingenlijst.MeldingBekijkenScreen
+import applab.veiligthuis.ui.meldingenlijst.meldingList
 import applab.veiligthuis.ui.theme.*
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
-import kotlinx.coroutines.flow.asFlow
+
 
 class MeldingLijstActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,31 +39,47 @@ class MeldingLijstActivity : ComponentActivity() {
     }
 }
 
+
+
+
+
 @Composable
-private fun meldingLijstScreen(meldingenLijstViewModel: MeldingLijstViewModel = MeldingLijstViewModel(), modifier: Modifier = Modifier.padding(1.dp)) {
+private fun meldingLijstScreen(
+    meldingenLijstViewModel: MeldingLijstViewModel = MeldingLijstViewModel(),
+    modifier: Modifier = Modifier.padding(1.dp)
+) {
 
     meldingenLijstViewModel.loadMeldingen()
     val meldingenLijstUiState by meldingenLijstViewModel.uiState.collectAsState()
 
-    Scaffold(
-        topBar = { topBar(meldingenLijstUiState.filterMeldingenInkomend,
-            { meldingenLijstViewModel.swapFilterMeldingenInkomend() }) },
-        content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) { meldingList(
-            filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
-            meldingen = meldingenLijstUiState.meldingen
-        ) } },
-        bottomBar = {
-            BottomAppBar(modifier = modifier.fillMaxHeight(0.1F), backgroundColor = Color.White, elevation = 0.dp) {
-                Row(horizontalArrangement = Arrangement.Center, modifier = modifier.fillMaxWidth()){
-                    Text(
-                        text = "Privacy verklaring",
-                    )
-                }
+    if(meldingenLijstUiState.showingLijstScreen) {
+        Scaffold(
+            topBar = { topBar(meldingenLijstUiState.filterMeldingenInkomend,
+                { meldingenLijstViewModel.updateFilterMeldingenInkomend() }) },
+            content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) { meldingList(
+                filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
+                meldingen = meldingenLijstUiState.meldingen,
+                onCardClick = { melding: Melding -> meldingenLijstViewModel.updateMeldingBekijkenScreen(melding = melding) }
+            ) } },
+            bottomBar = {
+                BottomAppBar(modifier = modifier.fillMaxHeight(0.1F), backgroundColor = Color.White, elevation = 0.dp) {
+                    Row(horizontalArrangement = Arrangement.Center, modifier = modifier.fillMaxWidth()){
+                        Text(
+                            text = "Privacy verklaring",
+                        )
+                    }
 
-            }
-        },
-        modifier = modifier.padding(22.dp, 10.dp)
-    )
+                }
+            },
+            modifier = modifier.padding(22.dp, 10.dp)
+        )
+    } else {
+        MeldingBekijkenScreen(
+            melding =meldingenLijstUiState.selectedMelding,
+            onBackButtonClicked = { meldingenLijstViewModel.resetMeldingenLijstScreen() }
+        )
+    }
+
 }
 
 @Composable
@@ -128,76 +140,6 @@ private fun topBar(
         }
 }
 
-
-@Composable
-private fun meldingList(
-    filterInkomendSelected: Boolean,
-    meldingen: List<Melding?>,
-    modifier: Modifier = Modifier){
-    Log.i("ACT", "Lijst aanmaken")
-    val filterMeldingen : List<Melding?>
-    if(filterInkomendSelected){
-        filterMeldingen = meldingen.filter { melding -> melding?.status != MeldingStatus.AFGEROND }
-    } else {
-        filterMeldingen = meldingen.filter { melding -> melding?.status == MeldingStatus.AFGEROND }
-    }
-
-    LazyColumn() {
-        items(filterMeldingen){ melding ->
-            if(melding != null) {
-                meldingCard(datum = "placeholder", shortDescription = melding.info, status = melding.status, anoniem = melding.anoniem)
-                Log.i("ACT", "Kaart gemaakt")
-            }
-        }
-    }
-}
-
-@Composable
-private fun meldingCard(
-    datum: String?,
-    shortDescription: String?,
-    status: MeldingStatus?,
-    anoniem: Boolean?,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .padding(4.dp)
-            .fillMaxWidth(),
-        elevation = 4.dp
-
-    ) {
-        Column(modifier = modifier.padding(10.dp)){
-            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
-                Column(modifier = modifier.fillMaxWidth(0.6F)){
-                    if (datum != null) {
-                        Text(
-                            text = datum,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    Text(
-                        text = "Anoniem",
-                        fontSize = 12.sp,
-                        modifier = Modifier.padding(bottom = 15.dp)
-                    )
-                    if (shortDescription != null) {
-                        Text(
-                            text = shortDescription,
-                            fontSize = 12.sp,
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)){
-                    statusMelding(status)
-                }
-            }
-        }
-    }
-}
 @Composable
 private fun meldingFilterButtons(
     inkomendSelected: Boolean,
@@ -230,27 +172,8 @@ private fun meldingFilterButton(
         )
     }
 }
-@Composable
-private fun statusMelding(meldingStatus: MeldingStatus?){
-    if (meldingStatus != null) {
-        Text (
-            text = meldingStatus.status,
-            fontSize = 12.sp,
-            color = Color.White,
-            modifier = Modifier
-                .background(color = meldingStatus.color, shape = RoundedCornerShape(45))
-                .padding(8.dp, 2.dp),
-        )
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun previewMeldingCard() {
-    AppTheme {
-        meldingCard(datum = "23 maart 2023 - 18.19", shortDescription = "Mijn melding gaat over...", status = MeldingStatus.AFGEROND, anoniem = true)
-    }
-}
+
 
 @Preview
 @Composable

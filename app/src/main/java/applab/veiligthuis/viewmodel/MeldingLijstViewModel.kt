@@ -13,7 +13,9 @@ import kotlinx.coroutines.withContext
 
 data class MeldingenLijstUiState(
     val meldingen : List<Melding?> = listOf(),
-    val filterMeldingenInkomend : Boolean = true
+    val filterMeldingenInkomend : Boolean = true,
+    val selectedMelding: Melding? = Melding(),
+    val showingLijstScreen: Boolean = true
 )
 
 class MeldingLijstViewModel(
@@ -37,10 +39,28 @@ class MeldingLijstViewModel(
             }
         }
 
-        fun swapFilterMeldingenInkomend(){
+        fun updateFilterMeldingenInkomend(){
             _uiState.update { currentState ->
                 currentState.copy(
                     filterMeldingenInkomend = currentState.filterMeldingenInkomend.not()
+                )
+            }
+        }
+
+        fun updateMeldingBekijkenScreen(melding: Melding?) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    selectedMelding = melding,
+                    showingLijstScreen = false
+                )
+            }
+        }
+
+        fun resetMeldingenLijstScreen() {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    selectedMelding = Melding(),
+                    showingLijstScreen = true
                 )
             }
         }
