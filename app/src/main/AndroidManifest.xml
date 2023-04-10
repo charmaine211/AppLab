@@ -27,10 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MeldingenActivity">
-
         </activity>
         <activity android:name=".activity.tip.TipInzien">
-
+        </activity>
+        <activity android:name=".activity.tip.TipBeheren">
+        </activity>
+        <activity android:name=".activity.tip.TipDetailActivity">
         </activity>
     </application>
 

@@ -41,11 +41,12 @@ public class TipMaken extends AppCompatActivity {
                 String beschrijving = beschrijvingEditText.getText().toString();
                 String categorie = categorieSpinner.getSelectedItem().toString();
 
+                String tipId = databaseReference.push().getKey();
                 // Create a new Tip object with the retrieved data
-                Tip tip = new Tip(titel, beschrijving, TipCategorie.valueOf(categorie));
+                Tip tip = new Tip(tipId, titel, beschrijving, TipCategorie.valueOf(categorie));
 
                 // Push the Tip object to the Firebase database
-                databaseReference.child("tips").push().setValue(tip);
+                databaseReference.child("tips").child(tipId).setValue(tip);
 
                 finishActivity();
             }

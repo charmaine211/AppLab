@@ -4,10 +4,13 @@ package applab.veiligthuis.activity.tip;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,7 +57,10 @@ public class TipInzien extends AppCompatActivity {
 
                 for (DataSnapshot tipSnapshot: dataSnapshot.getChildren()) {
                     Tip tip = tipSnapshot.getValue(Tip.class);
-                    mTipList.add(tip);
+                    tip.setId(tipSnapshot.getKey());
+                    if(!tip.isVerwijderd()){
+                        mTipList.add(tip);
+                    }
                 }
 
                 mTipListAdapter.notifyDataSetChanged();
@@ -66,18 +72,26 @@ public class TipInzien extends AppCompatActivity {
             }
         });
 
-        // Set an OnItemClickListener for the tip list view to show the tip description
         tipListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the selected tip
                 Tip selectedTip = mTipList.get(position);
 
-                // Create an AlertDialog to show the tip description
                 AlertDialog.Builder builder = new AlertDialog.Builder(TipInzien.this);
                 builder.setTitle(selectedTip.getTitel());
                 builder.setMessage(selectedTip.getBeschrijving());
                 builder.setPositiveButton(android.R.string.ok, null);
+                builder.setNegativeButton("verwijder", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String tipId = mTipList.get(position).getId();
+                        mDatabase
+                                .child(tipId)
+                                .child("verwijderd")
+                                .setValue(true);
+                    }
+                });
+                builder.setNegativeButtonIcon(getDrawable(R.drawable.delete_btn));
                 builder.show();
             }
         });
