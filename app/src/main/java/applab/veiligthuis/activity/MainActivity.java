@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.R;
+import applab.veiligthuis.activity.meldingen.MeldingMakenActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         initMeldingenButton();
         initTipsInzienButton();
         initTipsBeherenButton();
+        initMaakMeldingButton();
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
@@ -56,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent tipsIntent = new Intent(MainActivity.this, TipInzien.class);
                 startActivity(tipsIntent);
+            }
+        });
+    }
+
+    public void initMaakMeldingButton(){
+        Button maakMeldingBtn = (Button) findViewById(R.id.maakMeldingButton);
+        maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent meldingMakenIntent = new Intent(MainActivity.this, MeldingMakenActivity.class);
+                startActivity(meldingMakenIntent);
             }
         });
     }

@@ -12,5 +12,9 @@ public class MeldingMakenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_melding_maken);
+
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragmentContainerView, RisicoAnalyseFragment.class, null).commit();
+        }
     }
 }
