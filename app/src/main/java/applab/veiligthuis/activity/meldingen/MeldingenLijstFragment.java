@@ -1,4 +1,4 @@
-package applab.veiligthuis.activity;
+package applab.veiligthuis.activity.meldingen;
 
 import androidx.lifecycle.ViewModelProvider;
 

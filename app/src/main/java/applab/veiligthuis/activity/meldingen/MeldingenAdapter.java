@@ -1,4 +1,4 @@
-package applab.veiligthuis.activity;
+package applab.veiligthuis.activity.meldingen;
 
 import android.view.LayoutInflater;
 import android.view.View;

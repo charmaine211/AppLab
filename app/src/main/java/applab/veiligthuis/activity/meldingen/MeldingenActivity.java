@@ -1,15 +1,11 @@
-package applab.veiligthuis.activity;
+package applab.veiligthuis.activity.meldingen;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.Melding;
-import applab.veiligthuis.viewmodel.MeldingenLijstViewModel;
 
 public class MeldingenActivity extends AppCompatActivity {
 

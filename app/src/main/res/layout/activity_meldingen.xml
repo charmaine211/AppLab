@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MeldingenActivity">
+    tools:context=".activity.meldingen.MeldingenActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="applab.veiligthuis.activity.MeldingenLijstFragment"
+        android:name="applab.veiligthuis.activity.meldingen.MeldingenLijstFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>
