@@ -16,8 +16,6 @@ public class MeldingenActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragmentContainerView, MeldingenLijstFragment.class, null).commit();
         }
-
-
     }
 
 }
