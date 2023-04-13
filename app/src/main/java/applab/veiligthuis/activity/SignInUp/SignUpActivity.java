@@ -29,6 +29,10 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        editTextUserName = (EditText) findViewById(R.id.editTextUserName);
+        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextPhoneNo = (EditText) findViewById(R.id.editTextMobileNo);
+        editTextEmail = (EditText)findViewById(R.id.editTextEmail);
 
 
         Button button = (Button) findViewById(R.id.buttonAfterInput);
@@ -40,13 +44,14 @@ public class SignUpActivity extends AppCompatActivity {
                 String txtPassword = editTextPassword.getText().toString().trim();
                 String txtPhoneNo = editTextPhoneNo.getText().toString().trim();
                 String txtEmail = editTextEmail.getText().toString().trim();
+                mAuth = FirebaseAuth.getInstance();
 
                 if(txtUserName.isEmpty()){
                     editTextUserName.setError("please enter Username");
                     editTextUserName.requestFocus();
                 }
-                if(txtPassword.isEmpty()){
-                    editTextPassword.setError("please enter password");
+                if(txtPassword.isEmpty() || txtPassword.length()<7){
+                    editTextPassword.setError("please enter password containing at least 7 characters");
                     editTextPassword.requestFocus();
                 }
                 if (txtPhoneNo.isEmpty()){
@@ -57,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
                     editTextEmail.setError("please enter email adress");
                     editTextEmail.requestFocus();
                 }
-                if(txtUserName.isEmpty() || txtEmail.isEmpty() || txtPassword.isEmpty() || txtPhoneNo.isEmpty()){
+                if(txtUserName.isEmpty() || txtEmail.isEmpty() || txtPassword.length()<7 || txtPassword.isEmpty() || txtPhoneNo.isEmpty()){
                     Toast.makeText(SignUpActivity.this,"formulier moet volledig ingevuld worden",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -77,12 +82,12 @@ public class SignUpActivity extends AppCompatActivity {
                                                     if (task.isSuccessful()){
                                                         Toast.makeText(SignUpActivity.this,"User successfully registered",Toast.LENGTH_LONG).show();
                                                     }else{
-                                                        Toast.makeText(SignUpActivity.this,"faillure",Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(SignUpActivity.this,"faillure to register",Toast.LENGTH_LONG).show();
                                                     }
                                                 }
                                             });
                                 }else{
-                                    Toast.makeText(SignUpActivity.this,"faillure",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SignUpActivity.this,"faillure authentification",Toast.LENGTH_LONG).show();
                                 }
 
                             }
