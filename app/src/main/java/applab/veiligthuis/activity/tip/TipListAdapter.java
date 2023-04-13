@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,13 +65,24 @@ public class TipListAdapter extends BaseExpandableListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.test_tip_item, null);
+            view = inflater.inflate(R.layout.tip_tonen_rowitem, null);
         }
 
         Tip tip = mTipList.get(groupPosition);
 
         TextView titleTextView = view.findViewById(R.id.tipTitleTextView);
         titleTextView.setText(tip.getTitel());
+
+        ShapeableImageView tipShowImage = view.findViewById(R.id.tipShowImage);
+        ShapeableImageView tipHideImage = view.findViewById(R.id.tipHideImage);
+
+        if (isExpanded) {
+            tipShowImage.setVisibility(View.GONE);
+            tipHideImage.setVisibility(View.VISIBLE);
+        } else {
+            tipShowImage.setVisibility(View.VISIBLE);
+            tipHideImage.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -82,17 +92,17 @@ public class TipListAdapter extends BaseExpandableListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.test_tip_item, null);
+            view = inflater.inflate(R.layout.tip_tonen_rowitem, null);
         }
 
         Tip tip = mTipList.get(groupPosition);
 
         LinearLayout detailLayout = view.findViewById(R.id.tipDetailLayout);
+        ShapeableImageView tipShowImage = view.findViewById(R.id.tipShowImage);
 
         if (isLastChild) {
             detailLayout.setVisibility(View.VISIBLE);
-            ShapeableImageView symbolImageView = view.findViewById(R.id.tipSymbolImageView);
-            symbolImageView.setVisibility(View.GONE);
+            tipShowImage.setVisibility(View.GONE);
         } else {
             detailLayout.setVisibility(View.GONE);
         }

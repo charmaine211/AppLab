@@ -21,10 +21,18 @@
             android:textStyle="bold" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/tipSymbolImageView"
+            android:id="@+id/tipShowImage"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/veiligthuis_expand_knop"
+            app:shapeAppearanceOverlay="@style/TipSymbolImageViewStyle" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/tipHideImage"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/veiligthuis_hide_knop"
+            android:visibility="gone"
             app:shapeAppearanceOverlay="@style/TipSymbolImageViewStyle" />
 
     </LinearLayout>
@@ -35,7 +43,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
-        android:layout_marginTop="-50dp">
+        android:background="@color/veiligthuis_grijs"
+        android:layout_marginTop="-50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/tipDescriptionTextView"

@@ -68,28 +68,6 @@ public class TipInzien extends AppCompatActivity {
             }
         });
 
-        tipListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Tip selectedTip = mTipList.get(position);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(TipInzien.this);
-                builder.setTitle(selectedTip.getTitel());
-                builder.setMessage(selectedTip.getBeschrijving());
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setNegativeButton("verwijder", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String tipId = mTipList.get(position).getId();
-                        mDatabase
-                                .child(tipId)
-                                .child("verwijderd")
-                                .setValue(true);
-                    }
-                });
-                builder.setNegativeButtonIcon(getDrawable(R.drawable.delete_btn));
-                builder.show();
-            }
-        });
     }
 }
