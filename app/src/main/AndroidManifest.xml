@@ -12,7 +12,10 @@
         android:theme="@style/Theme.VeiligThuis"
         tools:targetApi="31">
         <activity
-            android:name=".LogInActivity"
+            android:name=".activity.SignInUp.AfterSignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SignInUp.LogInActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SignInUp.SignUpActivity"

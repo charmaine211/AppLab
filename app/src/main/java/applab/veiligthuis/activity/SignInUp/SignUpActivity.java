@@ -1,5 +1,6 @@
 package applab.veiligthuis.activity.SignInUp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -81,9 +82,17 @@ public class SignUpActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()){
                                                         Toast.makeText(SignUpActivity.this,"User successfully registered",Toast.LENGTH_LONG).show();
+                                                        ((EditText) findViewById(R.id.editTextUserName)).setText("");
+                                                        ((EditText) findViewById(R.id.editTextPassword)).setText("");
+                                                        ((EditText) findViewById(R.id.editTextMobileNo)).setText("");
+                                                        ((EditText) findViewById(R.id.editTextEmail)).setText("");
+
+                                                        Intent intent = new Intent(getApplicationContext(), applab.veiligthuis.activity.SignInUp.AfterSignInActivity.class);
+                                                        startActivity(intent);
+
                                                     }else{
                                                         Toast.makeText(SignUpActivity.this,"faillure to register",Toast.LENGTH_LONG).show();
-                                                    }
+                                                    }git a
                                                 }
                                             });
                                 }else{
