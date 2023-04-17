@@ -58,6 +58,8 @@ public class TipBeheren extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tip_beheren);
 
+        initLogoClickEventHandler();
+
         mDatabase = FirebaseDatabase.getInstance().getReference("tips");
         initToggleButton();
         initAddButton();
@@ -119,6 +121,16 @@ public class TipBeheren extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private void initLogoClickEventHandler() {
+        ImageView logo = findViewById(R.id.image_view);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
