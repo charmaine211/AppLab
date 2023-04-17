@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">VeiligThuis</string>
+    <string name="meldingenLijstButton">Meldingen</string>
+    <string name="tipMakenButton">tip aanmaken</string>
+    <string name="tip_categorie_prompt">Select a category</string>
+    <string-array name="tip_categorie_options">
+        <item>LichamelijkGeweld</item>
+        <item>FysiekGeweld</item>
+        <item>FinancieelMisbruik</item>
+        <item>Stalking</item>
+        <item>PsychischGeweld</item>
+    </string-array>
+    <string name="nav_signIn">Sign In</string>
+    <string name="nav_signUp">Sign Up</string>
+    <string name="logo">Logo veilig thuis</string>
+    <string name="signUp_username">naam</string>
+    <string name="signUp_mobile">GSM nummer</string>
+    <string name="signUp_email">email adres</string>
+    <string name="signUp_password">paswoord</string>
+</resources>
