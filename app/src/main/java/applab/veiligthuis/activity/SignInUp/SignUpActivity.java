@@ -92,7 +92,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                                     }else{
                                                         Toast.makeText(SignUpActivity.this,"faillure to register",Toast.LENGTH_LONG).show();
-                                                    }git a
+                                                    }
                                                 }
                                             });
                                 }else{
