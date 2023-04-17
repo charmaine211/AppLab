@@ -17,7 +17,7 @@
         android:id="@+id/tipSymbolImageView"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/tips_add"
+        android:src="@drawable/veiligthuis_expand_knop"
         app:shapeAppearanceOverlay="@style/TipSymbolImageViewStyle" />
 
 </LinearLayout>
