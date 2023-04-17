@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 
@@ -37,7 +38,7 @@ public class TipBeheren extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ListView tipListView;
     private List<Tip> tipList;
-    private TipListAdapter tipListAdapter;
+    private TipListBeheerAdapter tipListAdapter;
 
     private void initAddButton() {
         addButton = findViewById(R.id.addTipButton);
@@ -79,7 +80,7 @@ public class TipBeheren extends AppCompatActivity {
     private void initTipListView() {
         tipListView = findViewById(R.id.tipListView);
         tipList = new ArrayList<>();
-        tipListAdapter = new TipListAdapter(this, tipList);
+        tipListAdapter = new TipListBeheerAdapter(this, tipList);
         tipListView.setAdapter(tipListAdapter);
 
         tipListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
