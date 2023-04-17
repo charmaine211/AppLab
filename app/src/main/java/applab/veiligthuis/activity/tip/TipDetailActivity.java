@@ -154,7 +154,7 @@ public class TipDetailActivity extends AppCompatActivity {
         }
     }
 
-
+    // TODO: 13/04/2023 implementeer details als readonly
     private void initDetailsAsReadOnly() {
         // Bij alleen inzien de beheermogelijkheden wegnemen.
         changeTitleButton.setVisibility(View.GONE);

@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 
@@ -37,7 +39,7 @@ public class TipBeheren extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ListView tipListView;
     private List<Tip> tipList;
-    private TipListAdapter tipListAdapter;
+    private TipListBeheerAdapter tipListAdapter;
 
     private void initAddButton() {
         addButton = findViewById(R.id.addTipButton);
@@ -56,6 +58,8 @@ public class TipBeheren extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tip_beheren);
+
+        initLogoClickEventHandler();
 
         mDatabase = FirebaseDatabase.getInstance().getReference("tips");
         initToggleButton();
@@ -79,7 +83,7 @@ public class TipBeheren extends AppCompatActivity {
     private void initTipListView() {
         tipListView = findViewById(R.id.tipListView);
         tipList = new ArrayList<>();
-        tipListAdapter = new TipListAdapter(this, tipList);
+        tipListAdapter = new TipListBeheerAdapter(this, tipList);
         tipListView.setAdapter(tipListAdapter);
 
         tipListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,6 +122,16 @@ public class TipBeheren extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private void initLogoClickEventHandler() {
+        ImageView logo = findViewById(R.id.image_view);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
