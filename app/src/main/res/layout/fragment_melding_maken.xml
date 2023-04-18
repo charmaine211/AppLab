@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/melding_maken_text_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -37,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/bijlage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,19 +47,23 @@
 
     <Spinner
         android:id="@+id/plaatsnaam_spinner"
-        android:layout_width="409dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/plaatsnaam_textView"
-        tools:layout_editor_absoluteX="1dp" />
+        android:fontFamily="@font/montserrat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plaatsnaam_textView" />
 
     <Spinner
         android:id="@+id/janee_spinner"
-        android:layout_width="409dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/meldingWerk_textView"
-        tools:layout_editor_absoluteX="1dp" />
+        android:fontFamily="@font/montserrat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meldingWerk_textView" />
 
     <TextView
         android:id="@+id/plaatsnaam_textView"
@@ -64,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="@string/plaatsnaam"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bijlage_textView" />
@@ -74,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="@string/melding_voor_werk"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plaatsnaam_spinner" />

@@ -17,16 +17,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="316dp"
         android:text="@string/risico_text_fragment"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/twijfel_button"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
         android:text="@string/twijfel_button"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,11 +38,14 @@
 
     <Button
         android:id="@+id/ja_button"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="24dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/ja_button"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/twijfel_button"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,11 +53,14 @@
 
     <Button
         android:id="@+id/nee_button"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="76dp"
         android:text="@string/nee_button"
+        android:fontFamily="@font/montserrat"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/twijfel_button"
