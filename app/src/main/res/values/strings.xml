@@ -20,4 +20,10 @@
     <string name="maakMeldingButton">Maak een melding</string>
     <string name="risico_text_fragment">Maak een melding</string>
     <string name="melding_maken_text_fragment">Waar wilt u een melding van maken?</string>
+    <string name="ja_button">Ja</string>
+    <string name="twijfel_button">Ik twijfel</string>
+    <string name="nee_button">Nee</string>
+    <string name="bijlage">Voeg bijlage(s) toe</string>
+    <string name="plaatsnaam">Plaatsnaam</string>
+    <string name="melding_voor_werk">Doet u deze melding vanwege uw werk?</string>
 </resources>

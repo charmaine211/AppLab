@@ -7,8 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import applab.veiligthuis.R;
+
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +56,11 @@ public class RisicoAnalyseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initJaButton();
+        initTwijfelButton();
+        initNeeButton();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -63,4 +73,39 @@ public class RisicoAnalyseFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_risico_analyse, container, false);
     }
+
+    public void initJaButton() {
+        Button jaButton =  getView().findViewById(R.id.ja_button);
+        jaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(RisicoAnalyseFragment.this.getContext(), "112 bellen", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void initTwijfelButton() {
+        Button twijfelButton =  getView().findViewById(R.id.twijfel_button);
+        twijfelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(RisicoAnalyseFragment.this.getContext(), "VeiligThuis bellen", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void initNeeButton() {
+        Button neeButton =  getView().findViewById(R.id.nee_button);
+        neeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new MeldingMakenFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+    }
+
 }

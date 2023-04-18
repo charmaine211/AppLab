@@ -7,9 +7,8 @@
     app:layoutDescription="@xml/activity_melding_maken_scene"
     tools:context=".activity.meldingen.MeldingMakenActivity">
 
-
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/risocoAnalyseFragmentContainerView2"
+        android:id="@+id/fragmentContainerView2"
         android:name="applab.veiligthuis.activity.meldingen.RisicoAnalyseFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

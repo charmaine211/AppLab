@@ -15,7 +15,6 @@ import applab.veiligthuis.activity.meldingen.MeldingMakenActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
