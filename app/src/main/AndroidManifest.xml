@@ -9,8 +9,17 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VeiligThuis"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.SignInUp.AfterSignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SignInUp.LogInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SignInUp.SignUpActivity"
+            android:exported="false" />
         <activity
             android:name=".MeldingMaken"
             android:exported="false" />
