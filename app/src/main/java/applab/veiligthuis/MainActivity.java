@@ -1,17 +1,16 @@
-package applab.veiligthuis.activity;
+package applab.veiligthuis;
+
+import static applab.veiligthuis.R.id.maakMeldingButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.FirebaseDatabase;
 
-import applab.veiligthuis.R;
 import applab.veiligthuis.activity.meldingen.MeldingMakenActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initMaakMeldingButton(){
-        Button maakMeldingBtn = (Button) findViewById(R.id.maakMeldingButton);
+        Button maakMeldingBtn = (Button) findViewById(maakMeldingButton);
         maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

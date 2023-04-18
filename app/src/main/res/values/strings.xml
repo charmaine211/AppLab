@@ -17,4 +17,7 @@
     <string name="signUp_mobile">GSM nummer</string>
     <string name="signUp_email">email adres</string>
     <string name="signUp_password">paswoord</string>
+    <string name="maakMeldingButton">Maak een melding</string>
+    <string name="risico_text_fragment">Maak een melding</string>
+    <string name="melding_maken_text_fragment">Waar wilt u een melding van maken?</string>
 </resources>
