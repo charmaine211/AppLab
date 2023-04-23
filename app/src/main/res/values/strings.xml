@@ -17,4 +17,7 @@
     <string name="signUp_mobile">GSM nummer</string>
     <string name="signUp_email">email adres</string>
     <string name="signUp_password">paswoord</string>
+    <string name="nav_logIn">log in</string>
+    <string name="logIn_password">password</string>
+    <string name="logIn_name">name</string>
 </resources>
