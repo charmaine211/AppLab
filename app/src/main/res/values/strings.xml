@@ -26,4 +26,7 @@
     <string name="bijlage">Voeg bijlage(s) toe</string>
     <string name="plaatsnaam">Plaatsnaam</string>
     <string name="melding_voor_werk">Doet u deze melding vanwege uw werk?</string>
+    <string name="nav_logIn">log in</string>
+    <string name="logIn_password">password</string>
+    <string name="logIn_name">name</string>
 </resources>
