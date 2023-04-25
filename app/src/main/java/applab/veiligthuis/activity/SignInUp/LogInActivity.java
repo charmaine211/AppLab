@@ -1,15 +1,19 @@
 package applab.veiligthuis.activity.SignInUp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import applab.veiligthuis.MainActivity;
 import applab.veiligthuis.R;
 
 public class LogInActivity extends AppCompatActivity {
@@ -48,6 +52,19 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signInForgottenPassWord();
+            }
+        });
+
+        Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
+        setSupportActionBar(toolbar);
+        ImageView imageView_tb = findViewById(R.id.image_view);
+
+        imageView_tb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),
+                        MainActivity.class);
+                startActivity(intent);
             }
         });
 
