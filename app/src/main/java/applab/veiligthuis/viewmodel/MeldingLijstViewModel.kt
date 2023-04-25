@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import applab.veiligthuis.model.Melding
+import applab.veiligthuis.repository.melding.MeldingLijstRepository
 import applab.veiligthuis.repository.melding.MeldingLijstRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -19,7 +20,7 @@ data class MeldingenLijstUiState(
 )
 
 class MeldingLijstViewModel(
-    private val meldingLijstRepository: MeldingLijstRepositoryImpl = MeldingLijstRepositoryImpl()
+    private val meldingLijstRepository: MeldingLijstRepository = MeldingLijstRepositoryImpl()
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(MeldingenLijstUiState())
         val uiState: StateFlow<MeldingenLijstUiState> = _uiState.asStateFlow()
