@@ -18,12 +18,6 @@
             android:name=".activity.SignInUp.LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.SignInUp.SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MeldingMaken"
-            android:exported="false" />
-        <activity
             android:name=".activity.tip.TipMaken"
             android:exported="false" />
         <activity
@@ -35,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MeldingenActivity">
+        <activity android:name=".activity.meldingen.MeldingenActivity">
         </activity>
         <activity android:name=".activity.tip.TipInzien">
         </activity>
@@ -43,6 +37,9 @@
         </activity>
         <activity android:name=".activity.tip.TipDetailActivity">
         </activity>
+        <activity
+            android:name=".activity.meldingen.MeldingMakenActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

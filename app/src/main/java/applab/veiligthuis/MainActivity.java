@@ -66,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initMaakMeldingButton(){
-        Button maakMeldingBtn = (Button) findViewById(maakMeldingButton);
+        Button maakMeldingBtn = (Button) findViewById(R.id.maakMeldingButton);
         maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent meldingMakenIntent = new Intent(MainActivity.this, MeldingMakenActivity.class);
-                startActivity(meldingMakenIntent);
+                Intent intent = new Intent(MainActivity.this,MeldingMakenActivity.class);
+                startActivity(intent);
             }
         });
     }
