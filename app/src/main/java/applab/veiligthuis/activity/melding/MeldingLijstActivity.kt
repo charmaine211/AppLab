@@ -179,7 +179,7 @@ private fun meldingFilterButton(
 @Composable
 fun previewTopbar() {
     AppTheme {
-        //topBar(true)
+        topBar(true, {})
     }
 }
 
