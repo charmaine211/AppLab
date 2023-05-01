@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import applab.veiligthuis.MainActivity;
 import applab.veiligthuis.R;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -107,7 +108,7 @@ public class RisicoAnalyseFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RisicoAnalyseFragment.this.getContext());
                 builder.setMessage("We raden u aan ons te bellen.")
                         .setCancelable(true)
-                        .setPositiveButton("Bel 0800-2000", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Bel Veilig Thuis", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
                                 callIntent.setData(Uri.parse("tel:08002000"));
@@ -131,9 +132,12 @@ public class RisicoAnalyseFragment extends Fragment {
         neeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
+                // Navigeer naar de MeldingMakenActivity met MeldingMakenFragment
+                Intent intent = new Intent(getActivity(), MeldingMakenActivity.class);
+                Fragment fragment = new MeldingMakenFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new MeldingMakenFragment());
+                fragmentTransaction.replace(R.id.fragment_container, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

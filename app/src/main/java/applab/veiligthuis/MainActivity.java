@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.activity.meldingen.MeldingMakenActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
+import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
 public class MainActivity extends AppCompatActivity {
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,MeldingMakenActivity.class);
+                Intent intent = new Intent(MainActivity.this, RisicoAnalyseActivity.class);
                 startActivity(intent);
             }
         });

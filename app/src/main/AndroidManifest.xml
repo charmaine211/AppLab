@@ -12,6 +12,12 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".RisicoAnalyseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RisicoAnalyse"
+            android:exported="false" />
+        <activity
             android:name=".activity.SignInUp.AfterSignInActivity"
             android:exported="false" />
         <activity
@@ -29,14 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.meldingen.MeldingenActivity">
-        </activity>
-        <activity android:name=".activity.tip.TipInzien">
-        </activity>
-        <activity android:name=".activity.tip.TipBeheren">
-        </activity>
-        <activity android:name=".activity.tip.TipDetailActivity">
-        </activity>
+        <activity android:name=".activity.meldingen.MeldingenActivity" />
+        <activity android:name=".activity.tip.TipInzien" />
+        <activity android:name=".activity.tip.TipBeheren" />
+        <activity android:name=".activity.tip.TipDetailActivity" />
         <activity
             android:name=".activity.meldingen.MeldingMakenActivity"
             android:exported="true" />

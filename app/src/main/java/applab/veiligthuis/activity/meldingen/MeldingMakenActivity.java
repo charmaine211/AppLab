@@ -14,14 +14,14 @@ public class MeldingMakenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_melding_maken);
 
-        // Create a new instance of the risicoAnalyseFragment
-        RisicoAnalyseFragment risicoAnalyseFragment = new RisicoAnalyseFragment();
+        // Create a new instance of the meldingMakenFragment
+        MeldingMakenFragment meldingMakenFragment = new MeldingMakenFragment();
 
         // Start a new fragment transaction to display the fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // Replace the fragment_container with the risicoAnalyseFragment
-        transaction.replace(R.id.fragment_container, risicoAnalyseFragment);
+        // Replace the fragment_container with the meldingMakenFragment
+        transaction.replace(R.id.fragment_container, meldingMakenFragment);
 
         // Commit the transaction
         transaction.commit();

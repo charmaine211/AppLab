@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import applab.veiligthuis.R;
 
@@ -60,6 +62,27 @@ public class MeldingMakenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        initPlaatsnaamSpinner();
+        initJaNeeSpinner();
         return inflater.inflate(R.layout.fragment_melding_maken, container, false);
     }
+
+    public void initPlaatsnaamSpinner(){
+        Spinner plaatsnaamSpinner = getView().findViewById(R.id.plaatsnaam_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.plaatsnamen, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        plaatsnaamSpinner.setAdapter(adapter);
+    }
+
+    public void initJaNeeSpinner(){
+        Spinner jaNeeSpinner = getView().findViewById(R.id.janee_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.janee, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jaNeeSpinner.setAdapter(adapter);
+    }
+
 }

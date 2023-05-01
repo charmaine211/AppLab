@@ -29,4 +29,19 @@
     <string name="nav_logIn">log in</string>
     <string name="logIn_password">password</string>
     <string name="logIn_name">name</string>
+
+    // Array met alle plaatnamen
+    <string-array name="plaatsnamen">
+        <item>Amsterdam</item>
+        <item>Rotterdam</item>
+        <item>Den Haag</item>
+        <item>Utrecht</item>
+        <item>Groningen</item>
+    </string-array>
+
+    // Array met ja/nee
+    <string-array name="janee">
+        <item>Ja</item>
+        <item>Nee</item>
+    </string-array>
 </resources>
