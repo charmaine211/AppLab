@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.activity.SignInUp.LogInActivity;
-import applab.veiligthuis.activity.meldingen.MeldingMakenActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
