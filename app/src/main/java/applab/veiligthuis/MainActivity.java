@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         ImageView imageView_tb = findViewById(R.id.second_image_view);
 
         imageView_tb.setOnClickListener(new View.OnClickListener() {
