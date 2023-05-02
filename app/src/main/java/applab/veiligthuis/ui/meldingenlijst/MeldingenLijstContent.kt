@@ -57,8 +57,8 @@ private fun meldingCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier
-            .padding(4.dp)
+        modifier = modifier.padding(horizontal = 22.dp, vertical = 4.dp)
+
             .fillMaxWidth()
             .clickable(onClick = onCardClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp, hoveredElevation = 10.dp),

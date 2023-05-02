@@ -3,34 +3,26 @@ package applab.veiligthuis.activity.melding
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
+
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.compose.ui.viewinterop.AndroidViewBinding
-import applab.veiligthuis.R
+
 import applab.veiligthuis.model.Melding
 import applab.veiligthuis.ui.Toolbar
 import applab.veiligthuis.ui.meldingenlijst.MeldingBekijkenScreen
@@ -74,11 +66,11 @@ private fun meldingLijstScreen(
                     }
                 }
             },
-            modifier = modifier.padding(22.dp, 10.dp)
+
         )
     } else {
         MeldingBekijkenScreen(
-            melding =meldingenLijstUiState.selectedMelding,
+            melding = meldingenLijstUiState.selectedMelding,
             onBackButtonClicked = { meldingenLijstViewModel.resetMeldingenLijstScreen() }
         )
     }
@@ -92,33 +84,35 @@ private fun topBar(
 ) {
         Column(
             modifier = modifier
-                .padding(5.dp)
                 .background(Color.White),
         ) {
             Row {
                 Toolbar()
-
             }
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(4.dp)
+                    .padding(11.dp, 4.dp, 11.dp, 0.dp)
             ){
                 meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = onClickFilterChange)
-                Text(
-                    text = "Filter",
-                    fontSize = 12.sp,
-                    color = Color.White,
-                    modifier = modifier
-                        .background(color = filter_blue, shape = RoundedCornerShape(50))
-                        .padding(15.dp, 5.dp)
-                )
+                Box(
+                    modifier = modifier.padding(0.dp, 11.dp)
+                ){
+                    Text(
+                        text = "Filter",
+                        fontSize = 12.sp,
+                        color = Color.White,
+                        modifier = modifier
+                            .background(color = filter_blue, shape = RoundedCornerShape(50))
+                            .padding(11.dp, 4.dp)
+                    )
+                }
             }
             Divider(
                 color = Color.Black,
                 modifier = modifier
-                    .padding(4.dp, 15.dp, 4.dp, 0.dp),
+                    .padding(11.dp, 4.dp, 11.dp, 4.dp),
                 thickness = 1.dp
             )
         }

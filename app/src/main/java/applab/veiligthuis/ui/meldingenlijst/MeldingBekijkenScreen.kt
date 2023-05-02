@@ -4,17 +4,16 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import applab.veiligthuis.model.Melding
 import applab.veiligthuis.model.MeldingStatus
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import applab.veiligthuis.ui.Toolbar
+import applab.veiligthuis.ui.theme.filter_blue
 
 @Composable
 fun MeldingBekijkenScreen(
@@ -25,17 +24,21 @@ fun MeldingBekijkenScreen(
     BackHandler() {
         onBackButtonClicked
     }
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(20.dp)
-    ) {
-       item {
-           MeldingBekijkenNavBar(onBackButtonClicked = onBackButtonClicked)
-           MeldingBekijkenCard(melding = melding)
-       }
+    androidx.compose.material.Scaffold(
+        topBar = { Column(){
+            Toolbar()
+            MeldingBekijkenNavBar(onBackButtonClicked = onBackButtonClicked)
+        }
 
-    }
+        },
+        content = {contentPadding -> Box(modifier = Modifier.padding(contentPadding)) {
+            MeldingBekijkenCard(melding = melding)
+            }
+        }
+    )
+
+
+
 }
 
 @Composable
@@ -45,7 +48,7 @@ private fun MeldingBekijkenCard(
     ) {
     if (melding != null) {
         Card(
-            modifier = modifier,
+            modifier = modifier.padding(22.dp, 4.dp),
             colors = CardDefaults.cardColors(containerColor = Color.LightGray),
         ) {
             Column(
@@ -83,17 +86,26 @@ private fun MeldingBekijkenNavBar(
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
-       modifier = Modifier.fillMaxWidth()
+    Column(
+       modifier = Modifier
+           .fillMaxWidth()
+           .padding(11.dp, 4.dp)
     ) {
         Button(
             onClick = onBackButtonClicked,
-            shape = CircleShape
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(filter_blue)
         ) {
             Text(
                 text = "Terug"
             )
         }
+        androidx.compose.material.Divider(
+            color = Color.Black,
+            modifier = modifier
+                .padding(0.dp, 4.dp, 0.dp, 0.dp),
+            thickness = 1.dp
+        )
     }
 }
 
