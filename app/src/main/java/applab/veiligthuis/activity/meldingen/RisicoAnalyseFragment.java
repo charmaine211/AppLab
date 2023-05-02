@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import applab.veiligthuis.MainActivity;
 import applab.veiligthuis.R;
 
 import androidx.fragment.app.FragmentTransaction;
@@ -129,28 +128,3 @@ public class RisicoAnalyseFragment extends Fragment {
         });
     }
 }
-/**
- *        // Find the button by ID
- *         Button neeButton = view.findViewById(R.id.nee_button);
- *
- *         // Set an onClickListener to the neeButton
- *         neeButton.setOnClickListener(new View.OnClickListener() {
- *             @Override
- *             public void onClick(View view) {
- *                 // Create a new instance of the maakMeldingFragment
- *                 MeldingMakenFragment meldingMakenFragment = new MeldingMakenFragment();
- *
- *                 // Start a new fragment transaction to display the fragment
- *                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
- *
- *                 // Replace the fragment_container with the maakMeldingFragment
- *                 transaction.replace(R.id.fragment_container, meldingMakenFragment);
- *
- *                 // Add the transaction to the back stack
- *                 transaction.addToBackStack(null);
- *
- *                 // Commit the transaction
- *                 transaction.commit();
- *             }
- *         });
- */

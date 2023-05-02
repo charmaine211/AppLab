@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="visible"
     tools:context=".activity.meldingen.RisicoAnalyseFragment">
 
     <FrameLayout
@@ -16,15 +17,17 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="316dp"
-        android:text="@string/risico_text_fragment"
         android:fontFamily="@font/montserrat"
+        android:text="@string/risico_text_fragment"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,8 +39,10 @@
         android:layout_marginTop="76dp"
         android:background="@drawable/button_veilig_thuis_homescreen"
         android:fontFamily="@font/montserrat"
+        android:minHeight="48dp"
         android:text="@string/twijfel_button"
         android:textColor="@color/white"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,10 +54,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="24dp"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/ja_button"
         android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:minHeight="48dp"
+        android:text="@string/ja_button"
         android:textColor="@color/white"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/twijfel_button"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,10 +71,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="76dp"
-        android:text="@string/nee_button"
-        android:fontFamily="@font/montserrat"
         android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:minHeight="48dp"
+        android:text="@string/nee_button"
         android:textColor="@color/white"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/twijfel_button"
