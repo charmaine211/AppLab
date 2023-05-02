@@ -19,7 +19,6 @@ import applab.veiligthuis.ui.theme.filter_blue
 fun MeldingBekijkenScreen(
     melding: Melding?,
     onBackButtonClicked: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     BackHandler() {
         onBackButtonClicked
