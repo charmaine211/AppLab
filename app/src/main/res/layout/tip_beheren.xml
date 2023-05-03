@@ -17,8 +17,8 @@
             android:id="@+id/toggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOff="Toon actieve tips"
-            android:textOn="Toon verwijderde tips" />
+            android:textOff="Toon verwijderde tips"
+            android:textOn="Toon actieve tips" />
         <Button
             android:id="@+id/addTipButton"
             android:layout_width="wrap_content"
