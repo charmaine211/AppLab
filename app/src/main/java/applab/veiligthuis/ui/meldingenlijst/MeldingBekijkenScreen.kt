@@ -2,12 +2,11 @@ package applab.veiligthuis.ui.meldingenlijst
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,7 +16,7 @@ import applab.veiligthuis.ui.theme.filter_blue
 
 @Composable
 fun MeldingBekijkenScreen(
-    melding: Melding?,
+    meldingData: MeldingData?,
     onBackButtonClicked: () -> Unit,
 ) {
     BackHandler() {
@@ -31,7 +30,7 @@ fun MeldingBekijkenScreen(
 
         },
         content = {contentPadding -> Box(modifier = Modifier.padding(contentPadding)) {
-            MeldingBekijkenCard(melding = melding)
+            MeldingBekijkenCard(meldingData = meldingData)
             }
         }
     )
@@ -42,10 +41,10 @@ fun MeldingBekijkenScreen(
 
 @Composable
 private fun MeldingBekijkenCard(
-    melding: Melding?,
+    meldingData: MeldingData?,
     modifier: Modifier = Modifier
     ) {
-    if (melding != null) {
+    if (meldingData != null) {
         Card(
             modifier = modifier.padding(22.dp, 4.dp),
             colors = CardDefaults.cardColors(containerColor = Color.LightGray),
@@ -55,24 +54,24 @@ private fun MeldingBekijkenCard(
                     .fillMaxWidth()
                     .padding(20.dp)
             ) {
-                if(melding.datum != null){
+                if(meldingData.datum != null){
                     Text(
-                        text = melding.datum!!
+                        text = meldingData.datum!!
                     )
                 }
-                if(melding.locatie != null){
+                if(meldingData.locatie != null){
                     Text(
-                        text = melding.locatie!!
+                        text = meldingData.locatie!!
                     )
                 }
-                if(melding.status != null){
+                if(meldingData.status != null){
                     Text(
-                        text = melding.status!!.status
+                        text = meldingData.status!!.status
                     )
                 }
-                if(melding.info != null){
+                if(meldingData.info != null){
                     Text(
-                        text = melding.info!!
+                        text = meldingData.info!!
                     )
                 }
             }
@@ -111,7 +110,7 @@ private fun MeldingBekijkenNavBar(
 @Preview(showBackground = true)
 @Composable
 private fun previewMeldingBekijkenCard() {
-    MeldingBekijkenCard(melding = Melding(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true))
+    MeldingBekijkenCard(meldingData = MeldingData(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true))
 }
 
 @Preview(showBackground = true)
@@ -123,5 +122,5 @@ private fun previewMeldingBekijkenNavBar() {
 @Preview(showBackground = true)
 @Composable
 private fun previewMeldingBekijkenScreen() {
-    MeldingBekijkenScreen(melding = Melding(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true), onBackButtonClicked = { /*TODO*/ })
+    MeldingBekijkenScreen(meldingData = MeldingData(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true), onBackButtonClicked = { /*TODO*/ })
 }

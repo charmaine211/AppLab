@@ -4,7 +4,7 @@ package applab.veiligthuis.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.repository.melding.MeldingLijstRepository
 import applab.veiligthuis.repository.melding.MeldingLijstRepositoryImpl
 import kotlinx.coroutines.Dispatchers
@@ -13,9 +13,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 data class MeldingenLijstUiState(
-    val meldingen : List<Melding?> = listOf(),
+    val meldingen : List<MeldingData?> = listOf(),
     val filterMeldingenInkomend : Boolean = true,
-    val selectedMelding: Melding? = Melding(),
+    val selectedMeldingData: MeldingData? = MeldingData(),
     val showingLijstScreen: Boolean = true
 )
 
@@ -48,10 +48,10 @@ class MeldingLijstViewModel(
             }
         }
 
-        fun updateMeldingBekijkenScreen(melding: Melding?) {
+        fun updateMeldingBekijkenScreen(meldingData: MeldingData?) {
             _uiState.update { currentState ->
                 currentState.copy(
-                    selectedMelding = melding,
+                    selectedMeldingData = meldingData,
                     showingLijstScreen = false
                 )
             }
@@ -60,7 +60,7 @@ class MeldingLijstViewModel(
         fun resetMeldingenLijstScreen() {
             _uiState.update { currentState ->
                 currentState.copy(
-                    selectedMelding = Melding(),
+                    selectedMeldingData = MeldingData(),
                     showingLijstScreen = true
                 )
             }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,19 +19,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.activity.melding.AppTheme
-import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
 
 
 @Composable
 fun meldingList(
     filterInkomendSelected: Boolean,
-    meldingen: List<Melding?>,
-    onCardClick: (Melding) -> Unit,
+    meldingen: List<MeldingData?>,
+    onCardClick: (MeldingData) -> Unit,
     modifier: Modifier = Modifier
 ){
     Log.i("ACT", "Lijst aanmaken")
-    val filterMeldingen : List<Melding?>
+    val filterMeldingen : List<MeldingData?>
     if(filterInkomendSelected){
         filterMeldingen = meldingen.filter { melding -> melding?.status != MeldingStatus.AFGEROND }
     } else {
@@ -52,7 +51,7 @@ fun meldingList(
 
 @Composable
 private fun meldingCard(
-    melding: Melding,
+    meldingData: MeldingData,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,9 +65,9 @@ private fun meldingCard(
         Column(modifier = modifier.padding(10.dp)){
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
                 Column(modifier = modifier.fillMaxWidth(0.6F)){
-                    if (melding.datum != null) {
+                    if (meldingData.datum != null) {
                         Text(
-                            text = melding.datum,
+                            text = meldingData.datum,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -78,9 +77,9 @@ private fun meldingCard(
                         fontSize = 12.sp,
                         modifier = Modifier.padding(bottom = 15.dp)
                     )
-                    if (melding.info != null) {
+                    if (meldingData.info != null) {
                         Text(
-                            text = melding.info,
+                            text = meldingData.info,
                             fontSize = 12.sp,
                         )
                     }
@@ -88,7 +87,7 @@ private fun meldingCard(
                 Column(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)){
-                    statusMelding(melding.status)
+                    statusMelding(meldingData.status)
                 }
             }
         }
@@ -113,6 +112,6 @@ private fun statusMelding(meldingStatus: MeldingStatus?){
 @Composable
 fun previewMeldingCard() {
     AppTheme {
-        meldingCard(Melding(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet", status= MeldingStatus.ONBEHANDELD, anoniem = true), {})
+        meldingCard(MeldingData(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet", status= MeldingStatus.ONBEHANDELD, anoniem = true), {})
     }
 }

@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.ui.Toolbar
 import applab.veiligthuis.ui.meldingenlijst.MeldingBekijkenScreen
 import applab.veiligthuis.ui.meldingenlijst.meldingList
@@ -55,7 +55,7 @@ private fun meldingLijstScreen(
             content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) { meldingList(
                 filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
                 meldingen = meldingenLijstUiState.meldingen,
-                onCardClick = { melding: Melding -> meldingenLijstViewModel.updateMeldingBekijkenScreen(melding = melding) }
+                onCardClick = { meldingData: MeldingData -> meldingenLijstViewModel.updateMeldingBekijkenScreen(meldingData = meldingData) }
             ) } },
             bottomBar = {
                 BottomAppBar(modifier = modifier.fillMaxHeight(0.1F), backgroundColor = Color.White, elevation = 0.dp) {
@@ -70,7 +70,7 @@ private fun meldingLijstScreen(
         )
     } else {
         MeldingBekijkenScreen(
-            melding = meldingenLijstUiState.selectedMelding,
+            meldingData = meldingenLijstUiState.selectedMeldingData,
             onBackButtonClicked = { meldingenLijstViewModel.resetMeldingenLijstScreen() }
         )
     }

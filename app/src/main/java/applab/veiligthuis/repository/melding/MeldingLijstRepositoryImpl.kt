@@ -2,7 +2,7 @@ package applab.veiligthuis.repository.melding
 
 
 import applab.veiligthuis.model.MeldingStatus
-import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -22,15 +22,15 @@ class MeldingLijstRepositoryImpl : MeldingLijstRepository {
         ref.keepSynced(true)
     }
     fun writeNewMelding(datum: String, locatie: String, info: String, status: MeldingStatus, anoniem: Boolean){
-        val melding = Melding(datum, locatie, info, status, anoniem)
-        ref.push().setValue(melding)
+        val meldingData = MeldingData(datum, locatie, info, status, anoniem)
+        ref.push().setValue(meldingData)
     }
-    override fun getMeldingen(): Flow<List<Melding?>> {
+    override fun getMeldingen(): Flow<List<MeldingData?>> {
         return callbackFlow {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val items = snapshot.children.map { ds ->
-                        ds.getValue(Melding::class.java)
+                        ds.getValue(MeldingData::class.java)
                     }
                     trySend(items)
                 }
@@ -43,7 +43,7 @@ class MeldingLijstRepositoryImpl : MeldingLijstRepository {
         }
     }
 
-    fun getOnbehandeld(flowList: Flow<List<Melding?>>) : Flow<List<Melding?>> {
+    fun getOnbehandeld(flowList: Flow<List<MeldingData?>>) : Flow<List<MeldingData?>> {
         return flowList.mapLatest { list ->
             list.filter { it?.status == MeldingStatus.ONBEHANDELD }
         }

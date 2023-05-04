@@ -1,7 +1,7 @@
 package applab.veiligthuis.model
 
 
-data class Melding(
+data class MeldingData(
     val datum: String? = null,
     val locatie: String? = null,
     val info: String? = null,

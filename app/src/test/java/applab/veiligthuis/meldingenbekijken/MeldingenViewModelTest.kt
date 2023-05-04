@@ -1,16 +1,14 @@
 package applab.veiligthuis.meldingenbekijken
 
-import applab.veiligthuis.model.Melding
+import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
 import applab.veiligthuis.repository.melding.MeldingLijstRepository
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -23,9 +21,9 @@ import org.junit.Test
 class MeldingenViewModelTest {
 
     class MockMeldingLijstRepo : MeldingLijstRepository {
-        override fun getMeldingen(): Flow<List<Melding?>> {
-            var data = arrayListOf<Melding>()
-            data.add(Melding("1-1-1111", "TestLocatie", "Info Info Info", MeldingStatus.ONBEHANDELD, true))
+        override fun getMeldingen(): Flow<List<MeldingData?>> {
+            var data = arrayListOf<MeldingData>()
+            data.add(MeldingData("1-1-1111", "TestLocatie", "Info Info Info", MeldingStatus.ONBEHANDELD, true))
 
             return flow {
                 emit(data)
