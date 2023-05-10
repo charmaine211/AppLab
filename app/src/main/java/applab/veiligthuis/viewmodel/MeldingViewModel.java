@@ -7,34 +7,17 @@ import androidx.lifecycle.ViewModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.LocalDateTime;
-
 import applab.veiligthuis.model.Melding;
+import applab.veiligthuis.repository.MeldingRepositoryImpl;
 
 public class MeldingViewModel extends ViewModel {
-    private MutableLiveData<String> mSuccessMessage = new MutableLiveData<>();
-    private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
 
-    private DatabaseReference mDatabaseRef;
 
-    public LiveData<String> getSuccessMessage() {
-        return mSuccessMessage;
-    }
+    public void insertMelding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
 
-    public LiveData<String> getErrorMessage() {
-        return mErrorMessage;
-    }
+        Melding melding = new Melding(plaatsnaam, beroepsmatig, beschrijving, datum);
+        MeldingRepositoryImpl meldingRepo = new MeldingRepositoryImpl();
+        meldingRepo.addMelding(melding);
 
-    public void insertMelding(String gebruiker, String plaatsnaam, boolean beroepsmatig, String beschrijving, LocalDateTime datum){
-        if (mDatabaseRef == null) {
-            mDatabaseRef = FirebaseDatabase.getInstance().getReference("meldingen");
-        }
-
-        String key = mDatabaseRef.push().getKey();
-        Melding melding = new Melding(key, gebruiker, plaatsnaam, beroepsmatig, beschrijving, datum);
-
-        mDatabaseRef.child(key).setValue(melding)
-                .addOnSuccessListener(aVoid -> mSuccessMessage.setValue("Melding opgeslagen in database."))
-                .addOnFailureListener(e -> mErrorMessage.setValue("Fout bij opslaan melding: " + e.getMessage()));
     }
 }

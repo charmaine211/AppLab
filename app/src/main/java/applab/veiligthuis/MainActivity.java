@@ -1,7 +1,5 @@
 package applab.veiligthuis;
 
-import static applab.veiligthuis.R.id.maakMeldingButton;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;

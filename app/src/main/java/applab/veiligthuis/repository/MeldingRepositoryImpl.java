@@ -21,9 +21,35 @@ import applab.veiligthuis.model.Melding;
 
 public class MeldingRepositoryImpl implements MeldingRepository {
     private DatabaseReference meldingenRef;
+    private MutableLiveData<String> mSuccessMessage = new MutableLiveData<>();
+    private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
+
+    private DatabaseReference mDatabaseRef;
+
+    public LiveData<String> getSuccessMessage() {
+        return mSuccessMessage;
+    }
+
+    public LiveData<String> getErrorMessage() {
+        return mErrorMessage;
+    }
+
     public MeldingRepositoryImpl(){
         meldingenRef = FirebaseDatabase.getInstance().getReference("Tests/meldingen/");
         meldingenRef.keepSynced(true);
+    }
+
+    public void addMelding(Melding melding){
+        if (meldingenRef == null) {
+            meldingenRef = FirebaseDatabase.getInstance().getReference("meldingen");
+        }
+
+        String key = meldingenRef.push().getKey();
+        melding.setKey(key);
+        meldingenRef.child(key).setValue(melding)
+                .addOnSuccessListener(aVoid -> mSuccessMessage.setValue("Melding opgeslagen in database."))
+                .addOnFailureListener(e -> mErrorMessage.setValue("Fout bij opslaan melding: " + e.getMessage()));
+
     }
 
     public LiveData<List<Melding>> getMeldingenListLiveData(){

@@ -10,16 +10,14 @@ public class Melding {
     private String plaatsnaam;
     private boolean beroepsmatig;
     private String beschrijving;
-    private LocalDateTime datum;
+    private String datum;
     private String typeGeweld = null;
 
     public Melding(){
         // Lege constructor nodig voor calls naar Datasnapshot.getValue(Melding.class).
     }
 
-    public Melding(String key, String gebruiker, String plaatsnaam, boolean beroepsmatig, String beschrijving, LocalDateTime datum){
-        this.key = key;
-        this.gebruiker = gebruiker;
+    public Melding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
         this.plaatsnaam = plaatsnaam;
         this.beroepsmatig = beroepsmatig;
         this.beschrijving = beschrijving;
@@ -27,39 +25,51 @@ public class Melding {
 
     }
 
+    public void setKey(String key){
+        this.key = key;
+    }
+
     public String getKey(){
+
         return key;
     }
 
     public String getGebruiker(){
+
         return gebruiker;
     }
 
     public String getPlaatsnaam(){
+
         return plaatsnaam;
     }
 
     public void setPlaatsnaam(String plaatsnaam){
+
         this.plaatsnaam = plaatsnaam;
     }
 
     public boolean getBeroepsmatig(){
+
         return beroepsmatig;
     }
 
     public void setBeroepsmatig(boolean beroepsmatig){
+
         this.beroepsmatig = beroepsmatig;
     }
 
     public String getBeschrijving(){
+
         return beschrijving;
     }
 
     public void setBeschrijving(String beschrijving){
+
         this.beschrijving = beschrijving;
     }
 
-    public LocalDateTime getDatum(){
+    public String getDatum(){
         return datum;
     }
 

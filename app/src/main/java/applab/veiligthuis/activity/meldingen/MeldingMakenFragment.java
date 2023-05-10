@@ -85,12 +85,10 @@ public class MeldingMakenFragment extends Fragment {
                 }
                 String beschrijving = meldingEditText.getText().toString().trim();
 
-                // TODO: Gebruiker moet gekoppeld worden aan melding. Dat kan nu een anonieme gebruiker zijn
-                String gebruiker = "";
                 LocalDateTime datum = LocalDateTime.now();
 
                 // Save melding in ViewModel
-                meldingViewModel.insertMelding(gebruiker, plaatsnaam, beroepsmatig, beschrijving, datum);
+                meldingViewModel.insertMelding(plaatsnaam, beroepsmatig, beschrijving, datum.toString());
 
                 // Clear EditText
                 meldingEditText.setText("");

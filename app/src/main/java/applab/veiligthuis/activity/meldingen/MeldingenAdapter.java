@@ -29,8 +29,8 @@ public class MeldingenAdapter extends RecyclerView.Adapter<MeldingenAdapter.Meld
 
     @Override
     public void onBindViewHolder(@NonNull MeldingenAdapter.MeldingViewHolder holder, int position) {
-        holder.idTextView.setText(""+meldingen.get(position).getId());
-        holder.infoTextView.setText(meldingen.get(position).getMeldingInfo());
+        holder.idTextView.setText(""+meldingen.get(position).getKey());
+        holder.infoTextView.setText(meldingen.get(position).getBeschrijving());
     }
 
     @Override
