@@ -3,7 +3,6 @@ package applab.veiligthuis;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +10,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.activity.MeldingenActivity;
@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // Sign out Firebase user when the app is stopped
+        FirebaseAuth.getInstance().signOut();
     }
 
     public void initMeldingenButton(){

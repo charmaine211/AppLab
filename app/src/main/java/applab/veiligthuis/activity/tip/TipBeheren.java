@@ -15,7 +15,10 @@ import android.widget.ListView;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.helper.widget.MotionEffect;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +29,9 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import applab.veiligthuis.MainActivity;
 import applab.veiligthuis.R;
+import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.model.tipsmodel.Tip;
 
 
@@ -40,6 +45,9 @@ public class TipBeheren extends AppCompatActivity {
     private ListView tipListView;
     private List<Tip> tipList;
     private TipListBeheerAdapter tipListAdapter;
+    private FirebaseAuth mAuth;
+
+
 
     private void initAddButton() {
         addButton = findViewById(R.id.addTipButton);
@@ -59,6 +67,8 @@ public class TipBeheren extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tip_beheren);
 
+        mAuth = FirebaseAuth.getInstance();
+
         initLogoClickEventHandler();
 
         mDatabase = FirebaseDatabase.getInstance().getReference("tips");
@@ -66,6 +76,19 @@ public class TipBeheren extends AppCompatActivity {
         initAddButton();
         initTipListView();
         populateTipListView();
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null || currentUser.isAnonymous()) {
+            Log.d(MotionEffect.TAG, "user is not logged in");
+
+            Intent intent = new Intent(TipBeheren.this, LogInActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void initToggleButton() {
