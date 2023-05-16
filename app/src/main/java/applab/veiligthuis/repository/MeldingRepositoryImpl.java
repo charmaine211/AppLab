@@ -24,7 +24,7 @@ public class MeldingRepositoryImpl implements MeldingRepository {
     private MutableLiveData<String> mSuccessMessage = new MutableLiveData<>();
     private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
 
-    private DatabaseReference mDatabaseRef;
+    FirebaseDatabase firebaseDatabase;
 
     public LiveData<String> getSuccessMessage() {
         return mSuccessMessage;
@@ -35,14 +35,13 @@ public class MeldingRepositoryImpl implements MeldingRepository {
     }
 
     public MeldingRepositoryImpl(){
-        meldingenRef = FirebaseDatabase.getInstance().getReference("Tests/meldingen/");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
+        meldingenRef = firebaseDatabase.getReference("Meldingen/");
         meldingenRef.keepSynced(true);
     }
 
     public void addMelding(Melding melding){
-        if (meldingenRef == null) {
-            meldingenRef = FirebaseDatabase.getInstance().getReference("meldingen");
-        }
 
         String key = meldingenRef.push().getKey();
         melding.setKey(key);
