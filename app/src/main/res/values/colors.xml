@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFFF00</color>
+    <color name="veiligthuis_blauw">#0693E3</color>
+    <color name="veiligthuis_rood">#CF2E2E</color>
+    <color name="veiligthuis_paars">#CD6AFC</color>
+    <color name="veiligthuis_oranje">#CF7B2E</color>
+    <color name="veiligthuis_groen">#2BC57B</color>
+    <color name="veiligthuis_grijs">#D9D9D9</color>
 </resources>

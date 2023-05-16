@@ -1,7 +1,7 @@
 package applab.veiligthuis.model.tipsmodel;
 
 public class Tip {
-
+    private String id;
     private String titel;
     private String beschrijving;
     private TipCategorie categorie;
@@ -11,7 +11,8 @@ public class Tip {
 
     }
 
-    public Tip(String titel, String beschrijving, TipCategorie categorie){
+    public Tip(String id, String titel, String beschrijving, TipCategorie categorie){
+        this.id = id;
         this.titel = titel;
         this.beschrijving = beschrijving;
         this.categorie = categorie;
@@ -20,7 +21,13 @@ public class Tip {
     public boolean isVerwijderd(){
         return verwijderd;
     }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public void pasBeschrijvingAan(String beschrijving){
         this.beschrijving = beschrijving;
     }
