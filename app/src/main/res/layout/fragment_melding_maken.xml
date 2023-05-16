@@ -11,81 +11,69 @@
         android:id="@+id/include"
         layout="@layout/toolbar" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/meldingmaken_editTextTextMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        tools:layout_editor_absoluteY="211dp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <Spinner
+        android:id="@+id/janee_spinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        tools:layout_editor_absoluteY="139dp" />
 
-            <TextView
-                android:id="@+id/meldingMaken_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/melding_maken_text_fragment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/plaatsnaam_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/plaatsnaam"
+        tools:layout_editor_absoluteY="546dp" />
 
-            <EditText
-                android:id="@+id/meldingmaken_editTextTextMultiLine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="@font/montserrat"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                tools:layout_editor_absoluteY="211dp" />
+    <TextView
+        android:id="@+id/bijlage_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/bijlage"
+        tools:layout_editor_absoluteY="200dp" />
 
-            <TextView
-                android:id="@+id/bijlage_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/bijlage"
-                app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
-            <TextView
-                android:id="@+id/meldingWerk_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/melding_voor_werk"
-                tools:layout_editor_absoluteY="102dp" />
+    <Spinner
+        android:id="@+id/plaatsnaam_spinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:scrollbarSize="4dp"
+        tools:layout_editor_absoluteY="179dp" />
 
-            <Spinner
-                android:id="@+id/janee_spinner"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                tools:layout_editor_absoluteY="139dp" />
+    <TextView
+        android:id="@+id/meldingMaken_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/melding_maken_text_fragment"
+        tools:layout_editor_absoluteX="77dp"
+        tools:layout_editor_absoluteY="200dp" />
 
-            <Spinner
-                android:id="@+id/plaatsnaam_spinner"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:scrollbarSize="4dp"
-                tools:layout_editor_absoluteY="179dp" />
-
-            <TextView
-                android:id="@+id/plaatsnaam_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/plaatsnaam"
-                tools:layout_editor_absoluteY="546dp" />
-
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    <TextView
+        android:id="@+id/meldingWerk_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/melding_voor_werk"
+        tools:layout_editor_absoluteX="83dp"
+        tools:layout_editor_absoluteY="163dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
