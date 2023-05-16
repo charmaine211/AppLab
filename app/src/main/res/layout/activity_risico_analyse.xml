@@ -8,13 +8,13 @@
     tools:context=".activity.meldingen.RisicoAnalyseActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/risicoAnalyseFragmentContainerView"
+        android:id="@+id/risicoAnalyse_FragmentContainerView"
         android:name="applab.veiligthuis.activity.meldingen.RisicoAnalyseFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="731dp"
+        android:layout_width="412dp"
+        android:layout_height="735dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,6 @@ public class MeldingMakenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
     }
 
     @Override
@@ -34,10 +33,9 @@ public class MeldingMakenFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
         // Create spinners
         initPlaatsnaamSpinner();
-        initJaNeeSpinner();
         initSaveButton();
     }
 
@@ -48,15 +46,6 @@ public class MeldingMakenFragment extends Fragment {
                 R.array.plaatsnamen, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         plaatsnaamSpinner.setAdapter(adapter);
-    }
-
-    public void initJaNeeSpinner(){
-        Spinner jaNeeSpinner = getView().findViewById(R.id.janee_spinner);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.janee, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        jaNeeSpinner.setAdapter(adapter);
     }
 
     public void initSaveButton(){

@@ -21,7 +21,7 @@ public class RisicoAnalyseActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Replace the fragment_container with the risicoAnalyseFragment
-        transaction.replace(R.id.fragment_container, risicoAnalyseFragment);
+        transaction.replace(R.id.risicoAnalyse_FragmentContainerView, risicoAnalyseFragment);
 
         // Commit the transaction
         transaction.commit();

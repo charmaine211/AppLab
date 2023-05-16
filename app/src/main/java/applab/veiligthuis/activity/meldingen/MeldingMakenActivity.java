@@ -21,7 +21,7 @@ public class MeldingMakenActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Replace the fragment_container with the meldingMakenFragment
-        transaction.replace(R.id.fragment_container, meldingMakenFragment);
+        transaction.replace(R.id.meldingMaken_FragmentContainerView, meldingMakenFragment);
 
         // Commit the transaction
         transaction.commit();

@@ -14,7 +14,7 @@ public class MeldingenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meldingen);
         if(savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.fragmentContainerView, MeldingenLijstFragment.class, null).commit();
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).add(R.id.melding_FragmentContainerView, MeldingenLijstFragment.class, null).commit();
         }
     }
 

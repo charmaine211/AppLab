@@ -5,14 +5,13 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/activity_melding_maken_scene"
     tools:context=".activity.meldingen.MeldingMakenActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/meldingMakenFragmentContainerView2"
+        android:id="@+id/meldingMaken_FragmentContainerView"
         android:name="applab.veiligthuis.activity.meldingen.MeldingMakenFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="412dp"
+        android:layout_height="735dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
