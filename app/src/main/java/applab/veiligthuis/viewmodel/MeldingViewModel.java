@@ -20,4 +20,12 @@ public class MeldingViewModel extends ViewModel {
         meldingRepo.addMelding(melding);
 
     }
+
+    public void insertMelding(String plaatsnaam, String beschrijving, String datum){
+
+        Melding melding = new Melding(plaatsnaam, beschrijving, datum);
+        MeldingRepositoryImpl meldingRepo = new MeldingRepositoryImpl();
+        meldingRepo.addMelding(melding);
+
+    }
 }

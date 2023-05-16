@@ -25,7 +25,16 @@ public class Melding {
 
     }
 
+    public Melding(String plaatsnaam, String beschrijving, String datum){
+        this.plaatsnaam = plaatsnaam;
+        this.beschrijving = beschrijving;
+        this.datum = datum;
+        this.beroepsmatig = false;
+
+    }
+
     public void setKey(String key){
+
         this.key = key;
     }
 

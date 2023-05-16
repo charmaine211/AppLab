@@ -26,5 +26,6 @@ public class MeldingMakenActivity extends AppCompatActivity {
         // Commit the transaction
         transaction.commit();
     }
+
 }
 

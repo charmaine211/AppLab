@@ -116,14 +116,9 @@ public class RisicoAnalyseFragment extends Fragment {
         neeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Navigeer naar de MeldingMakenActivity met MeldingMakenFragment
-                Intent intent = new Intent(getActivity(), MeldingMakenActivity.class);
-                Fragment fragment = new MeldingMakenFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                // Navigeer naar de MeldingMakenActivity
+                Intent meldingMakenIntent = new Intent(getActivity(), MeldingMakenActivity.class);
+                startActivity(meldingMakenIntent);
             }
         });
     }

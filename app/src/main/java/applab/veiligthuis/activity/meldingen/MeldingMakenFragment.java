@@ -74,21 +74,12 @@ public class MeldingMakenFragment extends Fragment {
 
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
 
-                // TODO: Dit kan ook niet een spinner zijn. Even met het UI ontwerp controleren.
-                String jaNee = ((Spinner) getView().findViewById(R.id.janee_spinner)).getSelectedItem().toString();
-
-                if (jaNee.toLowerCase().equals("ja")){
-                    beroepsmatig = true;
-                }
-                else {
-                    beroepsmatig = false;
-                }
                 String beschrijving = meldingEditText.getText().toString().trim();
 
                 LocalDateTime datum = LocalDateTime.now();
 
                 // Save melding in ViewModel
-                meldingViewModel.insertMelding(plaatsnaam, beroepsmatig, beschrijving, datum.toString());
+                meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
 
                 // Clear EditText
                 meldingEditText.setText("");

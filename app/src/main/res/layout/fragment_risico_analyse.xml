@@ -21,12 +21,13 @@
         android:visibility="visible" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/risicoAnalyse_textView"
+        android:layout_width="205dp"
+        android:layout_height="37dp"
         android:layout_marginTop="316dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/risico_text_fragment"
+        android:textAlignment="center"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/risicoAnalyse_textView" />
 
     <Button
         android:id="@+id/ja_button"
@@ -63,7 +64,7 @@
         app:layout_constraintEnd_toStartOf="@+id/twijfel_button"
         app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/risicoAnalyse_textView" />
 
     <Button
         android:id="@+id/nee_button"
@@ -80,6 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/twijfel_button"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/risicoAnalyse_textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
