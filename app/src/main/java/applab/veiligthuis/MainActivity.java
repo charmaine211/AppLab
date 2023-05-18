@@ -3,7 +3,7 @@ package applab.veiligthuis;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.activity.melding.MeldingLijstActivity;
@@ -27,11 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
-
         initMeldingenButton();
         initTipsInzienButton();
         initTipsBeherenButton();
+        initSluitAppButton();
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -49,6 +49,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initSluitAppButton() {
+        View sluitButton = findViewById(R.id.sluitApp);
+        sluitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // Sign out Firebase user when the app is stopped
+        FirebaseAuth.getInstance().signOut();
     }
 
     public void initMeldingenButton(){
