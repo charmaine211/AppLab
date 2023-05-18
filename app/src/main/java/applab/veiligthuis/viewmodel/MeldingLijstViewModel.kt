@@ -17,7 +17,9 @@ data class MeldingenLijstUiState(
     val filterMeldingenInkomend : Boolean = true,
     val selectedMeldingData: MeldingData? = MeldingData(),
     val showingLijstScreen: Boolean = true,
-    val filterExpanded: Boolean = false
+    val filterExpanded: Boolean = false,
+    val filterLocatie: String? = null,
+    val filterDatum: String? = null
 )
 
 class MeldingLijstViewModel(
@@ -71,6 +73,23 @@ class MeldingLijstViewModel(
             _uiState.update { currentState ->
                 currentState.copy(
                     filterExpanded = currentState.filterExpanded.not()
+                )
+            }
+        }
+
+        fun updateFilterLocatie(locatie: String) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    filterLocatie = locatie
+                )
+            }
+        }
+
+        fun resetFilter() {
+            _uiState.update {currentState ->
+                currentState.copy(
+                    filterLocatie = null,
+                    filterDatum = null
                 )
             }
         }

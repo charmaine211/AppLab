@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.activity.melding.AppTheme
+import applab.veiligthuis.model.Melding
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
 
@@ -28,14 +29,20 @@ fun meldingList(
     filterInkomendSelected: Boolean,
     meldingen: List<MeldingData?>,
     onCardClick: (MeldingData) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    filterLocatie: String?,
+    filterDatum: String?
 ){
     Log.i("ACT", "Lijst aanmaken")
-    val filterMeldingen : List<MeldingData?>
+    var filterMeldingen : List<MeldingData?>
     if(filterInkomendSelected){
         filterMeldingen = meldingen.filter { melding -> melding?.status != MeldingStatus.AFGEROND }
     } else {
         filterMeldingen = meldingen.filter { melding -> melding?.status == MeldingStatus.AFGEROND }
+    }
+
+    if(filterLocatie != null){
+        filterMeldingen = filterMeldingen.filterByLocatie(filterLocatie)
     }
 
     LazyColumn() {
@@ -47,6 +54,9 @@ fun meldingList(
         }
     }
 }
+
+fun List<MeldingData?>.filterByLocatie(locatie: String) = this.filter {it?.locatie == locatie}
+fun List<MeldingData?>.filterByDate(date: String) = this.filter {it?.datum == date}
 
 
 @Composable

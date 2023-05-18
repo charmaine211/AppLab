@@ -11,25 +11,32 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.ui.Toolbar
 import applab.veiligthuis.ui.meldingenlijst.MeldingBekijkenScreen
+import applab.veiligthuis.ui.meldingenlijst.filterButtonsBar
 import applab.veiligthuis.ui.meldingenlijst.meldingList
 import applab.veiligthuis.ui.theme.*
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
@@ -59,13 +66,17 @@ private fun meldingLijstScreen(
                     filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
                     expandedFilter = meldingenLijstUiState.filterExpanded,
                     onClickExpandFilter = { meldingenLijstViewModel.updateFilterButtonExpanded() },
-                    onClickFilterChange = { meldingenLijstViewModel.updateFilterMeldingenInkomend() }
+                    onClickFilterChange = { meldingenLijstViewModel.updateFilterMeldingenInkomend() },
+                    updateSelectedLoc = {locatie: String -> meldingenLijstViewModel.updateFilterLocatie(locatie) },
+                    selectedLocatie = meldingenLijstUiState.filterLocatie
                 ) },
             content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) {
                 meldingList(
                     filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
                     meldingen = meldingenLijstUiState.meldingen,
-                    onCardClick = { meldingData: MeldingData -> meldingenLijstViewModel.updateMeldingBekijkenScreen(meldingData = meldingData) }
+                    onCardClick = { meldingData: MeldingData -> meldingenLijstViewModel.updateMeldingBekijkenScreen(meldingData = meldingData) },
+                    filterLocatie = meldingenLijstUiState.filterLocatie,
+                    filterDatum = meldingenLijstUiState.filterDatum
                 )
             } },
             bottomBar = {
@@ -92,6 +103,8 @@ private fun topBar(
     expandedFilter: Boolean,
     onClickExpandFilter: () -> Unit,
     onClickFilterChange: () -> Unit,
+    updateSelectedLoc: (String) -> Unit,
+    selectedLocatie: String?,
     modifier: Modifier = Modifier
 ) {
         Column(
@@ -106,7 +119,9 @@ private fun topBar(
                 filterInkomendSelected = filterInkomendSelected,
                 expandedFilter = expandedFilter,
                 onClickFilterChange = onClickFilterChange,
-                onClickExpandFilter = onClickExpandFilter
+                onClickExpandFilter = onClickExpandFilter,
+                selectedLocatie = selectedLocatie,
+                updateSelectedLocatie = updateSelectedLoc
             )
 
             Divider(
@@ -118,60 +133,6 @@ private fun topBar(
         }
 }
 
-@Composable
-private fun filterButtonsBar (
-    filterInkomendSelected: Boolean,
-    expandedFilter: Boolean,
-    onClickExpandFilter: () -> Unit,
-    onClickFilterChange: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(modifier = Modifier.animateContentSize(animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow))) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(11.dp, 4.dp, 11.dp, 0.dp)
-        ){
-            meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = onClickFilterChange)
-            Button(
-                onClick = onClickExpandFilter,
-                shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
-                modifier = modifier.height(30.dp)
-            ){
-                Text(
-                    text = "Filter",
-                    fontSize = 10.sp,
-                    color = Color.White
-                )
-            }
-        }
-        if(expandedFilter){
-            Column(
-                modifier = Modifier
-                    .padding(11.dp)
-            ) {
-                Text(text = "Datum")
-
-                val locaties = listOf("Amsterdam", "Rotterdam", "Eindhoven")
-
-                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
-                    locaties.forEach{
-                        DropdownMenuItem(onClick = { /*TODO*/ }) {
-                            Text(text = it)
-                        }
-                    }
-                }
-
-                Text(text = "Datum")
-                Text(text = "Datum")
-                Text(text = "Datum")
-            }
-        }
-    }
-}
 
 
 @Composable
@@ -229,7 +190,7 @@ private fun meldingFilterButton(
 @Composable
 fun previewTopbar() {
     AppTheme {
-        topBar(true, true, {}, {})
+        topBar(true, true, {}, {}, {}, null)
     }
 }
 
@@ -237,7 +198,7 @@ fun previewTopbar() {
 @Composable
 fun previewFilterButtonsBar() {
     AppTheme {
-        filterButtonsBar(true, true, {}, {})
+        filterButtonsBar(true, true, {}, {}, {}, null)
     }
 }
 
