@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.activity.melding.AppTheme
-import applab.veiligthuis.model.Melding
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
 
@@ -36,15 +35,17 @@ fun meldingList(
     Log.i("ACT", "Lijst aanmaken")
     var filterMeldingen : List<MeldingData?>
     if(filterInkomendSelected){
-        filterMeldingen = meldingen.filter { melding -> melding?.status != MeldingStatus.AFGEROND }
+        filterMeldingen = meldingen.filterByStatus(MeldingStatus.ONBEHANDELD) + meldingen.filterByStatus(MeldingStatus.IN_BEHANDELING)
     } else {
-        filterMeldingen = meldingen.filter { melding -> melding?.status == MeldingStatus.AFGEROND }
+        filterMeldingen = meldingen.filterByStatus(MeldingStatus.AFGEROND)
     }
-
     if(filterLocatie != null){
         filterMeldingen = filterMeldingen.filterByLocatie(filterLocatie)
     }
-
+    if(filterDatum != null){
+        filterMeldingen = filterMeldingen.filterByDate(filterDatum)
+    }
+    filterMeldingen = filterMeldingen.sortByDateAscend()
     LazyColumn() {
         items(filterMeldingen){ melding ->
             if(melding != null) {
@@ -54,10 +55,6 @@ fun meldingList(
         }
     }
 }
-
-fun List<MeldingData?>.filterByLocatie(locatie: String) = this.filter {it?.locatie == locatie}
-fun List<MeldingData?>.filterByDate(date: String) = this.filter {it?.datum == date}
-
 
 @Composable
 private fun meldingCard(
@@ -77,7 +74,7 @@ private fun meldingCard(
                 Column(modifier = modifier.fillMaxWidth(0.6F)){
                     if (meldingData.datum != null) {
                         Text(
-                            text = meldingData.datum,
+                            text = meldingData.datum.toString(),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -118,10 +115,17 @@ private fun statusMelding(meldingStatus: MeldingStatus?){
     }
 }
 
+private fun List<MeldingData?>.filterByLocatie(locatie: String) = this.filter {it?.locatie == locatie}
+private fun List<MeldingData?>.filterByDate(date: String) = this.filter {it?.datum.toString() == date}
+private fun List<MeldingData?>.filterByStatus(status: MeldingStatus) = this.filter{it?.status == status}
+
+private fun List<MeldingData?>.sortByDateDesc() = this.sortedByDescending { it?.datum }
+private fun List<MeldingData?>.sortByDateAscend() = this.sortedBy { it?.datum }
+
 @Preview(showBackground = true)
 @Composable
 fun previewMeldingCard() {
     AppTheme {
-        meldingCard(MeldingData(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet", status= MeldingStatus.ONBEHANDELD, anoniem = true), {})
+        meldingCard(MeldingData(datum = null, locatie = "Nederland", info = "Lorem ipsum dolor sit amet", status= MeldingStatus.ONBEHANDELD, anoniem = true), {})
     }
 }

@@ -56,7 +56,7 @@ private fun MeldingBekijkenCard(
             ) {
                 if(meldingData.datum != null){
                     Text(
-                        text = meldingData.datum!!
+                        text = meldingData.datum!!.toString()
                     )
                 }
                 if(meldingData.locatie != null){
@@ -110,7 +110,7 @@ private fun MeldingBekijkenNavBar(
 @Preview(showBackground = true)
 @Composable
 private fun previewMeldingBekijkenCard() {
-    MeldingBekijkenCard(meldingData = MeldingData(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true))
+    MeldingBekijkenCard(meldingData = MeldingData(datum = null, locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true))
 }
 
 @Preview(showBackground = true)
@@ -122,5 +122,5 @@ private fun previewMeldingBekijkenNavBar() {
 @Preview(showBackground = true)
 @Composable
 private fun previewMeldingBekijkenScreen() {
-    MeldingBekijkenScreen(meldingData = MeldingData(datum = "1-1-1111, 11:11", locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true), onBackButtonClicked = { /*TODO*/ })
+    MeldingBekijkenScreen(meldingData = MeldingData(datum = null, locatie = "Nederland", info = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ", status= MeldingStatus.ONBEHANDELD, anoniem = true), onBackButtonClicked = { /*TODO*/ })
 }

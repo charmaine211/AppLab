@@ -68,7 +68,9 @@ private fun meldingLijstScreen(
                     onClickExpandFilter = { meldingenLijstViewModel.updateFilterButtonExpanded() },
                     onClickFilterChange = { meldingenLijstViewModel.updateFilterMeldingenInkomend() },
                     updateSelectedLoc = {locatie: String -> meldingenLijstViewModel.updateFilterLocatie(locatie) },
-                    selectedLocatie = meldingenLijstUiState.filterLocatie
+                    selectedLocatie = meldingenLijstUiState.filterLocatie,
+                    resetFilter = { meldingenLijstViewModel.resetFilter() }
+
                 ) },
             content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) {
                 meldingList(
@@ -105,6 +107,7 @@ private fun topBar(
     onClickFilterChange: () -> Unit,
     updateSelectedLoc: (String) -> Unit,
     selectedLocatie: String?,
+    resetFilter:() -> Unit,
     modifier: Modifier = Modifier
 ) {
         Column(
@@ -114,16 +117,15 @@ private fun topBar(
             Row {
                 Toolbar()
             }
-
             filterButtonsBar(
                 filterInkomendSelected = filterInkomendSelected,
                 expandedFilter = expandedFilter,
                 onClickFilterChange = onClickFilterChange,
                 onClickExpandFilter = onClickExpandFilter,
                 selectedLocatie = selectedLocatie,
-                updateSelectedLocatie = updateSelectedLoc
+                updateSelectedLocatie = updateSelectedLoc,
+                resetFilter = resetFilter
             )
-
             Divider(
                 color = Color.Black,
                 modifier = modifier
@@ -134,19 +136,6 @@ private fun topBar(
 }
 
 
-
-@Composable
-private fun filterButton(
-    text: String
-){
-    Button(
-        onClick = {},
-        shape = RoundedCornerShape(45),
-        colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue)
-    ){
-        Text(text = text)
-    }
-}
 
 @Composable
 private fun meldingFilterButtons(
@@ -190,7 +179,7 @@ private fun meldingFilterButton(
 @Composable
 fun previewTopbar() {
     AppTheme {
-        topBar(true, true, {}, {}, {}, null)
+        topBar(true, true, {}, {}, {}, null, { })
     }
 }
 
@@ -198,7 +187,7 @@ fun previewTopbar() {
 @Composable
 fun previewFilterButtonsBar() {
     AppTheme {
-        filterButtonsBar(true, true, {}, {}, {}, null)
+        filterButtonsBar(true, true, {}, {}, {}, null, {  })
     }
 }
 

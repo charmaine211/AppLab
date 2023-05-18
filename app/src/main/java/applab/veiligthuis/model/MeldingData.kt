@@ -1,8 +1,11 @@
 package applab.veiligthuis.model
 
+import java.time.LocalDate
+import java.time.LocalDateTime
+
 
 data class MeldingData(
-    val datum: String? = null,
+    val datum: LocalDateTime? = null,
     val locatie: String? = null,
     val info: String? = null,
     val status: MeldingStatus? = null,

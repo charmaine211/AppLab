@@ -86,6 +86,7 @@ class MeldingLijstViewModel(
         }
 
         fun resetFilter() {
+            Log.i("ResetFilter", "Filter gereset")
             _uiState.update {currentState ->
                 currentState.copy(
                     filterLocatie = null,

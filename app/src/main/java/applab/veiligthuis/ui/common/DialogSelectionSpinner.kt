@@ -25,10 +25,11 @@ fun<E> listDialogSpinner(
     textValueState: String?,
     label: String,
     items: List<E>,
-    itemSelectedOnClick: (String) -> Unit
+    itemSelectedOnClick: (String) -> Unit,
+    modifier : Modifier = Modifier
 ) {
     var dialogOpen by remember { mutableStateOf(false) }
-    Box(modifier = Modifier.height(IntrinsicSize.Min)) {
+    Box(modifier = modifier.height(IntrinsicSize.Min)) {
         var textValue: TextFieldValue
         if(textValueState == null){
             textValue = TextFieldValue(text = textValueDefault)
@@ -65,12 +66,7 @@ fun<E> listDialogSpinner(
     }
 
     if(dialogOpen){
-
-
-
         Dialog(onDismissRequest = {dialogOpen = false}) {
-
-
             Surface(
                 shape = RoundedCornerShape(12.dp)
             ){
@@ -78,13 +74,10 @@ fun<E> listDialogSpinner(
                     items(items) {
                             item -> dialogListItem(itemText = item.toString(), onClickItem = { callBackCloseDialog(item.toString())} )
                     }
-
                 }
             }
         }
     }
-
-
 }
 
 @Composable

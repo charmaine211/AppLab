@@ -30,6 +30,7 @@ fun filterButtonsBar (
     onClickFilterChange: () -> Unit,
     updateSelectedLocatie: (String) -> Unit,
     selectedLocatie: String?,
+    resetFilter: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = Modifier.animateContentSize(animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow))) {
@@ -64,8 +65,23 @@ fun filterButtonsBar (
                     textValueState = selectedLocatie,
                     label = "Locatie",
                     items = listOf("Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam"),
-                    itemSelectedOnClick = updateSelectedLocatie
+                    itemSelectedOnClick = updateSelectedLocatie,
+                    modifier = Modifier.padding(bottom=4.dp)
                 )
+
+                Button(
+                    onClick =  resetFilter,
+                    shape = RoundedCornerShape(50),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
+                    modifier = modifier.height(30.dp)
+                ){
+                    Text(
+                        text = "Reset filter",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                    )
+                }
+
             }
         }
     }
@@ -108,6 +124,6 @@ private fun meldingFilterButton(
 @Composable
 fun previewFilterButtonsBar() {
     AppTheme {
-        filterButtonsBar(true, true, {}, {}, {}, null)
+        filterButtonsBar(true, true, {}, {}, {}, null, { })
     }
 }
