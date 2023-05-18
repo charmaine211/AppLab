@@ -17,7 +17,31 @@
     <string name="signUp_mobile">GSM nummer</string>
     <string name="signUp_email">email adres</string>
     <string name="signUp_password">paswoord</string>
+    <string name="maakMeldingButton">Maak een melding</string>
+    <string name="risico_text_fragment">Verkeert u, of iemand in uw omgeving in direct gevaar?</string>
+    <string name="melding_maken_text_fragment">Waar wilt u een melding van maken?</string>
+    <string name="ja_button">Ja</string>
+    <string name="twijfel_button">Ik twijfel</string>
+    <string name="nee_button">Nee</string>
+    <string name="bijlage">Voeg bijlage(s) toe</string>
+    <string name="plaatsnaam">Plaatsnaam</string>
+    <string name="melding_voor_werk">Doet u deze melding vanwege uw werk?</string>
     <string name="nav_logIn">log in</string>
     <string name="logIn_password">password</string>
     <string name="logIn_name">name</string>
+
+    // Array met alle plaatnamen
+    <string-array name="plaatsnamen">
+        <item>Amsterdam</item>
+        <item>Rotterdam</item>
+        <item>Den Haag</item>
+        <item>Utrecht</item>
+        <item>Groningen</item>
+    </string-array>
+
+    // Array met ja/nee
+    <string-array name="janee">
+        <item>Ja</item>
+        <item>Nee</item>
+    </string-array>
 </resources>

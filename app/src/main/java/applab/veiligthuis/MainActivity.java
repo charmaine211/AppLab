@@ -14,8 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import applab.veiligthuis.activity.MeldingenActivity;
 import applab.veiligthuis.activity.SignInUp.LogInActivity;
+import applab.veiligthuis.activity.meldingen.MeldingenActivity;
+import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
 
@@ -30,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
         initMeldingenButton();
         initTipsInzienButton();
         initTipsBeherenButton();
+        initMaakMeldingButton();
         initSluitAppButton();
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        //TODO: Ik krijg een nullPointerException door de setTitle. Staat nu als comment..
+        //getSupportActionBar().setTitle("");
         ImageView imageView_tb = findViewById(R.id.second_image_view);
 
         imageView_tb.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +100,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent tipsIntent = new Intent(MainActivity.this, TipInzien.class);
                 startActivity(tipsIntent);
+            }
+        });
+    }
+
+    public void initMaakMeldingButton(){
+        Button maakMeldingBtn = (Button) findViewById(R.id.maakMeldingButton);
+        maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RisicoAnalyseActivity.class);
+                startActivity(intent);
             }
         });
     }
