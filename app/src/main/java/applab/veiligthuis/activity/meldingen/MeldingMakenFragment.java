@@ -58,10 +58,8 @@ public class MeldingMakenFragment extends Fragment {
         getView().findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get values from spinners and EditText
 
-                boolean beroepsmatig;
-
+                // Get values from spinner and EditText
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
 
                 String beschrijving = meldingEditText.getText().toString().trim();
