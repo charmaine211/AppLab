@@ -16,7 +16,8 @@ data class MeldingenLijstUiState(
     val meldingen : List<MeldingData?> = listOf(),
     val filterMeldingenInkomend : Boolean = true,
     val selectedMeldingData: MeldingData? = MeldingData(),
-    val showingLijstScreen: Boolean = true
+    val showingLijstScreen: Boolean = true,
+    val filterExpanded: Boolean = false
 )
 
 class MeldingLijstViewModel(
@@ -65,4 +66,14 @@ class MeldingLijstViewModel(
                 )
             }
         }
+
+        fun updateFilterButtonExpanded(){
+            _uiState.update { currentState ->
+                currentState.copy(
+                    filterExpanded = currentState.filterExpanded.not()
+                )
+            }
+        }
+
+
 }
