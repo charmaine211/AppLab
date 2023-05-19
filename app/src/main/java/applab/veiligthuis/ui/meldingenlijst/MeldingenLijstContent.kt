@@ -25,29 +25,13 @@ import applab.veiligthuis.model.MeldingStatus
 
 @Composable
 fun meldingList(
-    filterInkomendSelected: Boolean,
     meldingen: List<MeldingData?>,
     onCardClick: (MeldingData) -> Unit,
-    modifier: Modifier = Modifier,
-    filterLocatie: String?,
-    filterDatum: String?
+    modifier: Modifier = Modifier
 ){
     Log.i("ACT", "Lijst aanmaken")
-    var filterMeldingen : List<MeldingData?>
-    if(filterInkomendSelected){
-        filterMeldingen = meldingen.filterByStatus(MeldingStatus.ONBEHANDELD) + meldingen.filterByStatus(MeldingStatus.IN_BEHANDELING)
-    } else {
-        filterMeldingen = meldingen.filterByStatus(MeldingStatus.AFGEROND)
-    }
-    if(filterLocatie != null){
-        filterMeldingen = filterMeldingen.filterByLocatie(filterLocatie)
-    }
-    if(filterDatum != null){
-        filterMeldingen = filterMeldingen.filterByDate(filterDatum)
-    }
-    filterMeldingen = filterMeldingen.sortByDateAscend()
     LazyColumn() {
-        items(filterMeldingen){ melding ->
+        items(meldingen){ melding ->
             if(melding != null) {
                 meldingCard(melding, onCardClick = { onCardClick(melding)})
                 Log.i("ACT", "Kaart gemaakt")
@@ -115,12 +99,7 @@ private fun statusMelding(meldingStatus: MeldingStatus?){
     }
 }
 
-private fun List<MeldingData?>.filterByLocatie(locatie: String) = this.filter {it?.locatie == locatie}
-private fun List<MeldingData?>.filterByDate(date: String) = this.filter {it?.datum.toString() == date}
-private fun List<MeldingData?>.filterByStatus(status: MeldingStatus) = this.filter{it?.status == status}
 
-private fun List<MeldingData?>.sortByDateDesc() = this.sortedByDescending { it?.datum }
-private fun List<MeldingData?>.sortByDateAscend() = this.sortedBy { it?.datum }
 
 @Preview(showBackground = true)
 @Composable

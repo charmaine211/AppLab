@@ -5,6 +5,7 @@ package applab.veiligthuis.activity.melding
 import android.os.Bundle
 
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -32,6 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.ui.Toolbar
@@ -40,25 +44,39 @@ import applab.veiligthuis.ui.meldingenlijst.filterButtonsBar
 import applab.veiligthuis.ui.meldingenlijst.meldingList
 import applab.veiligthuis.ui.theme.*
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
+import applab.veiligthuis.viewmodel.MeldingenLijstUiState
+import kotlinx.coroutines.launch
 
 
 class MeldingLijstActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { AppTheme {
-            meldingLijstScreen(MeldingLijstViewModel())
-        } }
+
+        val viewModel: MeldingLijstViewModel by viewModels()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                setContent {
+                    AppTheme {
+                        viewModel.loadMeldingen()
+                        viewModel.applyFilters()
+                        val meldingenLijstUiState by viewModel.uiState.collectAsState()
+                        meldingLijstScreen(
+                            meldingenLijstViewModel = viewModel,
+                            meldingenLijstUiState = meldingenLijstUiState
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
 @Composable
 private fun meldingLijstScreen(
-    meldingenLijstViewModel: MeldingLijstViewModel = MeldingLijstViewModel(),
+    meldingenLijstViewModel: MeldingLijstViewModel,
+    meldingenLijstUiState: MeldingenLijstUiState,
     modifier: Modifier = Modifier.padding(1.dp)
 ) {
-    meldingenLijstViewModel.loadMeldingen()
-    val meldingenLijstUiState by meldingenLijstViewModel.uiState.collectAsState()
-
     if(meldingenLijstUiState.showingLijstScreen) {
         Scaffold(
             topBar = {
@@ -74,11 +92,9 @@ private fun meldingLijstScreen(
                 ) },
             content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) {
                 meldingList(
-                    filterInkomendSelected = meldingenLijstUiState.filterMeldingenInkomend,
-                    meldingen = meldingenLijstUiState.meldingen,
-                    onCardClick = { meldingData: MeldingData -> meldingenLijstViewModel.updateMeldingBekijkenScreen(meldingData = meldingData) },
-                    filterLocatie = meldingenLijstUiState.filterLocatie,
-                    filterDatum = meldingenLijstUiState.filterDatum
+                    meldingen = meldingenLijstUiState.meldingenFiltered,
+                    onCardClick = { meldingData: MeldingData -> meldingenLijstViewModel.updateMeldingBekijkenScreen(meldingData = meldingData) }
+
                 )
             } },
             bottomBar = {
@@ -195,7 +211,7 @@ fun previewFilterButtonsBar() {
 @Composable
 fun previewMeldingenScreen() {
     AppTheme {
-        meldingLijstScreen(meldingenLijstViewModel = MeldingLijstViewModel())
+        //meldingLijstScreen(meldingenLijstViewModel = MeldingLijstViewModel())
     }
 }
 
