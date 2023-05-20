@@ -38,8 +38,6 @@ public class TipBuilder extends AppCompatActivity {
 
         setSpinnerAdapter();
 
-        initLogoClickEventHandler();
-
         editing = getIntent().getBooleanExtra("editing", false);
         String tipJson = getIntent().getStringExtra("tipJson");
 
@@ -140,25 +138,13 @@ public class TipBuilder extends AppCompatActivity {
     }
 
     private void finishActivity(){
-        // Show a success message to the user
         Toast.makeText(TipBuilder.this, editing ? "Tip succesvol gewijzigd" : "Tip succesvol aangemaakt!", Toast.LENGTH_SHORT).show();
 
-        // Clear the UI fields
         titelEditText.setText("");
         beschrijvingEditText.setText("");
         categorieSpinner.setSelection(0);
 
         finish();
-    }
-
-    private void initLogoClickEventHandler() {
-        ImageView logo = findViewById(R.id.image_view);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 }

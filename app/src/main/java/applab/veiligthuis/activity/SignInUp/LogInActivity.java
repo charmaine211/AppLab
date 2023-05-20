@@ -67,19 +67,6 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
-        setSupportActionBar(toolbar);
-        ImageView imageView_tb = findViewById(R.id.image_view);
-
-        imageView_tb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),
-                        MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     private void signInForgottenPassWord() {

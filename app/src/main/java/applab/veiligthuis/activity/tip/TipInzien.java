@@ -45,8 +45,6 @@ public class TipInzien extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tip_inzien);
 
-        initLogoClickEventHandler();
-
         mTipList = new ArrayList<>();
         mTipListAdapter = new TipListAdapter(this, mTipList);
 
@@ -78,16 +76,6 @@ public class TipInzien extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-    }
-
-    private void initLogoClickEventHandler() {
-        ImageView logo = findViewById(R.id.image_view);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
