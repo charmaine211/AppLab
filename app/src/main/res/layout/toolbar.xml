@@ -6,7 +6,7 @@
     android:id="@+id/veilig_thuis_toolbar"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:background="?attr/colorPrimary"
+    android:background="@color/white"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     tools:showIn="@layout/activity_main">

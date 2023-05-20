@@ -18,7 +18,7 @@
             android:name=".activity.SignInUp.LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.tip.TipMaken"
+            android:name=".activity.tip.TipBuilder"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
