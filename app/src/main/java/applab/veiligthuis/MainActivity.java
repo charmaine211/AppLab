@@ -19,6 +19,7 @@ import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
+import applab.veiligthuis.common.VeiligThuisToolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,21 +36,6 @@ public class MainActivity extends AppCompatActivity {
         initSluitAppButton();
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-        Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
-        setSupportActionBar(toolbar);
-        //TODO: Ik krijg een nullPointerException door de setTitle. Staat nu als comment..
-        //getSupportActionBar().setTitle("");
-        ImageView imageView_tb = findViewById(R.id.second_image_view);
-
-        imageView_tb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,
-                        LogInActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 

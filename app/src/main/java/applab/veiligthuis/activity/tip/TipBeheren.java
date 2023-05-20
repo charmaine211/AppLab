@@ -65,8 +65,6 @@ public class TipBeheren extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        initLogoClickEventHandler();
-
         mDatabase = FirebaseDatabase.getInstance().getReference("tips");
         initSwitchToggle();
         initAddButton();
@@ -155,13 +153,4 @@ public class TipBeheren extends AppCompatActivity {
         });
     }
 
-    private void initLogoClickEventHandler() {
-        ImageView logo = findViewById(R.id.image_view);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 }
