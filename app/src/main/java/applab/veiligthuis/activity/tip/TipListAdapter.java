@@ -1,14 +1,19 @@
 package applab.veiligthuis.activity.tip;
 
+import static android.view.View.GONE;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -19,6 +24,15 @@ public class TipListAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<Tip> mTipList;
+    private DatabaseReference mDatabase = null;
+    private boolean mBeheren = false;
+
+    public TipListAdapter(Context context, List<Tip> tipList, boolean beheren, DatabaseReference databaseReference) {
+        mContext = context;
+        mTipList = tipList;
+        mBeheren = beheren;
+        mDatabase = databaseReference;
+    }
 
     public TipListAdapter(Context context, List<Tip> tipList) {
         mContext = context;
@@ -63,10 +77,15 @@ public class TipListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         View view = convertView;
+
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.tip_tonen_rowitem, null);
         }
+
+        ImageView deleteImage = view.findViewById(R.id.deleteImageView);
+        ImageView restoreImage = view.findViewById(R.id.restoreImageView);
+        ImageView editImage = view.findViewById(R.id.editImageView);
 
         Tip tip = mTipList.get(groupPosition);
 
@@ -76,12 +95,27 @@ public class TipListAdapter extends BaseExpandableListAdapter {
         ShapeableImageView tipShowImage = view.findViewById(R.id.tipShowImage);
         ShapeableImageView tipHideImage = view.findViewById(R.id.tipHideImage);
 
+        initImageViewsTipItems(deleteImage, restoreImage, editImage, tip);
+
+        if(!tip.isVerwijderd()){
+            deleteImage.setVisibility(View.VISIBLE);
+            restoreImage.setVisibility(View.GONE);
+
+        } else{
+            deleteImage.setVisibility(View.GONE);
+            restoreImage.setVisibility(View.VISIBLE);
+        }
+
         if (isExpanded) {
-            tipShowImage.setVisibility(View.GONE);
+            tipShowImage.setVisibility(GONE);
             tipHideImage.setVisibility(View.VISIBLE);
         } else {
             tipShowImage.setVisibility(View.VISIBLE);
-            tipHideImage.setVisibility(View.GONE);
+            tipHideImage.setVisibility(GONE);
+        }
+
+        if(!mBeheren){
+            view.findViewById(R.id.beheerLayout).setVisibility(GONE);
         }
 
         return view;
@@ -92,28 +126,52 @@ public class TipListAdapter extends BaseExpandableListAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.tip_tonen_rowitem, null);
+            view = inflater.inflate(R.layout.tip_detail_omschrijving, null);
         }
 
+        TextView omschrijving = view.findViewById(R.id.tipDescriptionTextView);
         Tip tip = mTipList.get(groupPosition);
-
-        LinearLayout detailLayout = view.findViewById(R.id.tipDetailLayout);
-        ShapeableImageView tipShowImage = view.findViewById(R.id.tipShowImage);
-
-        if (isLastChild) {
-            detailLayout.setVisibility(View.VISIBLE);
-            tipShowImage.setVisibility(View.GONE);
-        } else {
-            detailLayout.setVisibility(View.GONE);
-        }
-
-        TextView descriptionTextView = view.findViewById(R.id.tipDescriptionTextView);
-        descriptionTextView.setText(tip.getBeschrijving());
+        omschrijving.setText(tip.getBeschrijving());
 
         return view;
 
     }
 
+    private void initImageViewsTipItems(ImageView deleteImage, ImageView restoreImage, ImageView editImage, Tip selectedTip) {
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle click event for editDeleteView
+                mDatabase
+                        .child(selectedTip.getId())
+                        .child("verwijderd")
+                        .setValue(true);
+            }
+        });
+
+        restoreImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle click event for editDeleteView
+                mDatabase
+                        .child(selectedTip.getId())
+                        .child("verwijderd")
+                        .setValue(false);
+            }
+        });
+
+        editImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //serialiseren omdat alleen primitives als parameter gebruikt kunnen worden voor intent
+                String tipJson = new Gson().toJson(selectedTip);
+                Intent intent = new Intent(mContext, TipBuilder.class);
+                intent.putExtra("tipJson", tipJson);
+                intent.putExtra("editing", true);
+                mContext.startActivity(intent);
+            }
+        });
+    }
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
