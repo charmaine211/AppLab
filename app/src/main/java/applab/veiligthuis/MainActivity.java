@@ -49,14 +49,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // Sign out Firebase user when the app is stopped
-        FirebaseAuth.getInstance().signOut();
-    }
-
     public void initMeldingenButton(){
         Button meldingenBtn = findViewById(R.id.meldingenButton);
         meldingenBtn.setOnClickListener(new View.OnClickListener() {

@@ -21,6 +21,9 @@
             android:name=".activity.tip.TipBuilder"
             android:exported="false" />
         <activity
+            android:name=".activity.profile.Profile"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
