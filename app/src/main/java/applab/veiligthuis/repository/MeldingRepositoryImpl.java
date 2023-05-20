@@ -36,7 +36,6 @@ public class MeldingRepositoryImpl implements MeldingRepository {
 
     public MeldingRepositoryImpl(){
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.setPersistenceEnabled(true);
         meldingenRef = firebaseDatabase.getReference("Meldingen/");
         meldingenRef.keepSynced(true);
     }
