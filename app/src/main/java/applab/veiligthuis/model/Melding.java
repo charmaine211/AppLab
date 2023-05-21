@@ -22,7 +22,6 @@ public class Melding {
         this.beroepsmatig = beroepsmatig;
         this.beschrijving = beschrijving;
         this.datum = datum;
-
     }
 
     public Melding(String plaatsnaam, String beschrijving, String datum){
@@ -30,7 +29,14 @@ public class Melding {
         this.beschrijving = beschrijving;
         this.datum = datum;
         this.beroepsmatig = false;
+    }
 
+    public Melding(String plaatsnaam, String beschrijving, String datum, String uid){
+        this.plaatsnaam = plaatsnaam;
+        this.beschrijving = beschrijving;
+        this.datum = datum;
+        this.beroepsmatig = false;
+        this.gebruiker = uid;
     }
 
     public void setKey(String key){
@@ -96,6 +102,7 @@ public class Melding {
     public String toString() {
         return "Melding: " +
                 "key = " + key +
+                ", gebruiker = " + gebruiker +
                 ", plaatsnaam = " + plaatsnaam +
                 ", beroepsmatig = " + beroepsmatig +
                 ", beschrijving = " + beschrijving +

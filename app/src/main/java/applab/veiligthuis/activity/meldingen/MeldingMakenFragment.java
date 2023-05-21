@@ -1,6 +1,7 @@
 package applab.veiligthuis.activity.meldingen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,16 +66,14 @@ public class MeldingMakenFragment extends Fragment {
             public void onClick(View v) {
 
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
-
                 String beschrijving = meldingEditText.getText().toString().trim();
-
                 LocalDateTime datum = LocalDateTime.now();
-
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
                 if (currentUser != null) {
                     String uid = currentUser.getUid();
                     meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString(), uid);
+                    Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_SHORT).show();
                 } else {
                     FirebaseAuth.getInstance().signInAnonymously()
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -86,16 +85,15 @@ public class MeldingMakenFragment extends Fragment {
                                         String uid = user.getUid();
 
                                         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString(), uid);
-
-                                        meldingEditText.setText("");
+                                        Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getActivity(), "Error creating anonymous user", Toast.LENGTH_SHORT).show();
+                                        String errorMessage = task.getException().getMessage();
+                                        Log.e("Firebase", "Error creating anonymous user: " + errorMessage);
+                                        Toast.makeText(getActivity(), "Fout bij het anoniem versturen van melding", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-                meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
-
                 meldingEditText.setText("");
             }
         });
