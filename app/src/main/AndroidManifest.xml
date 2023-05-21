@@ -18,28 +18,39 @@
             android:name=".activity.SignInUp.LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".MeldingMaken"
+            android:name=".activity.tip.TipBuilder"
             android:exported="false" />
         <activity
-            android:name=".activity.tip.TipMaken"
+            android:name=".activity.profile.Profile"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.melding.MeldingLijstActivity">
-
         </activity>
-        <activity android:name=".activity.tip.TipInzien">
+        <activity android:name=".activity.tip.TipInzien" />
+        <activity android:name=".activity.tip.TipBeheren" />
+        <activity android:name=".activity.tip.TipDetailActivity" />
+        <activity
+            android:name=".activity.meldingen.RisicoAnalyseActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activity.tip.TipBeheren">
-        </activity>
-        <activity android:name=".activity.tip.TipDetailActivity">
+        <activity
+            android:name=".activity.meldingen.MeldingMakenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

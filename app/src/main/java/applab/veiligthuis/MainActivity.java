@@ -16,9 +16,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.activity.melding.MeldingLijstActivity;
 import applab.veiligthuis.activity.SignInUp.LogInActivity;
+import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
 import applab.veiligthuis.activity.tip.TipMaken;
+import applab.veiligthuis.common.VeiligThuisToolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,23 +33,10 @@ public class MainActivity extends AppCompatActivity {
         initMeldingenButton();
         initTipsInzienButton();
         initTipsBeherenButton();
+        initMaakMeldingButton();
         initSluitAppButton();
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-        Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        ImageView imageView_tb = findViewById(R.id.second_image_view);
-
-        imageView_tb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,
-                        LogInActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -59,14 +48,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // Sign out Firebase user when the app is stopped
-        FirebaseAuth.getInstance().signOut();
     }
 
     public void initMeldingenButton(){
@@ -98,6 +79,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent tipsIntent = new Intent(MainActivity.this, TipInzien.class);
                 startActivity(tipsIntent);
+            }
+        });
+    }
+
+    public void initMaakMeldingButton(){
+        Button maakMeldingBtn = (Button) findViewById(R.id.maakMeldingButton);
+        maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RisicoAnalyseActivity.class);
+                startActivity(intent);
             }
         });
     }

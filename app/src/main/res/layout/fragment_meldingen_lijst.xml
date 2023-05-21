@@ -4,7 +4,7 @@
     android:id="@+id/meldingenRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity.MeldingenLijstFragment">
+    tools:context=".activity.meldingen.MeldingenLijstFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/meldingenRecycler"

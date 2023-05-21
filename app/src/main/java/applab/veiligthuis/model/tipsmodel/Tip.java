@@ -28,7 +28,7 @@ public class Tip {
     public void setId(String id) {
         this.id = id;
     }
-    public void pasBeschrijvingAan(String beschrijving){
+    public void setBeschrijving(String beschrijving){
         this.beschrijving = beschrijving;
     }
     public String getBeschrijving(){
@@ -40,13 +40,13 @@ public class Tip {
     public TipCategorie getCategorie(){
         return categorie;
     }
-    public void pasCategorieAan(TipCategorie categorie){
+    public void setCategorie(TipCategorie categorie){
         this.categorie = categorie;
     }
     public String getTitel(){
         return titel;
     }
-    public void pasTitelAan(String titel){
+    public void setTitel(String titel){
         this.titel = titel;
     }
 }

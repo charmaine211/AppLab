@@ -67,19 +67,6 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        Toolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
-        setSupportActionBar(toolbar);
-        ImageView imageView_tb = findViewById(R.id.image_view);
-
-        imageView_tb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),
-                        MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     private void signInForgottenPassWord() {
@@ -106,24 +93,24 @@ public class LogInActivity extends AppCompatActivity {
 
         else{
             mAuth.signInWithEmailAndPassword(userName, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Toast.makeText(getApplicationContext(), "Authentication Successful.",
-                                        Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-            }
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Toast.makeText(getApplicationContext(), "Authentication Successful.",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
+    }
 }

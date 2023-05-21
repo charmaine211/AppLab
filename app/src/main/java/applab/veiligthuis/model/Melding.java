@@ -1,38 +1,105 @@
 package applab.veiligthuis.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Melding {
-    private int id;
-    private boolean anomiem;
-    private String meldingInfo;
-    private String plaatsNaam;
-    private Date datum;
-    private String typeGeweld;
+
+    private String key;
+
+    private String gebruiker;
+    private String plaatsnaam;
+    private boolean beroepsmatig;
+    private String beschrijving;
+    private String datum;
+    private String typeGeweld = null;
 
     public Melding(){
         // Lege constructor nodig voor calls naar Datasnapshot.getValue(Melding.class).
     }
 
-    public Melding(int id, boolean anomiem, String meldingInfo){
-        this.id = id;
-        this.anomiem = anomiem;
-        this.meldingInfo = meldingInfo;
+    public Melding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
+        this.plaatsnaam = plaatsnaam;
+        this.beroepsmatig = beroepsmatig;
+        this.beschrijving = beschrijving;
+        this.datum = datum;
+
     }
 
-    public int getId(){
-        return id;
+    public Melding(String plaatsnaam, String beschrijving, String datum){
+        this.plaatsnaam = plaatsnaam;
+        this.beschrijving = beschrijving;
+        this.datum = datum;
+        this.beroepsmatig = false;
+
     }
 
-    public boolean isAnomiem(){
-        return anomiem;
+    public void setKey(String key){
+
+        this.key = key;
     }
 
-    public String getMeldingInfo(){
-        return meldingInfo;
+    public String getKey(){
+
+        return key;
     }
 
-    public String toString(){
-        return "id: " + id + ", meldingInfo: " + meldingInfo;
+    public String getGebruiker(){
+
+        return gebruiker;
+    }
+
+    public String getPlaatsnaam(){
+
+        return plaatsnaam;
+    }
+
+    public void setPlaatsnaam(String plaatsnaam){
+
+        this.plaatsnaam = plaatsnaam;
+    }
+
+    public boolean getBeroepsmatig(){
+
+        return beroepsmatig;
+    }
+
+    public void setBeroepsmatig(boolean beroepsmatig){
+
+        this.beroepsmatig = beroepsmatig;
+    }
+
+    public String getBeschrijving(){
+
+        return beschrijving;
+    }
+
+    public void setBeschrijving(String beschrijving){
+
+        this.beschrijving = beschrijving;
+    }
+
+    public String getDatum(){
+        return datum;
+    }
+
+    public String getTypeGeweld(){
+        if (this.typeGeweld == null) {
+            return "Ongecatoriseerd";
+        }
+        return typeGeweld;
+    }
+
+    public void setTypeGeweld(String typeGeweld){
+        this.typeGeweld = typeGeweld;
+    }
+
+    public String toString() {
+        return "Melding: " +
+                "key = " + key +
+                ", plaatsnaam = " + plaatsnaam +
+                ", beroepsmatig = " + beroepsmatig +
+                ", beschrijving = " + beschrijving +
+                ", datum = " + datum +
+                ", typeGeweld = " + typeGeweld;
     }
 }

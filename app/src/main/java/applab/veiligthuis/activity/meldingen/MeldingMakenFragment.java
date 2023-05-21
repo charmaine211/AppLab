@@ -1,0 +1,77 @@
+package applab.veiligthuis.activity.meldingen;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.time.LocalDateTime;
+
+import applab.veiligthuis.R;
+import applab.veiligthuis.viewmodel.MeldingViewModel;
+
+public class MeldingMakenFragment extends Fragment {
+
+    private MeldingViewModel meldingViewModel;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_melding_maken, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
+        // Create spinners
+        initPlaatsnaamSpinner();
+        initSaveButton();
+    }
+
+    public void initPlaatsnaamSpinner(){
+        Spinner plaatsnaamSpinner = getView().findViewById(R.id.plaatsnaam_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.plaatsnamen, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        plaatsnaamSpinner.setAdapter(adapter);
+    }
+
+    public void initSaveButton(){
+
+        // Get reference to EditText
+        final EditText meldingEditText = getView().findViewById(R.id.meldingmaken_editTextTextMultiLine);
+
+        // Save button click listener
+        getView().findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Get values from spinner and EditText
+                String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
+
+                String beschrijving = meldingEditText.getText().toString().trim();
+
+                LocalDateTime datum = LocalDateTime.now();
+
+                // Save melding in ViewModel
+                meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
+
+                // Clear EditText
+                meldingEditText.setText("");
+            }
+        });
+    }
+}
