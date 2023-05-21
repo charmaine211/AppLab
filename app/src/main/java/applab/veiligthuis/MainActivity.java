@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.activity.melding.MeldingLijstActivity;
@@ -19,8 +19,7 @@ import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
-import applab.veiligthuis.activity.tip.TipMaken;
-import applab.veiligthuis.common.VeiligThuisToolbar;
+
 
 public class MainActivity extends AppCompatActivity {
 

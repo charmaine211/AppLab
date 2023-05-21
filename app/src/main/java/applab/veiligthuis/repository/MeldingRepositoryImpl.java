@@ -19,7 +19,7 @@ import java.util.List;
 
 import applab.veiligthuis.model.Melding;
 
-public class MeldingRepositoryImpl implements MeldingRepository {
+public class MeldingRepositoryImpl {
     private DatabaseReference meldingenRef;
     private MutableLiveData<String> mSuccessMessage = new MutableLiveData<>();
     private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
