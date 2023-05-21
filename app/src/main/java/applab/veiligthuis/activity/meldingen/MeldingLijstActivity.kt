@@ -11,8 +11,8 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import applab.veiligthuis.ui.screens.AppTheme
 import applab.veiligthuis.ui.screens.meldingLijstScreen
+import applab.veiligthuis.ui.theme.AppTheme
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 import kotlinx.coroutines.launch
 

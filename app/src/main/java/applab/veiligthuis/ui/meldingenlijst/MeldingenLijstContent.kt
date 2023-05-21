@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
-import applab.veiligthuis.ui.screens.AppTheme
+import applab.veiligthuis.ui.theme.AppTheme
 
 
 @Composable
@@ -48,7 +48,6 @@ private fun meldingCard(
 ) {
     Card(
         modifier = modifier.padding(horizontal = 22.dp, vertical = 4.dp)
-
             .fillMaxWidth()
             .clickable(onClick = onCardClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp, hoveredElevation = 10.dp),

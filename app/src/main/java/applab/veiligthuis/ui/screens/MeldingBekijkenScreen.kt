@@ -11,7 +11,7 @@ import applab.veiligthuis.model.MeldingStatus
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import applab.veiligthuis.ui.Toolbar
+import applab.veiligthuis.ui.veiligThuisToolbar
 import applab.veiligthuis.ui.theme.filter_blue
 
 @Composable
@@ -24,7 +24,7 @@ fun MeldingBekijkenScreen(
     }
     androidx.compose.material.Scaffold(
         topBar = { Column(){
-            Toolbar()
+            veiligThuisToolbar()
             MeldingBekijkenNavBar(onBackButtonClicked = onBackButtonClicked)
         }
 

@@ -20,16 +20,15 @@ import androidx.compose.ui.unit.sp
 import applab.veiligthuis.ui.theme.filter_blue
 import applab.veiligthuis.ui.theme.filter_grey
 import applab.veiligthuis.ui.common.listDialogSpinner
+import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 
 @Composable
 fun filterButtonsBar (
     filterInkomendSelected: Boolean,
     expandedFilter: Boolean,
     onClickExpandFilter: () -> Unit,
-    onClickFilterChange: () -> Unit,
-    updateSelectedLocatie: (String) -> Unit,
     selectedLocatie: String?,
-    resetFilter: () -> Unit,
+    meldingenFilter: MeldingenLijstFilter,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = Modifier.animateContentSize(animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow))) {
@@ -40,7 +39,7 @@ fun filterButtonsBar (
                 .fillMaxWidth()
                 .padding(11.dp, 4.dp, 11.dp, 0.dp)
         ){
-            meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = onClickFilterChange)
+            meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = { meldingenFilter.filterInkomend() })
             Button(
                 onClick = onClickExpandFilter,
                 shape = RoundedCornerShape(50),
@@ -64,20 +63,34 @@ fun filterButtonsBar (
                     textValueState = selectedLocatie,
                     label = "Locatie",
                     items = listOf("Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam"),
-                    itemSelectedOnClick = updateSelectedLocatie,
+                    itemSelectedOnClick = {plaatsnaam : String -> meldingenFilter.filterPlaatsnaam(plaatsnaam)} ,
                     modifier = Modifier.padding(bottom=4.dp)
                 )
-                Button(
-                    onClick =  resetFilter,
-                    shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
-                    modifier = modifier.height(30.dp)
-                ){
-                    Text(
-                        text = "Reset filter",
-                        fontSize = 10.sp,
-                        color = Color.White,
-                    )
+                Row(){
+                    Button(
+                        onClick = { meldingenFilter.resetFilter() },
+                        shape = RoundedCornerShape(50),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
+                        modifier = modifier.height(30.dp)
+                    ){
+                        Text(
+                            text = "Reset filter",
+                            fontSize = 10.sp,
+                            color = Color.White,
+                        )
+                    }
+                    Button(
+                        onClick = { meldingenFilter.sortDate() },
+                        shape = RoundedCornerShape(50),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
+                        modifier = modifier.height(30.dp)
+                    ){
+                        Text(
+                            text = "Sorteer datum",
+                            fontSize = 10.sp,
+                            color = Color.White,
+                        )
+                    }
                 }
 
             }
@@ -122,11 +135,53 @@ private fun meldingFilterButton(
 @Preview(showBackground = true)
 @Composable
 fun previewExpandedBar() {
-    filterButtonsBar(true, true, {}, {}, {}, null, { })
+    class mockFilter() : MeldingenLijstFilter {
+        override fun filterPlaatsnaam(plaatsnaam: String) {
+            // mock
+        }
+
+        override fun filterInkomend() {
+            // mock
+        }
+
+        override fun resetFilter() {
+            // mock
+        }
+
+        override fun expandedFilter() {
+            // mock
+        }
+
+        override fun sortDate() {
+            // mock
+        }
+    }
+    filterButtonsBar(true, true, {}, null, mockFilter())
 }
 
 @Preview(showBackground = true)
 @Composable
 fun previewUnexpandedBar() {
-    filterButtonsBar(true, false, {}, {}, {}, null, { })
+    class mockFilter() : MeldingenLijstFilter {
+        override fun filterPlaatsnaam(plaatsnaam: String) {
+            // mock
+        }
+
+        override fun filterInkomend() {
+            // mock
+        }
+
+        override fun resetFilter() {
+            // mock
+        }
+
+        override fun expandedFilter() {
+           // mock
+        }
+
+        override fun sortDate() {
+            // mock
+        }
+    }
+   filterButtonsBar(true, false, {}, null, mockFilter())
 }

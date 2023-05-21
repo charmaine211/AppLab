@@ -43,7 +43,6 @@ class MeldingRepositoryImpl : MeldingRepository {
                         val anoniem = ds.child("anoniem").getValue()
                         items.add(MeldingData(datum = datum, locatie = locatie, info = info, status = parseMeldingStatus(status), anoniem = true))
                     }
-
                     trySend(items)
                 }
                 override fun onCancelled(error: DatabaseError) {
