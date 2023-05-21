@@ -2,7 +2,7 @@ package applab.veiligthuis.meldingenbekijken
 
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
-import applab.veiligthuis.repository.melding.MeldingLijstRepository
+import applab.veiligthuis.repository.melding.MeldingRepository
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +20,7 @@ import org.junit.Test
 
 class MeldingenViewModelTest {
 
-    class MockMeldingLijstRepo : MeldingLijstRepository {
+    class MockMeldingRepo : MeldingRepository {
         override fun getMeldingen(): Flow<List<MeldingData?>> {
             var data = arrayListOf<MeldingData>()
             data.add(MeldingData("1-1-1111", "TestLocatie", "Info Info Info", MeldingStatus.ONBEHANDELD, true))
@@ -47,7 +47,7 @@ class MeldingenViewModelTest {
 
 
 
-    private val viewModel = MeldingLijstViewModel(meldingLijstRepository = MockMeldingLijstRepo())
+    private val viewModel = MeldingLijstViewModel(meldingRepository = MockMeldingRepo())
 
     @Test
     fun testViewModelData() = runTest {

@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
-import applab.veiligthuis.repository.melding.MeldingLijstRepository
-import applab.veiligthuis.repository.melding.MeldingLijstRepositoryImpl
+import applab.veiligthuis.repository.melding.MeldingRepository
+import applab.veiligthuis.repository.melding.MeldingRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ data class MeldingenLijstUiState(
 )
 
 class MeldingLijstViewModel(
-    private val meldingLijstRepository: MeldingLijstRepository = MeldingLijstRepositoryImpl()
+    private val meldingRepository: MeldingRepository = MeldingRepositoryImpl()
     ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MeldingenLijstUiState())
@@ -34,7 +34,7 @@ class MeldingLijstViewModel(
     fun loadMeldingen() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                meldingLijstRepository.getMeldingen().collect() {
+                meldingRepository.getMeldingen().collect() {
                     _uiState.update { currentState ->
                         currentState.copy(
                             meldingen = it
@@ -42,8 +42,8 @@ class MeldingLijstViewModel(
                     }
                 }
             }
-            Log.i("VM", "Meldingen geladen")
         }
+        Log.i("VM", "Meldingen geladen")
     }
 
     fun updateFilterMeldingenInkomend(){
