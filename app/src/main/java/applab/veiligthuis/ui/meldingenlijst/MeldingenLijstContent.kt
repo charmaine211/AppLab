@@ -18,9 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import applab.veiligthuis.activity.melding.AppTheme
 import applab.veiligthuis.model.MeldingData
 import applab.veiligthuis.model.MeldingStatus
+import applab.veiligthuis.ui.screens.AppTheme
 
 
 @Composable

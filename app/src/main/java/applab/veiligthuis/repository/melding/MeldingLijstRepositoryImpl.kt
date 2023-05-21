@@ -33,14 +33,12 @@ class MeldingLijstRepositoryImpl : MeldingLijstRepository {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var items : ArrayList<MeldingData> = arrayListOf()
-
                     snapshot.children.forEach(){ ds ->
                         val datum = LocalDateTime.parse(ds.child("datum").getValue().toString())
                         val locatie = ds.child("locatie").getValue().toString()
                         val info = ds.child("info").getValue().toString()
                         val status = ds.child("status").getValue().toString()
                         val anoniem = ds.child("anoniem").getValue()
-
                         items.add(MeldingData(datum = datum, locatie = locatie, info = info, status = parseMeldingStatus(status), anoniem = true))
                     }
 
