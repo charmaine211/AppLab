@@ -16,28 +16,31 @@ import androidx.compose.ui.unit.dp
 import applab.veiligthuis.R
 
 @Composable
-fun veiligThuisToolbar() {
+fun veiligThuisToolbar(
+    onHome: () -> Unit,
+    onProfile: () -> Unit,
+) {
     TopAppBar(
         title = {},
         backgroundColor =  Color.White,
         navigationIcon = {
-            IconButton(onClick = {/* Do Something*/ }) {
+            IconButton(onClick = onHome) {
                 Image(
                     painter = painterResource(id = R.drawable.veiligthuis_logo),
                     contentDescription = "Veilig thuis logo knop",
                     modifier = Modifier
-                        .padding(start=15.dp, top=3.dp, end=15.dp, bottom=3.dp)
+                        .padding(start = 15.dp, top = 3.dp, end = 15.dp, bottom = 3.dp)
                         .height(56.dp)
                         .width(56.dp)
                 )
             }
         }, actions = {
-            IconButton(onClick = {/* Do Something*/ }) {
+            IconButton(onClick = onProfile) {
                 Image(
                     painter = painterResource(id = R.drawable.veiligthuis_gebruiker),
                     contentDescription = "Veilig thuis gebruiker knop",
                     modifier = Modifier
-                        .padding(start=3.dp, top=3.dp, end=15.dp, bottom=3.dp)
+                        .padding(start = 3.dp, top = 3.dp, end = 15.dp, bottom = 3.dp)
                         .height(56.dp)
                         .width(56.dp)
                 )
@@ -53,5 +56,5 @@ fun veiligThuisToolbar() {
 @Preview(showBackground = true)
 @Composable
 fun previewToolbar() {
-    veiligThuisToolbar()
+    veiligThuisToolbar({}, {})
 }

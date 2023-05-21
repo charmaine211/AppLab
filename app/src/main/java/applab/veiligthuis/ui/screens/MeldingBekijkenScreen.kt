@@ -24,7 +24,7 @@ fun MeldingBekijkenScreen(
     }
     androidx.compose.material.Scaffold(
         topBar = { Column(){
-            veiligThuisToolbar()
+            veiligThuisToolbar({}, {})
             MeldingBekijkenNavBar(onBackButtonClicked = onBackButtonClicked)
         }
 

@@ -20,12 +20,14 @@ fun meldingLijstScreen(
     meldingenLijstUiState: MeldingenLijstUiState,
     meldingenLijstViewModel: MeldingLijstViewModel,
     filter: MeldingenLijstFilter = meldingenLijstViewModel,
+    onHome: () -> Unit,
+    onProfile: () -> Unit,
     modifier: Modifier = Modifier.padding(1.dp)
 ) {
     if(meldingenLijstUiState.showingLijstScreen) {
         Scaffold(
             topBar = {
-                veiligThuisToolbar()
+                veiligThuisToolbar(onHome, onProfile)
                      },
             content = { contentPadding -> Box(modifier = Modifier.padding(contentPadding)) {
                 Column() {

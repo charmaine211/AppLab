@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import androidx.appcompat.widget.Toolbar;
 
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.activity.meldingen.MeldingLijstActivity;
@@ -22,6 +24,7 @@ import applab.veiligthuis.activity.tip.TipInzien;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         initTipsBeherenButton();
         initMaakMeldingButton();
         initSluitAppButton();
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
     }
 
     private void initSluitAppButton() {

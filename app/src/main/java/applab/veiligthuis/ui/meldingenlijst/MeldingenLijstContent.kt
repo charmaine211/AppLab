@@ -98,8 +98,6 @@ private fun statusMelding(meldingStatus: MeldingStatus?){
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun previewMeldingCard() {
