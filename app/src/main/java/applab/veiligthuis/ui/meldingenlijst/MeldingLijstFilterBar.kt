@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.*
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +40,7 @@ fun filterButtonsBar (
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(11.dp, 4.dp, 11.dp, 0.dp)
+                .padding(11.dp, 0.dp, 11.dp, 0.dp)
         ){
             meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = { meldingenFilter.filterInkomend() })
             Button(
@@ -56,7 +59,7 @@ fun filterButtonsBar (
         if(expandedFilter){
             Column(
                 modifier = Modifier
-                    .padding(11.dp)
+                    .padding(11.dp, 0.dp)
             ) {
                 listDialogSpinner(
                     textValueDefault = "Selecteer een locatie",
@@ -66,7 +69,7 @@ fun filterButtonsBar (
                     itemSelectedOnClick = {plaatsnaam : String -> meldingenFilter.filterPlaatsnaam(plaatsnaam)} ,
                     modifier = Modifier.padding(bottom=4.dp)
                 )
-                Row(){
+                Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
                     Button(
                         onClick = { meldingenFilter.resetFilter() },
                         shape = RoundedCornerShape(50),
@@ -79,20 +82,23 @@ fun filterButtonsBar (
                             color = Color.White,
                         )
                     }
-                    Button(
-                        onClick = { meldingenFilter.sortDate() },
-                        shape = RoundedCornerShape(50),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
-                        modifier = modifier.height(30.dp)
-                    ){
-                        Text(
-                            text = "Sorteer datum",
-                            fontSize = 10.sp,
-                            color = Color.White,
-                        )
+                    Box() {
+                        var expanded by remember { mutableStateOf(false) }
+                        IconButton(onClick = { expanded = !expanded }) {
+                            Icon(imageVector = Icons.Default.Menu, contentDescription = "More", modifier = Modifier.padding(0.dp))
+                        }
+                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                            DropdownMenuItem( onClick = { meldingenFilter.sortDate(true) }) {
+                                Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = "Sorting by date descending")
+                                Text(text = "Sort Datum Desc")
+                            }
+                            DropdownMenuItem( onClick = { meldingenFilter.sortDate(false) }) {
+                                Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "Sorting by date ascending")
+                                Text(text = "Sort Datum Asc")
+                            }
+                        }
                     }
                 }
-
             }
         }
     }
@@ -152,7 +158,7 @@ fun previewExpandedBar() {
             // mock
         }
 
-        override fun sortDate() {
+        override fun sortDate(desc: Boolean) {
             // mock
         }
     }
@@ -179,7 +185,7 @@ fun previewUnexpandedBar() {
            // mock
         }
 
-        override fun sortDate() {
+        override fun sortDate(desc: Boolean) {
             // mock
         }
     }

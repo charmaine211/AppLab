@@ -5,5 +5,5 @@ interface MeldingenLijstFilter {
     fun filterInkomend()
     fun resetFilter()
     fun expandedFilter()
-    fun sortDate()
+    fun sortDate(desc: Boolean)
 }

@@ -91,10 +91,10 @@ class MeldingLijstViewModel(
         }
     }
 
-    fun updateSortDateDesc() {
+    fun updateSortDateDesc(desc: Boolean) {
         _uiState.update { currentState ->
             currentState.copy(
-                sortDateDesc = currentState.sortDateDesc.not()
+                sortDateDesc = desc
             )
         }
     }
@@ -121,8 +121,8 @@ class MeldingLijstViewModel(
         updateFilterButtonExpanded()
     }
 
-    override fun sortDate() {
-        updateSortDateDesc()
+    override fun sortDate(desc: Boolean) {
+        updateSortDateDesc(desc)
     }
 
     fun applyFilters() {
