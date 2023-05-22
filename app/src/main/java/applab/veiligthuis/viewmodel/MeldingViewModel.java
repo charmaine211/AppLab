@@ -1,7 +1,5 @@
 package applab.veiligthuis.viewmodel;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
