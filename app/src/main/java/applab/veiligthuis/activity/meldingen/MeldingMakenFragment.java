@@ -1,5 +1,6 @@
 package applab.veiligthuis.activity.meldingen;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -34,17 +36,24 @@ public class MeldingMakenFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_melding_maken, container, false);
     }
 
+
+    /**
+     *
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
         initMeldingObservers();
 
-        // Create spinners
+        // Create spinners en knoppen
         initPlaatsnaamSpinner();
-        initSaveButton();
+        initOpslaanButton();
     }
 
+    /**
+     *
+     */
     public void initPlaatsnaamSpinner(){
         Spinner plaatsnaamSpinner = getView().findViewById(R.id.plaatsnaam_spinner);
 
@@ -54,32 +63,64 @@ public class MeldingMakenFragment extends Fragment {
         plaatsnaamSpinner.setAdapter(adapter);
     }
 
-    public void initSaveButton(){
+    /**
+     *
+     */
+    public void initOpslaanButton(){
 
-        // Get reference to EditText
-        final EditText meldingEditText = getView().findViewById(R.id.meldingmaken_editTextTextMultiLine);
-
-        // Save button click listener
-        getView().findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
+        getView().findViewById(R.id.opslaan_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // De waarden van de spinner en edit text
+                // De waarde van de spinner
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
 
+                // De waarde van de edittext
+                final EditText meldingEditText = getView().findViewById(R.id.meldingmaken_editTextTextMultiLine);
                 String beschrijving = meldingEditText.getText().toString().trim();
 
-                LocalDateTime datum = LocalDateTime.now();
-
-                // Sla de melding op in de database
-                meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
-
-                // Ga terug naar de main activity
-                returnToMain();
+                // Controleer of de edittext of plaatsneem leeg zijn
+                if (plaatsnaam.isEmpty() || beschrijving.isEmpty()){
+                    Toast.makeText(getActivity(), "Zorg dat de beschrijving en de plaatsnaam ingevuld zijn.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Zo niet, vraag de gebruiker dan om te bevestigen om de melding te maken en deze naar de db te sturen
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MeldingMakenFragment.this.getContext());
+                    builder.setMessage("Wil je je melding opsturen?")
+                            .setCancelable(true)
+                            .setPositiveButton("Bevestig", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    slaMeldingOp(plaatsnaam, beschrijving);
+                                    // Ga terug naar de main activity
+                                    returnToMain();
+                                }
+                            })
+                            .setNegativeButton("Annuleer", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
             }
         });
     }
 
+    /**
+     *
+     * @param plaatsnaam
+     * @param beschrijving
+     */
+    public void slaMeldingOp(String plaatsnaam, String beschrijving){
+        LocalDateTime datum = LocalDateTime.now();
+
+        // Sla de melding op in de database
+        meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
+    }
+
+    /**
+     *
+     */
     public void initMeldingObservers(){
         meldingViewModel.getErrorMessage().observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null) {
@@ -95,6 +136,9 @@ public class MeldingMakenFragment extends Fragment {
         });
     }
 
+    /**
+     *
+     */
     public void returnToMain(){
         Intent mainIntent = new Intent(getActivity(), MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
