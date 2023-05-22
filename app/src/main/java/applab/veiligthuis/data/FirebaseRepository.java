@@ -12,7 +12,7 @@ public class FirebaseRepository {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference meldingenRef;
 
-    private FirebaseRepository() {
+    public FirebaseRepository() {
         firebaseAuth = FirebaseAuth.getInstance();
         meldingenRef = FirebaseDatabase.getInstance().getReference("Meldingen/");
         meldingenRef.keepSynced(true);
