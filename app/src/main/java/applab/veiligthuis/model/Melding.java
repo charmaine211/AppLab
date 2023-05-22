@@ -6,7 +6,7 @@ public class Melding {
 
     private String key;
 
-    private String gebruiker;
+    private String uid;
     private String plaatsnaam;
     private boolean beroepsmatig;
     private String beschrijving;
@@ -22,7 +22,6 @@ public class Melding {
         this.beroepsmatig = beroepsmatig;
         this.beschrijving = beschrijving;
         this.datum = datum;
-
     }
 
     public Melding(String plaatsnaam, String beschrijving, String datum){
@@ -30,7 +29,14 @@ public class Melding {
         this.beschrijving = beschrijving;
         this.datum = datum;
         this.beroepsmatig = false;
+    }
 
+    public Melding(String plaatsnaam, String beschrijving, String datum, String uid){
+        this.plaatsnaam = plaatsnaam;
+        this.beschrijving = beschrijving;
+        this.datum = datum;
+        this.beroepsmatig = false;
+        this.uid = uid;
     }
 
     public void setKey(String key){
@@ -43,9 +49,9 @@ public class Melding {
         return key;
     }
 
-    public String getGebruiker(){
+    public String getUid(){
 
-        return gebruiker;
+        return uid;
     }
 
     public String getPlaatsnaam(){
@@ -96,6 +102,7 @@ public class Melding {
     public String toString() {
         return "Melding: " +
                 "key = " + key +
+                ", gebruiker = " + uid +
                 ", plaatsnaam = " + plaatsnaam +
                 ", beroepsmatig = " + beroepsmatig +
                 ", beschrijving = " + beschrijving +

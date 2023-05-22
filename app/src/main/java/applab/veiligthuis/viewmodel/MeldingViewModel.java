@@ -11,12 +11,12 @@ public class MeldingViewModel extends ViewModel {
     MeldingRepositoryImpl meldingRepo;
 
     public MeldingViewModel(){
-
         meldingRepo = new MeldingRepositoryImpl();
     }
 
     public void insertMelding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
         Melding melding = new Melding(plaatsnaam, beroepsmatig, beschrijving, datum);
+        MeldingRepositoryImpl meldingRepo = new MeldingRepositoryImpl();
         meldingRepo.addMelding(melding);
     }
 
@@ -30,6 +30,11 @@ public class MeldingViewModel extends ViewModel {
 
     public void insertMelding(String plaatsnaam, String beschrijving, String datum){
         Melding melding = new Melding(plaatsnaam, beschrijving, datum);
+        meldingRepo.addMelding(melding);
+    }
+
+    public void insertMelding(String plaatsnaam, String beschrijving, String datum, String uid){
+        Melding melding = new Melding(plaatsnaam, beschrijving, datum, uid);
         meldingRepo.addMelding(melding);
     }
 }
