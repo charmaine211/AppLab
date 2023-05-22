@@ -6,7 +6,7 @@ public class Melding {
 
     private String key;
 
-    private String gebruiker;
+    private String uid;
     private String plaatsnaam;
     private boolean beroepsmatig;
     private String beschrijving;
@@ -36,7 +36,7 @@ public class Melding {
         this.beschrijving = beschrijving;
         this.datum = datum;
         this.beroepsmatig = false;
-        this.gebruiker = uid;
+        this.uid = uid;
     }
 
     public void setKey(String key){
@@ -49,9 +49,9 @@ public class Melding {
         return key;
     }
 
-    public String getGebruiker(){
+    public String getUid(){
 
-        return gebruiker;
+        return uid;
     }
 
     public String getPlaatsnaam(){
@@ -102,7 +102,7 @@ public class Melding {
     public String toString() {
         return "Melding: " +
                 "key = " + key +
-                ", gebruiker = " + gebruiker +
+                ", gebruiker = " + uid +
                 ", plaatsnaam = " + plaatsnaam +
                 ", beroepsmatig = " + beroepsmatig +
                 ", beschrijving = " + beschrijving +
