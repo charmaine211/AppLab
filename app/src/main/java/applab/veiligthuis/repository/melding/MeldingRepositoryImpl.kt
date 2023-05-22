@@ -4,7 +4,7 @@ package applab.veiligthuis.repository.melding
 import androidx.lifecycle.MutableLiveData
 import applab.veiligthuis.domain.model.melding.Melding
 
-import applab.veiligthuis.domain.model.model.MeldingStatus
+import applab.veiligthuis.domain.model.MeldingStatus
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.DataSnapshot
@@ -54,18 +54,18 @@ class MeldingRepositoryImpl : MeldingRepository {
         }
     }
 
-    override fun addMelding(melding: applab.veiligthuis.domain.model.model.Melding) {
-//        val key: String? = ref.push().getKey()
-//        melding.key = key
-//        if (key != null) {
-//            ref.child(key).setValue(melding)
-//                .addOnSuccessListener(OnSuccessListener<Void> { aVoid: Void? ->
-//                    mSuccessMessage.setValue(
-//                        "Melding opgeslagen in database."
-//                    )
-//                })
-//                .addOnFailureListener(OnFailureListener { e: Exception -> mErrorMessage.setValue("Fout bij opslaan melding: " + e.message) })
-//        }
+    override fun addMelding(melding: applab.veiligthuis.domain.model.Melding) {
+        val key: String? = ref.push().getKey()
+        melding.key = key
+        if (key != null) {
+            ref.child(key).setValue(melding)
+                .addOnSuccessListener(OnSuccessListener<Void> { aVoid: Void? ->
+                    mSuccessMessage.setValue(
+                        "Melding opgeslagen in database."
+                    )
+                })
+                .addOnFailureListener(OnFailureListener { e: Exception -> mErrorMessage.setValue("Fout bij opslaan melding: " + e.message) })
+        }
     }
 
     private fun parseMeldingStatus(status: String) : MeldingStatus {

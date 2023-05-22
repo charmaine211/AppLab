@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingOrder
+import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.domain.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -24,7 +25,7 @@ class MeldingLijstViewModel @Inject constructor(
     private var getMeldingenJob: Job? = null
 
     init {
-        getMeldingen(MeldingOrder.Datum(OrderType.Descending))
+        getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend)
     }
 
     fun onEvent(event: MeldingEvent) {
@@ -35,7 +36,7 @@ class MeldingLijstViewModel @Inject constructor(
                 ) {
                     return
                 }
-                getMeldingen(event.meldingOrder)
+                getMeldingen(event.meldingOrder, _uiState.value.meldingType)
             }
             is MeldingEvent.ToggleFilterSection -> {
                 viewModelScope.launch {
@@ -46,17 +47,35 @@ class MeldingLijstViewModel @Inject constructor(
                     }
                 }
             }
+            is MeldingEvent.ToggleMeldingStatus -> {
+                viewModelScope.launch {
+                    val newMeldingType: MeldingType
+                    if(_uiState.value.isInkomendSelected){
+                        newMeldingType = MeldingType.Afgesloten
+                    } else {
+                        newMeldingType = MeldingType.Inkomend
+                    }
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            meldingType = newMeldingType,
+                            isInkomendSelected = currentState.isInkomendSelected.not()
+                        )
+                    }
+                    getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType)
+                }
+            }
         }
     }
 
-    private fun getMeldingen(meldingOrder: MeldingOrder) {
+    private fun getMeldingen(meldingOrder: MeldingOrder, meldingType: MeldingType) {
         getMeldingenJob?.cancel()
-        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder)
+        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder, meldingType)
             .onEach { meldingen ->
                 _uiState.update { currentState ->
                     currentState.copy(
                         meldingen = meldingen,
-                        meldingOrder = meldingOrder
+                        meldingOrder = meldingOrder,
+                        meldingType = meldingType
                     )
                 }
             }

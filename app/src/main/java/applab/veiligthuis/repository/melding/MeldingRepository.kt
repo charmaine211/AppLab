@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MeldingRepository {
     fun getMeldingen() : Flow<List<Melding>>
-    fun addMelding(melding: applab.veiligthuis.domain.model.model.Melding)
+    fun addMelding(melding: applab.veiligthuis.domain.model.Melding)
 }

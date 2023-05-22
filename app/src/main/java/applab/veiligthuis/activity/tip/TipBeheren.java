@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.domain.model.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.tipsmodel.Tip;
 
 
 public class TipBeheren extends AppCompatActivity {

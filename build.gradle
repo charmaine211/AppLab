@@ -10,7 +10,7 @@ buildscript {
 
     }
     ext {
-        compose_ui_version = '1.0.2'
+        compose_ui_version = '1.4.0'
     }
 }
 

@@ -3,7 +3,7 @@ package applab.veiligthuis.domain.model.melding
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import applab.veiligthuis.domain.model.model.MeldingStatus
+import applab.veiligthuis.domain.model.MeldingStatus
 import java.time.LocalDateTime
 
 class Melding(

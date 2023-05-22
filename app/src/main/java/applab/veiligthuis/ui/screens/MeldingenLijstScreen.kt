@@ -6,7 +6,7 @@
 //import androidx.compose.ui.Modifier
 //import androidx.compose.ui.graphics.Color
 //import androidx.compose.ui.unit.dp
-//import applab.veiligthuis.domain.model.model.MeldingData
+//import applab.veiligthuis.domain.model.MeldingData
 //import applab.veiligthuis.ui.veiligThuisToolbar
 //import applab.veiligthuis.ui.meldingenlijst.MeldingBekijkenScreen
 //import applab.veiligthuis.ui.meldingenlijst.MeldingenLijstFilter

@@ -27,11 +27,11 @@ import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 
 @Composable
 fun filterButtonsBar (
-    filterInkomendSelected: Boolean,
+    isInkomendSelected: Boolean,
+    toggleInkomendSelected: () -> Unit,
     expandedFilter: Boolean,
     onClickExpandFilter: () -> Unit,
     selectedLocatie: String?,
-    meldingenFilter: MeldingenLijstFilter,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = Modifier.animateContentSize(animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow))) {
@@ -42,7 +42,7 @@ fun filterButtonsBar (
                 .fillMaxWidth()
                 .padding(11.dp, 0.dp, 11.dp, 0.dp)
         ){
-            meldingFilterButtons(inkomendSelected = filterInkomendSelected, onClick = { meldingenFilter.filterInkomend() })
+            meldingFilterButtons(inkomendSelected = isInkomendSelected, onClick = toggleInkomendSelected)
             Button(
                 onClick = onClickExpandFilter,
                 shape = RoundedCornerShape(50),
@@ -66,12 +66,12 @@ fun filterButtonsBar (
                     textValueState = selectedLocatie,
                     label = "Locatie",
                     items = listOf("Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam"),
-                    itemSelectedOnClick = {plaatsnaam : String -> meldingenFilter.filterPlaatsnaam(plaatsnaam)} ,
+                    itemSelectedOnClick = {plaatsnaam : String -> } ,
                     modifier = Modifier.padding(bottom=4.dp)
                 )
                 Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
                     Button(
-                        onClick = { meldingenFilter.resetFilter() },
+                        onClick = {  },
                         shape = RoundedCornerShape(50),
                         colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
                         modifier = modifier.height(30.dp)
@@ -88,11 +88,11 @@ fun filterButtonsBar (
                             Icon(imageVector = Icons.Default.Menu, contentDescription = "More", modifier = Modifier.padding(0.dp))
                         }
                         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                            DropdownMenuItem( onClick = { meldingenFilter.sortDate(true) }) {
+                            DropdownMenuItem( onClick = {  }) {
                                 Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = "Sorting by date descending")
                                 Text(text = "Sort Datum Desc")
                             }
-                            DropdownMenuItem( onClick = { meldingenFilter.sortDate(false) }) {
+                            DropdownMenuItem( onClick = {  }) {
                                 Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "Sorting by date ascending")
                                 Text(text = "Sort Datum Asc")
                             }
@@ -141,53 +141,11 @@ private fun meldingFilterButton(
 @Preview(showBackground = true)
 @Composable
 fun previewExpandedBar() {
-    class mockFilter() : MeldingenLijstFilter {
-        override fun filterPlaatsnaam(plaatsnaam: String) {
-            // mock
-        }
-
-        override fun filterInkomend() {
-            // mock
-        }
-
-        override fun resetFilter() {
-            // mock
-        }
-
-        override fun expandedFilter() {
-            // mock
-        }
-
-        override fun sortDate(desc: Boolean) {
-            // mock
-        }
-    }
-    filterButtonsBar(true, true, {}, null, mockFilter())
+    filterButtonsBar(true, { }, true, { }, null)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun previewUnexpandedBar() {
-    class mockFilter() : MeldingenLijstFilter {
-        override fun filterPlaatsnaam(plaatsnaam: String) {
-            // mock
-        }
-
-        override fun filterInkomend() {
-            // mock
-        }
-
-        override fun resetFilter() {
-            // mock
-        }
-
-        override fun expandedFilter() {
-           // mock
-        }
-
-        override fun sortDate(desc: Boolean) {
-            // mock
-        }
-    }
-   filterButtonsBar(true, false, {}, null, mockFilter())
+    filterButtonsBar(true, { }, false, { }, null)
 }

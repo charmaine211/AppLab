@@ -2,7 +2,7 @@ package applab.veiligthuis.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 
-import applab.veiligthuis.domain.model.model.Melding;
+import applab.veiligthuis.domain.model.Melding;
 import applab.veiligthuis.repository.melding.MeldingRepository;
 import applab.veiligthuis.repository.melding.MeldingRepositoryImpl;
 
