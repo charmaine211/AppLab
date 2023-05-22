@@ -3,23 +3,12 @@ package applab.veiligthuis.activity.tip;
 
 
 import static android.content.ContentValues.TAG;
-import static android.view.View.GONE;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,9 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import applab.veiligthuis.MainActivity;
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.model.tipsmodel.Tip;
 
 public class TipInzien extends AppCompatActivity {
 

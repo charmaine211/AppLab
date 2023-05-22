@@ -2,27 +2,19 @@ package applab.veiligthuis.activity.tip;
 
 import static android.content.ContentValues.TAG;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.Switch;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.helper.widget.MotionEffect;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.divider.MaterialDivider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
-import applab.veiligthuis.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.model.tipsmodel.Tip;
 
 
 public class TipBeheren extends AppCompatActivity {

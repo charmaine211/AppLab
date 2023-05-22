@@ -13,13 +13,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import applab.veiligthuis.MainActivity
-import applab.veiligthuis.ui.screens.meldingLijstScreen
+
+import applab.veiligthuis.ui.screens.MeldingListScreen
 import applab.veiligthuis.ui.theme.AppTheme
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class MeldingLijstActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,24 +30,7 @@ class MeldingLijstActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 setContent {
                     AppTheme {
-                        viewModel.loadMeldingen()
-                        viewModel.applyFilters()
-                        val meldingenLijstUiState by viewModel.uiState.collectAsState()
-
-
-                        val localContext = LocalContext.current
-
-                        meldingLijstScreen(
-                            meldingenLijstViewModel = viewModel,
-                            meldingenLijstUiState = meldingenLijstUiState,
-                            onHome = {
-                                val intent = Intent(localContext, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                startActivity(intent)
-                                     },
-                            onProfile = {}
-
-                        )
+                        MeldingListScreen()
                     }
                 }
             }

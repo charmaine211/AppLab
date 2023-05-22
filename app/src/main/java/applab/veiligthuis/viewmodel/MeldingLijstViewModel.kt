@@ -1,169 +1,66 @@
 package applab.veiligthuis.viewmodel
 
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import applab.veiligthuis.model.MeldingData
-import applab.veiligthuis.model.MeldingStatus
-import applab.veiligthuis.repository.melding.MeldingRepository
-import applab.veiligthuis.repository.melding.MeldingRepositoryImpl
-import applab.veiligthuis.ui.meldingenlijst.MeldingenLijstFilter
-import kotlinx.coroutines.Dispatchers
+import applab.veiligthuis.domain.usecase.MeldingUseCases
+import applab.veiligthuis.domain.util.MeldingOrder
+import applab.veiligthuis.domain.util.OrderType
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-data class MeldingenLijstUiState(
-    val meldingen : List<MeldingData?> = listOf(),
-    val meldingenFiltered: List<MeldingData?> = listOf(),
-    val selectedMeldingData: MeldingData? = MeldingData(),
-    val showingLijstScreen: Boolean = true,
-    val filterShowInkomend : Boolean = true,
-    val filterExpanded: Boolean = false,
-    val filterLocatie: String? = null,
-    val filterDatum: String? = null,
-    val sortDateDesc: Boolean = true
-    )
 
-class MeldingLijstViewModel(
-    private val meldingRepository: MeldingRepository = MeldingRepositoryImpl()
-    ) : ViewModel(), MeldingenLijstFilter {
+@HiltViewModel
+class MeldingLijstViewModel @Inject constructor(
+    private val meldingUseCases: MeldingUseCases
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(MeldingenLijstUiState())
-    val uiState: StateFlow<MeldingenLijstUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(MeldingLijstState())
+    val uiState: StateFlow<MeldingLijstState> = _uiState.asStateFlow()
 
-    fun loadMeldingen() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                meldingRepository.getMeldingen().collect() {
+    private var getMeldingenJob: Job? = null
+
+    init {
+        getMeldingen(MeldingOrder.Datum(OrderType.Descending))
+    }
+
+    fun onEvent(event: MeldingEvent) {
+        when(event) {
+            is MeldingEvent.Order -> {
+                if (_uiState.value.meldingOrder::class == event.meldingOrder::class &&
+                    _uiState.value.meldingOrder.orderType == event.meldingOrder.orderType
+                ) {
+                    return
+                }
+                getMeldingen(event.meldingOrder)
+            }
+            is MeldingEvent.ToggleFilterSection -> {
+                viewModelScope.launch {
                     _uiState.update { currentState ->
                         currentState.copy(
-                            meldingen = it
+                            isFilterExpanded = currentState.isFilterExpanded.not()
                         )
                     }
                 }
             }
         }
-        Log.i("VM", "Meldingen geladen")
     }
 
-    fun updateFilterMeldingenInkomend(){
-        _uiState.update { currentState ->
-            currentState.copy(
-                filterShowInkomend = currentState.filterShowInkomend.not()
-            )
-        }
+    private fun getMeldingen(meldingOrder: MeldingOrder) {
+        getMeldingenJob?.cancel()
+        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder)
+            .onEach { meldingen ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        meldingen = meldingen,
+                        meldingOrder = meldingOrder
+                    )
+                }
+            }
+            .launchIn(viewModelScope)
     }
-
-    fun updateMeldingBekijkenScreen(meldingData: MeldingData?) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                selectedMeldingData = meldingData,
-                showingLijstScreen = false
-            )
-        }
-    }
-
-    fun resetMeldingenLijstScreen() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                selectedMeldingData = MeldingData(),
-                showingLijstScreen = true
-            )
-        }
-    }
-
-    fun updateFilterButtonExpanded(){
-        _uiState.update { currentState ->
-            currentState.copy(
-                filterExpanded = currentState.filterExpanded.not()
-            )
-        }
-    }
-
-    fun updateFilterLocatie(locatie: String) {
-        Log.i("Filter", "Filter locatie update")
-        _uiState.update { currentState ->
-            currentState.copy(
-                filterLocatie = locatie
-            )
-        }
-    }
-
-    fun updateSortDateDesc(desc: Boolean) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                sortDateDesc = desc
-            )
-        }
-    }
-
-    override fun filterPlaatsnaam(plaatsnaam: String) {
-        updateFilterLocatie(plaatsnaam)
-    }
-
-    override fun filterInkomend() {
-        updateFilterMeldingenInkomend()
-    }
-
-    override fun resetFilter() {
-        Log.i("Filter", "Filter gereset")
-        _uiState.update {currentState ->
-            currentState.copy(
-                filterLocatie = null,
-                filterDatum = null
-            )
-        }
-    }
-
-    override fun expandedFilter() {
-        updateFilterButtonExpanded()
-    }
-
-    override fun sortDate(desc: Boolean) {
-        updateSortDateDesc(desc)
-    }
-
-    fun applyFilters() {
-        Log.i("Filter", "Filter toegepast")
-        var filterMeldingen = _uiState.value.meldingen
-
-        if(_uiState.value.filterShowInkomend) {
-            filterMeldingen = filterMeldingen.filterByStatus(MeldingStatus.IN_BEHANDELING) + filterMeldingen.filterByStatus(MeldingStatus.ONBEHANDELD)
-        } else {
-            filterMeldingen = filterMeldingen.filterByStatus(MeldingStatus.AFGEROND)
-        }
-        if(_uiState.value.filterLocatie != null) {
-            filterMeldingen = filterMeldingen.filterByLocatie(_uiState.value.filterLocatie!!)
-        }
-        if(_uiState.value.filterDatum != null) {
-            filterMeldingen = filterMeldingen.filterByDate(_uiState.value.filterDatum!!)
-        }
-
-        filterMeldingen = sortByDate(filterMeldingen, _uiState.value.sortDateDesc)
-
-        _uiState.update { currentState ->
-            currentState.copy (
-                meldingenFiltered = filterMeldingen
-            )
-        }
-    }
-
-    private fun sortByDate(list: List<MeldingData?>, desc: Boolean): List<MeldingData?> {
-        if(desc) {
-           return list.sortByDateDesc()
-        } else {
-            return list.sortByDateAscend()
-        }
-    }
-
-    private fun List<MeldingData?>.filterByLocatie(locatie: String) = this.filter {it?.locatie == locatie}
-    private fun List<MeldingData?>.filterByDate(date: String) = this.filter {it?.datum.toString() == date}
-    private fun List<MeldingData?>.filterByStatus(status: MeldingStatus) = this.filter{it?.status == status}
-
-    private fun List<MeldingData?>.sortByDateDesc() = this.sortedByDescending { it?.datum }
-    private fun List<MeldingData?>.sortByDateAscend() = this.sortedBy { it?.datum }
-
 
 }

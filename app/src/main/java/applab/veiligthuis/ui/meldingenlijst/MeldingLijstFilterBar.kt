@@ -127,7 +127,7 @@ private fun meldingFilterButton(
         onClick = onClick,
         shape = RoundedCornerShape(45),
         colors = ButtonDefaults.buttonColors(disabledBackgroundColor = filter_blue, backgroundColor = filter_grey),
-        modifier = Modifier.minimumInteractiveComponentSize(),
+        modifier = Modifier,
         enabled = !enabledButton
     ) {
         Text(

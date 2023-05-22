@@ -6,8 +6,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import applab.veiligthuis.model.MeldingData
-import applab.veiligthuis.model.MeldingStatus
+import applab.veiligthuis.domain.model.model.MeldingData
+import applab.veiligthuis.domain.model.model.MeldingStatus
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -24,7 +24,7 @@ fun MeldingBekijkenScreen(
     }
     androidx.compose.material.Scaffold(
         topBar = { Column(){
-            veiligThuisToolbar({}, {})
+            veiligThuisToolbar(Unit, Unit)
             MeldingBekijkenNavBar(onBackButtonClicked = onBackButtonClicked)
         }
 

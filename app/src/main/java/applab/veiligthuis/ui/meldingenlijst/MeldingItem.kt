@@ -1,0 +1,42 @@
+package applab.veiligthuis.ui.meldingenlijst
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import applab.veiligthuis.domain.model.model.MeldingStatus
+import applab.veiligthuis.ui.common.MeldingStatusDisplay
+
+@Composable
+fun MeldingItem(
+    modifier: Modifier = Modifier,
+    datum: String,
+    meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
+    description: String
+) {
+    Card(modifier = modifier.fillMaxWidth().padding(vertical = 5.dp, horizontal = 0.dp)) {
+        Row(modifier = Modifier.padding(8.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Column(modifier =  Modifier.fillMaxWidth(0.7f)) {
+                Text(text = datum)
+                Text(text = description ,fontSize = 10.sp, maxLines = 3)
+            }
+            Column(modifier = Modifier
+                .align(Alignment.CenterVertically)) {
+                MeldingStatusDisplay(meldingStatus = meldingStatus)
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun previewMeldingItem(){
+    val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    MeldingItem(datum = "1-11-1111 11:11", description = description)
+}
+

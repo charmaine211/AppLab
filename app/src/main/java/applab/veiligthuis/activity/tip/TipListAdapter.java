@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.model.tipsmodel.Tip;
 
 public class TipListAdapter extends BaseExpandableListAdapter {
 

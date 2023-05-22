@@ -17,14 +17,14 @@ import applab.veiligthuis.R
 
 @Composable
 fun veiligThuisToolbar(
-    onHome: () -> Unit,
-    onProfile: () -> Unit,
+    onHome: Unit,
+    onProfile: Unit,
 ) {
     TopAppBar(
         title = {},
         backgroundColor =  Color.White,
         navigationIcon = {
-            IconButton(onClick = onHome) {
+            IconButton(onClick = {onHome}) {
                 Image(
                     painter = painterResource(id = R.drawable.veiligthuis_logo),
                     contentDescription = "Veilig thuis logo knop",
@@ -35,7 +35,7 @@ fun veiligThuisToolbar(
                 )
             }
         }, actions = {
-            IconButton(onClick = onProfile) {
+            IconButton(onClick = {onProfile}) {
                 Image(
                     painter = painterResource(id = R.drawable.veiligthuis_gebruiker),
                     contentDescription = "Veilig thuis gebruiker knop",
@@ -56,5 +56,5 @@ fun veiligThuisToolbar(
 @Preview(showBackground = true)
 @Composable
 fun previewToolbar() {
-    veiligThuisToolbar({}, {})
+    veiligThuisToolbar(Unit, Unit)
 }
