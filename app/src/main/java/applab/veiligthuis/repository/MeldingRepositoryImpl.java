@@ -45,7 +45,7 @@ public class MeldingRepositoryImpl implements MeldingRepository {
         String key = meldingenRef.push().getKey();
         melding.setKey(key);
         meldingenRef.child(key).setValue(melding)
-                .addOnSuccessListener(aVoid -> mSuccessMessage.setValue("Melding opgeslagen in database."))
+                .addOnSuccessListener(aVoid -> mSuccessMessage.setValue("Bedankt voor het maken van de melding."))
                 .addOnFailureListener(e -> mErrorMessage.setValue("Fout bij opslaan melding: " + e.getMessage()));
 
     }

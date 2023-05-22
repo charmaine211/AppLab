@@ -3,23 +3,16 @@ package applab.veiligthuis;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
-import androidx.appcompat.widget.Toolbar;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
-import applab.veiligthuis.common.VeiligThuisToolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         initMaakMeldingButton();
         initSluitAppButton();
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
     }
 
