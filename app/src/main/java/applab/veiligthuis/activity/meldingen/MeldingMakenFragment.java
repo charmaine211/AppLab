@@ -17,21 +17,25 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDateTime;
 
 import applab.veiligthuis.R;
+import applab.veiligthuis.data.FirebaseRepository;
 import applab.veiligthuis.viewmodel.MeldingViewModel;
 
 public class MeldingMakenFragment extends Fragment {
 
     private MeldingViewModel meldingViewModel;
 
+    private FirebaseRepository firebaseRepository;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseRepository = FirebaseRepository.getInstance();
+
     }
 
     @Override
@@ -68,21 +72,18 @@ public class MeldingMakenFragment extends Fragment {
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
                 String beschrijving = meldingEditText.getText().toString().trim();
                 LocalDateTime datum = LocalDateTime.now();
-                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = firebaseRepository.getCurrentUserId();
 
-                if (currentUser != null) {
-                    String uid = currentUser.getUid();
+                if (uid != null) {
                     meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString(), uid);
                     Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_SHORT).show();
                 } else {
-                    FirebaseAuth.getInstance().signInAnonymously()
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    firebaseRepository.signInAnonymously(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
 
-                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                        String uid = user.getUid();
+                                        String uid = firebaseRepository.getCurrentUserId();
 
                                         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString(), uid);
                                         Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_SHORT).show();
