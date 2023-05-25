@@ -8,12 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.app.ActivityManager;
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.util.AttributeSet;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toolbar;
 
@@ -22,12 +17,9 @@ import androidx.annotation.Nullable;
 import applab.veiligthuis.R;
 import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-import applab.veiligthuis.R;
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.activity.profile.Profile;
 
 public class VeiligThuisToolbar extends Toolbar {
@@ -73,10 +65,11 @@ public class VeiligThuisToolbar extends Toolbar {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    popupMenu.getMenuInflater().inflate(R.menu.menu_profile_logged_in, popupMenu.getMenu());
-                } else {
+                if( FirebaseAuth.getInstance().getCurrentUser() == null || FirebaseAuth.getInstance().getCurrentUser().isAnonymous() ){
                     popupMenu.getMenuInflater().inflate(R.menu.menu_profile_not_logged_in, popupMenu.getMenu());
+                }
+                else {
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_profile_logged_in, popupMenu.getMenu());
                 }
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override

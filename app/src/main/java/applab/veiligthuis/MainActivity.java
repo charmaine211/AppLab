@@ -3,29 +3,26 @@ package applab.veiligthuis;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
-import applab.veiligthuis.common.VeiligThuisToolbar;
+import applab.veiligthuis.common.VeiligThuisApp;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((VeiligThuisApp) getApplication()).addActivity(this);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         setContentView(R.layout.activity_main);
 
@@ -34,9 +31,16 @@ public class MainActivity extends AppCompatActivity {
         initTipsBeherenButton();
         initMaakMeldingButton();
         initSluitAppButton();
+    }
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (((VeiligThuisApp) getApplication()).isLastActivity(this)) {
+            FirebaseAuth.getInstance().signOut();
+        }
 
+        ((VeiligThuisApp) getApplication()).removeActivity(this);
     }
 
     private void initSluitAppButton() {

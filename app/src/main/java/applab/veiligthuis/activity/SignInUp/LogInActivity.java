@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -75,7 +77,8 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void signInRegisterClicked() {
-        Toast.makeText(getApplicationContext(),"optie nog niet geactiveerd", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LogInActivity.this, RegistrationActivity.class);
+        startActivity(intent);
     }
 
     public void signInButtonClicked(){
@@ -97,14 +100,12 @@ public class LogInActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
                         Toast.makeText(getApplicationContext(), "Authentication Successful.",
                                 Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(getApplicationContext(), "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
