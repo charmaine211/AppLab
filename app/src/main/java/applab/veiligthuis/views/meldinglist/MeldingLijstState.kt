@@ -6,7 +6,7 @@ import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.domain.util.OrderType
 
 data class MeldingLijstState(
-    val meldingen: List<Melding> = emptyList(),
+    val meldingen: List<Melding?> = emptyList(),
     val meldingOrder: MeldingOrder = MeldingOrder.Datum(OrderType.Descending),
     val meldingType: MeldingType = MeldingType.Inkomend,
     val isFilterExpanded: Boolean = false,

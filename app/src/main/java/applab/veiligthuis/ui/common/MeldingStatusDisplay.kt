@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import applab.veiligthuis.domain.model.MeldingStatus
+import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun MeldingStatusDisplay(
@@ -21,29 +22,37 @@ fun MeldingStatusDisplay(
     ){
         Text (
             text = meldingStatus.status,
-            fontSize = 12.sp,
+            fontSize = 10.sp,
             color = Color.White,
             textAlign = TextAlign.Center,
             modifier = modifier
                 .background(color = meldingStatus.color, shape = RoundedCornerShape(45))
-                .padding(8.dp, 2.dp).width(80.dp),
+                .padding(8.dp, 4.dp)
+                .width(80.dp),
         )
 }
 
 @Preview
 @Composable
 fun PreviewOnbehandeld() {
-    MeldingStatusDisplay()
+    AppTheme {
+        MeldingStatusDisplay()
+    }
+
 }
 
 @Preview
 @Composable
 fun PreviewInBehandeling() {
-    MeldingStatusDisplay(meldingStatus = MeldingStatus.IN_BEHANDELING)
+    AppTheme {
+        MeldingStatusDisplay(meldingStatus = MeldingStatus.IN_BEHANDELING)
+    }
 }
 
 @Preview
 @Composable
 fun PreviewAfgerond() {
-    MeldingStatusDisplay(meldingStatus = MeldingStatus.AFGESLOTEN)
+    AppTheme {
+        MeldingStatusDisplay(meldingStatus = MeldingStatus.AFGESLOTEN)
+    }
 }

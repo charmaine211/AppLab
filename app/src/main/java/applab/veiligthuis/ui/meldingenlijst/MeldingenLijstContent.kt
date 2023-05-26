@@ -67,9 +67,9 @@ private fun meldingCard(
                         fontSize = 12.sp,
                         modifier = Modifier.padding(bottom = 15.dp)
                     )
-                    if (meldingData.info != null) {
+                    if (meldingData.beschrijving != null) {
                         Text(
-                            text = meldingData.info,
+                            text = meldingData.beschrijving,
                             fontSize = 12.sp,
                         )
                     }
@@ -102,6 +102,6 @@ private fun statusMelding(meldingStatus: MeldingStatus?){
 @Composable
 fun previewMeldingCard() {
     AppTheme {
-        meldingCard(MeldingData(datum = null, locatie = "Nederland", info = "Lorem ipsum dolor sit amet", status= MeldingStatus.ONBEHANDELD, anoniem = true), {})
+        meldingCard(MeldingData(datum = null, plaatsnaam = "Nederland", beschrijving = "Lorem ipsum dolor sit amet", status= MeldingStatus.ONBEHANDELD), {})
     }
 }

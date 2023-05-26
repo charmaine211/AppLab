@@ -11,7 +11,11 @@ import android.widget.Spinner;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 
 import applab.veiligthuis.R;
 import applab.veiligthuis.viewmodel.MeldingViewModel;
@@ -67,7 +71,7 @@ public class MeldingMakenFragment extends Fragment {
                 LocalDateTime datum = LocalDateTime.now();
 
                 // Save melding in ViewModel
-                meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
+                meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toEpochSecond(ZoneOffset.UTC));
 
                 // Clear EditText
                 meldingEditText.setText("");
