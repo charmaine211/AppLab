@@ -4,9 +4,11 @@ import java.time.LocalDateTime
 
 
 data class MeldingData(
+    val key: String? = null,
     val datum: LocalDateTime? = null,
-    val locatie: String? = null,
-    val info: String? = null,
+    val plaatsnaam: String? = null,
+    val beschrijving: String? = null,
     val status: MeldingStatus? = null,
-    val anoniem: Boolean? = null,
+    val typeGeweld: String? = null,
+    val beroepsmatig: Boolean = false
 )

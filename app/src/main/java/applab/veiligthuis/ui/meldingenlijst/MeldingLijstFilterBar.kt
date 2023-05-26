@@ -14,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import applab.veiligthuis.ui.theme.filter_blue
 import applab.veiligthuis.ui.theme.filter_grey
 import applab.veiligthuis.ui.common.listDialogSpinner
-import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 
 @Composable
 fun filterButtonsBar (

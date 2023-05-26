@@ -9,8 +9,11 @@ import java.time.LocalDateTime
 class Melding(
     val datum: LocalDateTime,
     initialStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
-    val description: String = "",
-    val plaatsNaam: String = ""
+    val beschrijving: String = "",
+    val plaatsNaam: String = "",
+    val key: String? = null,
+    val typeGeweld: String? = null,
+    val beroepsmatig: Boolean = false
 ) {
     var status by mutableStateOf(initialStatus)
 }

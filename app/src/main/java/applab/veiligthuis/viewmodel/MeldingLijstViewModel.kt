@@ -7,6 +7,9 @@ import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingOrder
 import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.domain.util.OrderType
+import applab.veiligthuis.views.meldinglist.MeldingLijstEvent
+import applab.veiligthuis.views.meldinglist.MeldingLijstFilterState
+import applab.veiligthuis.views.meldinglist.MeldingLijstState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -22,15 +25,18 @@ class MeldingLijstViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MeldingLijstState())
     val uiState: StateFlow<MeldingLijstState> = _uiState.asStateFlow()
 
+    private val _filterState = MutableStateFlow(MeldingLijstFilterState())
+    val filterState: StateFlow<MeldingLijstFilterState> = _filterState.asStateFlow()
+
     private var getMeldingenJob: Job? = null
 
     init {
         getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend)
     }
 
-    fun onEvent(event: MeldingEvent) {
+    fun onEvent(event: MeldingLijstEvent) {
         when(event) {
-            is MeldingEvent.Order -> {
+            is MeldingLijstEvent.Order -> {
                 if (_uiState.value.meldingOrder::class == event.meldingOrder::class &&
                     _uiState.value.meldingOrder.orderType == event.meldingOrder.orderType
                 ) {
@@ -38,7 +44,7 @@ class MeldingLijstViewModel @Inject constructor(
                 }
                 getMeldingen(event.meldingOrder, _uiState.value.meldingType)
             }
-            is MeldingEvent.ToggleFilterSection -> {
+            is MeldingLijstEvent.ToggleFilterSection -> {
                 viewModelScope.launch {
                     _uiState.update { currentState ->
                         currentState.copy(
@@ -47,7 +53,7 @@ class MeldingLijstViewModel @Inject constructor(
                     }
                 }
             }
-            is MeldingEvent.ToggleMeldingStatus -> {
+            is MeldingLijstEvent.ToggleMeldingStatusLijst -> {
                 viewModelScope.launch {
                     val newMeldingType: MeldingType
                     if(_uiState.value.isInkomendSelected){
@@ -62,6 +68,30 @@ class MeldingLijstViewModel @Inject constructor(
                         )
                     }
                     getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType)
+                }
+            }
+            is MeldingLijstEvent.Status -> {
+                val status = _filterState.value.statusFilter
+                _filterState.update { currentState ->
+                    currentState.copy(
+                        statusFilter = status.map { item -> if(event.id == item.id) item.copy(checked = event.checked) else item }
+                    )
+                }
+            }
+            is MeldingLijstEvent.Beroepsmatig -> {
+                val beroepsmatig = _filterState.value.beroepsmatigFilter
+                _filterState.update { currentState ->
+                    currentState.copy(
+                        beroepsmatigFilter = beroepsmatig.map { item -> if(event.id == item.id) item.copy(checked = event.checked) else item }
+                    )
+                }
+            }
+            is MeldingLijstEvent.SoortGeweld -> {
+                val soortGeweld = _filterState.value.soortGeweldFilter
+                _filterState.update { currentState ->
+                    currentState.copy(
+                        soortGeweldFilter = soortGeweld.map { item -> if(event.id == item.id) item.copy(checked = event.checked) else item }
+                    )
                 }
             }
         }
@@ -81,5 +111,4 @@ class MeldingLijstViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
-
 }

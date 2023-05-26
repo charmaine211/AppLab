@@ -37,14 +37,45 @@ class MeldingRepositoryImpl : MeldingRepository {
                     var items : ArrayList<Melding> = arrayListOf()
                     snapshot.children.forEach(){ ds ->
                         val datum = LocalDateTime.parse(ds.child("datum").getValue().toString())
-                        val locatie = ds.child("locatie").getValue().toString()
-                        val description = ds.child("beschrijving").getValue().toString()
+                        val plaatsnaam = ds.child("plaatsnaam").getValue().toString()
+                        val beschrijving = ds.child("beschrijving").getValue().toString()
                         val status = ds.child("status").getValue().toString()
-                        val anoniem = ds.child("anoniem").getValue()
-                        items.add(Melding(datum = datum, initialStatus = parseMeldingStatus(status), description = description, plaatsNaam = locatie))
+                        val beroepsmatig: Boolean = ds.child("beroepsmatig").getValue() as Boolean
+                        val typeGeweld = ds.child("typeGeweld").toString()
+                        items.add(Melding(datum = datum, initialStatus = parseMeldingStatus(status), beschrijving = beschrijving, plaatsNaam = plaatsnaam, beroepsmatig = beroepsmatig, typeGeweld = typeGeweld))
                     }
                     trySend(items)
                 }
+                override fun onCancelled(error: DatabaseError) {
+                    cancel()
+                }
+            }
+            ref.addValueEventListener(postListener)
+            awaitClose { ref.removeEventListener(postListener) }
+        }
+    }
+
+    override fun getMeldingenFilter(
+        filter: String
+    ): Flow<List<Melding>> {
+        val dbRef = database.getReference(filter)
+        return callbackFlow {
+
+            val postListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var items: ArrayList<Melding> = arrayListOf()
+                    snapshot.children.forEach { ds ->
+                        val datum = LocalDateTime.parse(ds.child("datum").getValue().toString())
+                        val plaatsnaam = ds.child("plaatsnaam").getValue().toString()
+                        val beschrijving = ds.child("beschrijving").getValue().toString()
+                        val status = ds.child("status").getValue().toString()
+                        val beroepsmatig: Boolean = ds.child("beroepsmatig").getValue() as Boolean
+                        val typeGeweld = ds.child("typeGeweld").toString()
+                        items.add(Melding(datum = datum, initialStatus = parseMeldingStatus(status), beschrijving = beschrijving, plaatsNaam = plaatsnaam, beroepsmatig = beroepsmatig, typeGeweld = typeGeweld))
+                    }
+                    trySend(items)
+                }
+
                 override fun onCancelled(error: DatabaseError) {
                     cancel()
                 }
