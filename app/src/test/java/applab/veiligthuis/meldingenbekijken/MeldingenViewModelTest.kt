@@ -1,7 +1,6 @@
 package applab.veiligthuis.meldingenbekijken
 
-import applab.veiligthuis.domain.model.MeldingData
-import applab.veiligthuis.domain.model.MeldingStatus
+import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.repository.melding.MeldingRepository
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 import kotlinx.coroutines.Dispatchers

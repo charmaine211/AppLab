@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import applab.veiligthuis.domain.model.MeldingStatus
+import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.ui.common.MeldingStatusDisplay
 import applab.veiligthuis.ui.theme.AppTheme
 
