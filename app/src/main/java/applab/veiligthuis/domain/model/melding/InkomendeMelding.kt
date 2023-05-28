@@ -18,8 +18,8 @@ class InkomendeMelding(
     override fun getPaths(): List<String> {
         return listOf(
             "/$key",
-            "${MeldingPaths.INKOMEND}/$key",
-            "${MeldingPaths.INKOMEND}/$plaatsNaam/$key"
+            "${MeldingPaths.INKOMEND.path}/$key",
+            "${MeldingPaths.INKOMEND.path}_plaatsnaam/$plaatsNaam/$key"
         )
     }
 }
