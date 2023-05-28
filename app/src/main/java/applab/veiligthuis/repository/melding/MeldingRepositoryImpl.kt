@@ -52,61 +52,31 @@ class MeldingRepositoryImpl : MeldingRepository {
         }
     }
 
-    override fun getMeldingenFilter(
-        filter: String
-    ): Flow<List<Melding>> {
-        val dbRef = database.getReference(filter)
-        return callbackFlow {
 
-            val postListener = object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var items: ArrayList<Melding> = arrayListOf()
-                    snapshot.children.forEach { ds ->
-                        val datum = LocalDateTime.parse(ds.child("datum").getValue().toString()).toEpochSecond(
-                            ZoneOffset.UTC)
-                        val plaatsnaam = ds.child("plaatsnaam").getValue().toString()
-                        val beschrijving = ds.child("beschrijving").getValue().toString()
-                        val status = ds.child("status").getValue().toString()
-                        val beroepsmatig: Boolean = ds.child("beroepsmatig").getValue() as Boolean
-                        val typeGeweld = ds.child("typeGeweld").toString()
-                        items.add(Melding(datum = datum,  beschrijving = beschrijving, plaatsNaam = plaatsnaam, beroepsmatig = beroepsmatig, typeGeweld = typeGeweld))
-                    }
-                    trySend(items)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    cancel()
-                }
-            }
-            ref.addValueEventListener(postListener)
-            awaitClose { ref.removeEventListener(postListener) }
-        }
-    }
-
-    override fun addMelding(melding: Melding) {
+    override fun addMelding(melding: Melding, paths: List<String>) {
         val key = ref.push().key
         if(key == null) {
             Log.w("REP", "Melding niet naar db gepushed.")
         }
-        val meldingNew = melding.copy(key = key!!)
-        val meldingValues = meldingNew.toMap()
+        melding.key = key
+        editMelding(melding, paths)
+    }
 
-        val childUpdates = hashMapOf<String, Any>(
-            "/status/${meldingNew.status.toString()}/$key" to meldingValues,
-            "/$key" to meldingValues,
-        )
-
+    override fun editMelding(melding: Melding, paths: List<String>) {
+        val childUpdates = hashMapOf<String, Any>()
+        paths.forEach { path ->
+            childUpdates[path+"/${melding.key}"] = melding.toMap()
+        }
         ref.updateChildren(childUpdates)
     }
 
-    private fun parseMeldingStatus(status: String) : MeldingStatus {
-        if(status == "AFGEROND"){
-            return MeldingStatus.AFGESLOTEN
-        } else if (status == "IN_BEHANDELING") {
-            return MeldingStatus.IN_BEHANDELING
-        } else {
-            return MeldingStatus.ONBEHANDELD
+    override fun deleteMelding(melding: Melding, paths: List<String>) {
+        val childUpdates = hashMapOf<String, Any?>()
+        paths.forEach { path ->
+            childUpdates[path] = null
         }
+        ref.updateChildren(childUpdates)
     }
+
 }
 

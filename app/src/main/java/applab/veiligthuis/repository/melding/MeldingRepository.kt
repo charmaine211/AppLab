@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MeldingRepository {
     fun getMeldingen() : Flow<List<Melding?>>
-    fun getMeldingenFilter(filter: String): Flow<List<Melding?>>
-    fun addMelding(melding: Melding)
+    fun addMelding(melding: Melding, paths: List<String>)
+    fun editMelding(melding: Melding, paths: List<String>)
+    fun deleteMelding(melding: Melding, paths: List<String>)
 }

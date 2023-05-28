@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import java.time.Instant
 import java.time.LocalDateTime
@@ -40,9 +41,9 @@ private fun parseDate(datum: String) {
 @Preview
 @Composable
 fun PreviewMeldingList() {
-    val list = List(30) { Melding(datum = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)) }
-    MeldingList(
-        list = list
-    )
+//    val list = List(30) { InkomendeMelding(datum = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)) }
+//    MeldingList(
+//        list = list
+//    )
 }
 

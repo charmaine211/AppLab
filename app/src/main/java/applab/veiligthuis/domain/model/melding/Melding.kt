@@ -9,15 +9,18 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.time.LocalDateTime
 
 @IgnoreExtraProperties
-data class Melding(
-    val datum: Long? = null,
-    val status: MeldingStatus? = null,
-    val beschrijving: String = "",
-    val plaatsNaam: String = "",
-    val key: String? = null,
-    val typeGeweld: String = "Ongecategoriseerd",
-    val beroepsmatig: Boolean = false
+abstract class Melding(
+    var datum: Long? = null,
+    var status: MeldingStatus? = null,
+    var beschrijving: String = "",
+    var plaatsNaam: String = "",
+    var key: String? = null,
+    var typeGeweld: String = "Ongecategoriseerd",
+    var beroepsmatig: Boolean = false
 ) {
+
+    @Exclude
+    abstract fun getPaths(): List<String>
 
     @Exclude
     fun toMap():  Map<String, Any?> {
