@@ -1,7 +1,6 @@
 package applab.veiligthuis.di
 
-import applab.veiligthuis.domain.usecase.GetMeldingen
-import applab.veiligthuis.domain.usecase.MeldingUseCases
+import applab.veiligthuis.domain.usecase.*
 import applab.veiligthuis.repository.melding.MeldingRepository
 import applab.veiligthuis.repository.melding.MeldingRepositoryImpl
 import dagger.Module
@@ -24,7 +23,10 @@ object AppModule {
     @Singleton
     fun provideMeldingUseCases(repository: MeldingRepository): MeldingUseCases {
         return MeldingUseCases(
-            getMeldingen = GetMeldingen(repository)
+            getMeldingen = GetMeldingen(repository),
+            deleteMelding = DeleteMelding(repository),
+            addMelding = AddMelding(repository),
+            editMelding = EditMelding(repository)
         )
     }
 }
