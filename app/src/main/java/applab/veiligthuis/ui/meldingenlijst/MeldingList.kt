@@ -15,7 +15,8 @@ import java.time.ZoneOffset
 @Composable
 fun MeldingList(
     list: List<Melding?>,
-    modifier: Modifier = Modifier
+    onCardClick: (String, String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier
@@ -25,6 +26,7 @@ fun MeldingList(
             if(melding != null){
             val datumParsed = LocalDateTime.ofEpochSecond(melding.datum!!, 0, ZoneOffset.UTC)
                 MeldingItem(
+                    onCardClick = { onCardClick("inkomend", melding.key!!) },
                     datum = "" + datumParsed.dayOfMonth + "-" + datumParsed.monthValue + "-" + datumParsed.year + " " + datumParsed.hour + ":" + datumParsed.minute,
                     description = melding.beschrijving!!,
                     meldingStatus = melding.status!!

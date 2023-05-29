@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import applab.veiligthuis.domain.util.MeldingType
 
 import applab.veiligthuis.ui.screens.MeldingLijstScreen
 import applab.veiligthuis.ui.theme.AppTheme
+import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenScreen
 import applab.veiligthuis.views.meldinglist.FilterScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -34,6 +38,26 @@ class MeldingLijstActivity : AppCompatActivity() {
                             }
                             composable(route = "melding_list_filter") {
                                 FilterScreen(navController = navController)
+                            }
+                            composable(
+                                route = "melding_bewerken_screen" +
+                                        "?meldingtype={meldingtype}&meldingKey={meldingKey}",
+                                arguments = listOf(
+                                    navArgument(
+                                        name = "meldingtype"
+                                    ) {
+                                        type = NavType.StringType
+                                        defaultValue = "inkomend"
+                                    },
+                                    navArgument(
+                                        name = "meldingKey"
+                                    ) {
+                                        type = NavType.StringType
+                                        defaultValue = ""
+                                    }
+                                )
+                            ) {
+                                MeldingBewerkenScreen(navController = navController)
                             }
                         }
                     }

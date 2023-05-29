@@ -53,7 +53,12 @@ fun MeldingLijstScreen(
                             .padding(11.dp, 0.dp, 11.dp, 4.dp),
                         thickness = 1.dp
                     )
-                MeldingList(list = state.value.meldingen)
+                MeldingList(list = state.value.meldingen, onCardClick = {
+                    a,b -> navController.navigate("melding_list_filter")
+//                        a,b -> navController.navigate(
+//                    "melding_bewerken_screen" +
+//                            "?meldingtype=$a&meldingKey=$b"
+                } )
             }
         }
     }

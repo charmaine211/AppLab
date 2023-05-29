@@ -1,5 +1,6 @@
 package applab.veiligthuis.ui.meldingenlijst
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -18,15 +19,18 @@ import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun MeldingItem(
-    modifier: Modifier = Modifier,
+    onCardClick: (String) -> Unit,
     datum: String,
     meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
-    description: String
+    description: String,
+    modifier: Modifier = Modifier,
 ) {
     Card(colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),modifier = modifier
         .fillMaxWidth()
         .padding(vertical = 5.dp, horizontal = 0.dp)
-        .requiredHeight(80.dp)) {
+        .requiredHeight(80.dp)
+        .clickable(true) { onCardClick }
+    ) {
         Row(modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -49,7 +53,7 @@ fun MeldingItem(
 fun previewMeldingItem(){
     val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     AppTheme {
-        MeldingItem(datum = "1-11-1111 11:11", description = description)
+        MeldingItem(onCardClick = {}, datum = "1-11-1111 11:11", description = description)
     }
 
 }

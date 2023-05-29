@@ -25,7 +25,13 @@ class MeldingBewerkenViewModel @Inject constructor(
     private var getMeldingJob: Job? = null
 
     init {
-        val meldingType = savedStateHandle.get<MeldingType>("meldingtype")
+        val meldingTypeStr = savedStateHandle.get<String>("meldingtype")
+        val meldingType: MeldingType
+        if(meldingTypeStr == "inkomend"){
+            meldingType = MeldingType.Inkomend
+        } else {
+            meldingType = MeldingType.Afgesloten
+        }
         savedStateHandle.get<String>("meldingKey").let { key ->
             if(key != null) {
                 viewModelScope.launch {
