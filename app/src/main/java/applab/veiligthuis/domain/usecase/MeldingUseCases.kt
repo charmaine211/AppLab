@@ -4,5 +4,6 @@ data class MeldingUseCases(
     val getMeldingen: GetMeldingen,
     val addMelding: AddMelding,
     val editMelding: EditMelding,
-    val deleteMelding: DeleteMelding
+    val deleteMelding: DeleteMelding,
+    val getMelding: GetMelding
 )

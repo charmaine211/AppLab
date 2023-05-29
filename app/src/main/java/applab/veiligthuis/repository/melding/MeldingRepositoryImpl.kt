@@ -44,6 +44,26 @@ class MeldingRepositoryImpl : MeldingRepository {
         }
     }
 
+    override fun <T : Melding> getMelding(meldingKey: String, meldingType: Class<T>): Flow<Melding> {
+        return callbackFlow {
+            val meldingListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val melding = snapshot.child(meldingKey).getValue(meldingType)
+                    if (melding != null) {
+                        trySend(melding)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    cancel()
+                }
+            }
+            ref.addValueEventListener(meldingListener)
+            awaitClose { ref.removeEventListener(meldingListener) }
+        }
+    }
+
+
     override fun addMelding(melding: Melding) {
         if(melding.key == null) {
             val key = ref.child(melding.getPaths()[0]).push().key
