@@ -43,6 +43,8 @@ android {
     }
 }
 
+
+
 task prepareKotlinBuildScriptModel {
 
 }
@@ -58,13 +60,20 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.firebase:firebase-auth'
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:3.12.4'
-    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation'androidx.navigation:navigation-fragment:2.5.3'
     implementation'androidx.navigation:navigation-ui:2.5.3'
+
+    // Unit test dependencies
+    testImplementation "androidx.test:core:1.5.0"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'androidx.arch.core:core-testing:2.2.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
 
     implementation'androidx.navigation:navigation-dynamic-features-fragment:2.5.3'
 
@@ -79,7 +88,7 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
     implementation 'com.google.firebase:firebase-database-ktx'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
