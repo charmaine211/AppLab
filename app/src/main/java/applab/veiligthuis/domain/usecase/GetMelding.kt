@@ -11,8 +11,8 @@ class GetMelding(
     private val repository: MeldingRepository
 ) {
     operator fun invoke(
-        meldingType: MeldingType,
-        key: String
+        key: String,
+        meldingType: MeldingType
     ): Flow<Melding> {
         when(meldingType) {
             is MeldingType.Inkomend -> {
