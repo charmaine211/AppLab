@@ -19,7 +19,7 @@ import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun MeldingItem(
-    onCardClick: (String) -> Unit,
+    onCardClick: () -> Unit,
     datum: String,
     meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
     description: String,
@@ -29,7 +29,7 @@ fun MeldingItem(
         .fillMaxWidth()
         .padding(vertical = 5.dp, horizontal = 0.dp)
         .requiredHeight(80.dp)
-        .clickable(true) { onCardClick }
+        .clickable(onClick = onCardClick)
     ) {
         Row(modifier = Modifier
             .padding(8.dp)

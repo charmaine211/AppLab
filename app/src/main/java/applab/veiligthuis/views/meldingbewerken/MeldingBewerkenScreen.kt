@@ -38,18 +38,21 @@ fun MeldingBewerkenScreen(
             Column() {
                 Row {
                     Column() {
-                        val datumParsed = LocalDateTime.ofEpochSecond(state.value.uneditedMelding.datum!!, 0 , ZoneOffset.UTC)
-                        Text(text = "" + datumParsed.dayOfMonth + "-" + datumParsed.monthValue + "-" + datumParsed.year + " " + datumParsed.hour + ":" + datumParsed.minute)
-                        Text(text = state.value.uneditedMelding.plaatsNaam)
+                        if(state.value.uneditedMelding != null){
+                            val datumParsed = LocalDateTime.ofEpochSecond(state.value.uneditedMelding.datum!!, 0 , ZoneOffset.UTC)
+                            Text(text = "" + datumParsed.dayOfMonth + "-" + datumParsed.monthValue + "-" + datumParsed.year + " " + datumParsed.hour + ":" + datumParsed.minute)
+                            Text(text = state.value.uneditedMelding.plaatsNaam)
+                        }
                     }
-                    MeldingStatusDisplay(meldingStatus = state.value.status)
+                    MeldingStatusDisplay(meldingStatus = state.value.uneditedMelding.status!!)
+                }
+                Text(text = state.value.uneditedMelding.beschrijving)
+
+                Button(onClick = { navController.navigate("melding_list_screen") }) {
+                    Text("Terug")
                 }
             }
-            Text(text = state.value.uneditedMelding.beschrijving)
-            
-            Button(onClick = { navController.navigate("melding_list_screen") }) {
-                Text("Terug")
-            }
+
 
     }
 

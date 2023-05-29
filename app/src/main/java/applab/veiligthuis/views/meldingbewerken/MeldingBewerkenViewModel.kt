@@ -32,22 +32,23 @@ class MeldingBewerkenViewModel @Inject constructor(
         } else {
             meldingType = MeldingType.Afgesloten
         }
-        savedStateHandle.get<String>("meldingKey").let { key ->
-            if(key != null) {
-                viewModelScope.launch {
-                    getMelding(key, meldingType!!)
-                    _uiState.update { currentState ->
-                        currentState.copy(
-                            meldingKey = key,
-                            meldingType = meldingType!!,
-                            status = currentState.uneditedMelding.status!!,
-                            typeGeweld = currentState.uneditedMelding.typeGeweld,
-                            beroepsmatig = currentState.uneditedMelding.beroepsmatig,
-                        )
-                    }
+        val key = savedStateHandle.get<String>("meldingKey")
+        if(key != null) {
+            getMelding(key, meldingType)
+            viewModelScope.launch {
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        meldingKey = key,
+                        meldingType = meldingType,
+                        status = currentState.uneditedMelding.status!!,
+                        typeGeweld = currentState.uneditedMelding.typeGeweld,
+                        beroepsmatig = currentState.uneditedMelding.beroepsmatig,
+                    )
                 }
             }
         }
+
+
     }
 
     fun onEvent(event: MeldingBewerkenEvent){
