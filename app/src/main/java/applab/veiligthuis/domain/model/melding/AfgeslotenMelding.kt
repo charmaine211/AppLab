@@ -21,4 +21,25 @@ class AfgeslotenMelding(
             "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaatsNaam/$key",
         )
     }
+
+    @Exclude
+    override fun copy(
+        datum: Long?,
+        status: MeldingStatus?,
+        beschrijving: String,
+        plaatsNaam: String,
+        key: String?,
+        typeGeweld: String,
+        beroepsmatig: Boolean
+    ): Melding {
+        return AfgeslotenMelding(
+            datum = datum,
+            status = status,
+            beschrijving = beschrijving,
+            plaatsNaam = plaatsNaam,
+            key = key,
+            typeGeweld = typeGeweld,
+            beroepsmatig = beroepsmatig
+        )
+    }
 }
