@@ -55,15 +55,15 @@ class MeldingLijstViewModel @Inject constructor(
             }
             is MeldingLijstEvent.ToggleMeldingStatusLijst -> {
                 viewModelScope.launch {
-                    val newMeldingType: MeldingType
+                    val newMeldingPath: MeldingType
                     if(_uiState.value.isInkomendSelected){
-                        newMeldingType = MeldingType.Afgesloten
+                        newMeldingPath = MeldingType.Afgesloten
                     } else {
-                        newMeldingType = MeldingType.Inkomend
+                        newMeldingPath = MeldingType.Inkomend
                     }
                     _uiState.update { currentState ->
                         currentState.copy(
-                            meldingType = newMeldingType,
+                            meldingType = newMeldingPath,
                             isInkomendSelected = currentState.isInkomendSelected.not()
                         )
                     }

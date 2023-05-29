@@ -17,11 +17,12 @@ class GetMeldingen(
 ) {
     operator fun invoke(
         meldingOrder: MeldingOrder = MeldingOrder.Datum(OrderType.Descending),
-        meldingType: MeldingType = MeldingType.Inkomend
+        meldingType: MeldingType = MeldingType.Inkomend,
+        paths: List<String> = listOf(MeldingPaths.INKOMEND.path)
     ): Flow<List<Melding?>> {
         when(meldingType) {
             is MeldingType.Inkomend -> {
-                return repository.getMeldingen(listOf(MeldingPaths.INKOMEND.path), InkomendeMelding::class.java)
+                return repository.getMeldingen(paths, InkomendeMelding::class.java)
                     .map { meldingen ->
                         when(meldingOrder.orderType) {
                             is OrderType.Ascending -> {
@@ -40,7 +41,13 @@ class GetMeldingen(
                     }
             }
             is MeldingType.Afgesloten -> {
-                return repository.getMeldingen(listOf(MeldingPaths.AFGESLOTEN.path), AfgeslotenMelding::class.java)
+                val afgeslotenPaths: List<String>
+                if(paths.isEmpty()){
+                    afgeslotenPaths = listOf(MeldingPaths.AFGESLOTEN.path)
+                } else {
+                    afgeslotenPaths = paths
+                }
+                return repository.getMeldingen(afgeslotenPaths, AfgeslotenMelding::class.java)
                     .map { meldingen ->
                         when(meldingOrder.orderType) {
                             is OrderType.Ascending -> {
@@ -59,7 +66,5 @@ class GetMeldingen(
                     }
             }
         }
-
-
     }
 }

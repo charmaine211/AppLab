@@ -5,5 +5,7 @@ enum class MeldingPaths(
 ) {
     ROOT(""),
     INKOMEND("/inkomend"),
-    AFGESLOTEN("/afgesloten")
+    AFGESLOTEN("/afgesloten"),
+    INKOMEND_PLAATS("/inkomend_plaatsnaam"),
+    AFGESLOTEN_PLAATS("/afgesloten_plaatsnaam")
 }

@@ -46,7 +46,7 @@ class MeldingRepositoryImpl : MeldingRepository {
 
     override fun addMelding(melding: Melding) {
         if(melding.key == null) {
-            val key = ref.push().key
+            val key = ref.child(melding.getPaths()[0]).push().key
             if(key == null) {
                 Log.w("REP", "Melding niet naar db gepushed.")
             }

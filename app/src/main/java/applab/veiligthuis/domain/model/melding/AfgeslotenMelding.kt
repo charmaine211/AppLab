@@ -1,5 +1,6 @@
 package applab.veiligthuis.domain.model.melding
 
+import applab.veiligthuis.repository.melding.MeldingPaths
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
@@ -16,8 +17,8 @@ class AfgeslotenMelding(
     @Exclude
     override fun getPaths(): List<String> {
         return listOf(
-            "/$key",
-            "/afgesloten/${status.toString()}/$key"
+            "${MeldingPaths.AFGESLOTEN.path}/$key",
+            "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaatsNaam/$key",
         )
     }
 }
