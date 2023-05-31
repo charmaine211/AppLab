@@ -3,9 +3,9 @@ package applab.veiligthuis.repository.melding
 enum class MeldingPaths(
     val path: String
 ) {
-    ROOT(""),
-    INKOMEND("/inkomend"),
-    AFGESLOTEN("/afgesloten"),
+    MELDINGEN("/meldingen"),
+    INKOMEND("/meldingen_inkomend"),
+    AFGESLOTEN("/meldingen_afgesloten"),
     INKOMEND_PLAATS("/inkomend_plaatsnaam"),
     AFGESLOTEN_PLAATS("/afgesloten_plaatsnaam")
 }

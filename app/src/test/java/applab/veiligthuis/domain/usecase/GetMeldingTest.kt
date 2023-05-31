@@ -6,6 +6,7 @@ import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.domain.util.MeldingType
+import applab.veiligthuis.repository.melding.MeldingNotFoundException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -38,7 +39,7 @@ class GetMeldingTest {
         ('n'..'z').forEachIndexed { index, c ->
             testMeldingen.add(AfgeslotenMelding(
                 datum = index.toLong(),
-                status = MeldingStatus.ONBEHANDELD,
+                status = MeldingStatus.AFGESLOTEN,
                 beschrijving = "test $c",
                 plaatsNaam = "plaats $c",
                 key = c.toString(),
@@ -51,11 +52,26 @@ class GetMeldingTest {
     }
 
     @Test
-    fun `Getmelding by correct key`() = runBlocking {
-        val meldingKey = 'b'
-        val melding = getMelding(meldingKey.toString(), MeldingType.Inkomend).first()
+    fun `Getmelding - existing key`() = runBlocking {
+        val meldingKey = "b"
+        val melding = getMelding(meldingKey, MeldingType.Inkomend).first()
+        assertEquals(melding.key, meldingKey)
+    }
 
-        assertEquals(melding.key, meldingKey.toString())
+    @Test
+    fun `GetMelding - correct subtype of melding`() = runBlocking {
+        val meldingKey1 = "a"
+        val meldingKey2 = "q"
+        val inkomendeMelding = getMelding(meldingKey1, MeldingType.Inkomend).first()
+        assertEquals(inkomendeMelding::class.java ,InkomendeMelding::class.java)
+        val afgeslotenMelding = getMelding(meldingKey2, MeldingType.Afgesloten).first()
+        assertEquals(afgeslotenMelding::class.java, AfgeslotenMelding::class.java)
+    }
+
+    @Test(expected = MeldingNotFoundException::class)
+    fun `GetMelding - non existing key`() = runBlocking {
+        val meldingKey = "abcdef"
+        val melding = getMelding(meldingKey, MeldingType.Inkomend).first()
     }
 
 

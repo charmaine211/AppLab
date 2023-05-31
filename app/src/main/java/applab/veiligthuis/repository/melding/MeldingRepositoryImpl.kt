@@ -2,7 +2,10 @@ package applab.veiligthuis.repository.melding
 
 
 import android.util.Log
+import applab.veiligthuis.domain.model.melding.AfgeslotenMelding
+import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
+import applab.veiligthuis.domain.util.MeldingType
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -44,16 +47,21 @@ class MeldingRepositoryImpl : MeldingRepository {
         }
     }
 
-    override fun <T : Melding> getMelding(meldingKey: String, meldingType: Class<T>): Flow<Melding> {
+    override fun getMelding(meldingKey: String, meldingType: MeldingType): Flow<Melding> {
         return callbackFlow {
+            lateinit var meldingClassType: Class<out Melding>
+            if(meldingType == MeldingType.Inkomend) {
+                meldingClassType = InkomendeMelding::class.java
+            } else {
+                meldingClassType = AfgeslotenMelding::class.java
+            }
             val meldingListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val melding = snapshot.child(meldingKey).getValue(meldingType)
+                    val melding = snapshot.child(MeldingPaths.MELDINGEN.path).child(meldingKey).getValue(meldingClassType)
                     if (melding != null) {
                         trySend(melding)
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     cancel()
                 }

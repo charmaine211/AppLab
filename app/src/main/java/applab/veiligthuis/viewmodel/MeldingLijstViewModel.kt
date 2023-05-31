@@ -1,6 +1,7 @@
 package applab.veiligthuis.viewmodel
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import applab.veiligthuis.domain.usecase.MeldingUseCases
@@ -32,6 +33,7 @@ class MeldingLijstViewModel @Inject constructor(
 
     init {
         getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend)
+        Log.w("VM", "Meldingen opgehaald.")
     }
 
     fun onEvent(event: MeldingLijstEvent) {

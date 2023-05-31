@@ -17,6 +17,7 @@ class AfgeslotenMelding(
     @Exclude
     override fun getPaths(): List<String> {
         return listOf(
+            "${MeldingPaths.MELDINGEN.path}/$key",
             "${MeldingPaths.AFGESLOTEN.path}/$key",
             "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaatsNaam/$key",
         )

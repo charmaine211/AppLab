@@ -6,6 +6,8 @@ import android.os.Bundle
 
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,6 +21,7 @@ import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.ui.screens.MeldingLijstScreen
 import applab.veiligthuis.ui.theme.AppTheme
 import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenScreen
+import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenViewModel
 import applab.veiligthuis.views.meldinglist.FilterScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -57,7 +60,9 @@ class MeldingLijstActivity : AppCompatActivity() {
                                     }
                                 )
                             ) {
-                                MeldingBewerkenScreen(navController = navController)
+                                val viewModel = hiltViewModel<MeldingBewerkenViewModel>()
+                                val state = viewModel.uiState.collectAsState()
+                                MeldingBewerkenScreen(navController = navController, state = state, onEvent = viewModel::onEvent)
                             }
                         }
                     }
