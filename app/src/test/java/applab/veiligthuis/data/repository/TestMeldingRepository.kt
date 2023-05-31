@@ -1,6 +1,7 @@
 package applab.veiligthuis.data.repository
 
 import applab.veiligthuis.domain.model.melding.Melding
+import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.repository.melding.MeldingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,9 +22,9 @@ class TestMeldingRepository: MeldingRepository {
         return flow { emit(meldingen) }
     }
 
-    override fun <T : Melding> getMelding(
+    override fun  getMelding(
         meldingKey: String,
-        meldingType: Class<T>,
+        meldingType: MeldingType,
     ): Flow<Melding> {
         var melding: Melding? = null
         meldingenList.forEach{

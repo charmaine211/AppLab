@@ -26,7 +26,7 @@ object AppModule {
             getMeldingen = GetMeldingen(repository),
             deleteMelding = DeleteMelding(repository),
             addMelding = AddMelding(repository),
-            editMelding = EditMelding(repository),
+            updateMelding = UpdateMelding(repository),
             getMelding = GetMelding(repository)
         )
     }

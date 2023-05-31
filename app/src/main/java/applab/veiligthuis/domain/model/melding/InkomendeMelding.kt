@@ -14,8 +14,6 @@ class InkomendeMelding(
     typeGeweld: String = "Ongecategoriseerd",
     beroepsmatig: Boolean = false
 ) : Melding(datum, status, beschrijving, plaatsNaam, key, typeGeweld, beroepsmatig) {
-
-
     @Exclude
     override fun getPaths(): List<String> {
         return listOf(
@@ -25,6 +23,7 @@ class InkomendeMelding(
         )
     }
 
+    @Exclude
     override fun copy(
         datum: Long?,
         status: MeldingStatus?,
