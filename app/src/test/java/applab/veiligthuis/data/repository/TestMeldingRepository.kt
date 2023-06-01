@@ -1,7 +1,11 @@
 package applab.veiligthuis.data.repository
 
+import androidx.compose.runtime.clearCompositionErrors
+import applab.veiligthuis.domain.model.melding.AfgeslotenMelding
+import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.util.MeldingType
+import applab.veiligthuis.repository.melding.MeldingPaths
 import applab.veiligthuis.repository.melding.MeldingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,9 +15,9 @@ class TestMeldingRepository: MeldingRepository {
     private val meldingenList = mutableListOf<Melding>()
     private val meldingenMap = mutableMapOf<String, ArrayList<Melding>>()
 
-    override fun <T : Melding> getMeldingen(
+    override fun getMeldingen(
         paths: List<String>,
-        meldingType: Class<T>,
+        meldingType: MeldingType,
     ): Flow<List<Melding?>> {
         var meldingen: ArrayList<Melding> = arrayListOf()
         paths.forEach { path ->
@@ -35,20 +39,42 @@ class TestMeldingRepository: MeldingRepository {
         return flow { emit(melding!!) }
     }
 
-    override fun addMelding(melding: Melding) {
+    override fun insertOrUpdateMelding(melding: Melding) {
         meldingenList.add(melding)
-        melding.getPaths().forEach { path ->
-            meldingenMap[path]?.add(melding)
+        lateinit var paths: List<String>
+        when(melding) {
+            is InkomendeMelding -> {
+                paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.INKOMEND.path)
+            }
+            is AfgeslotenMelding -> {
+                paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.AFGESLOTEN.path)
+            }
         }
-    }
-
-    override fun editMelding(melding: Melding) {
-        TODO("Not yet implemented")
+        paths.forEach { path ->
+            if (!meldingenMap.containsKey(path)){
+                meldingenMap[path] = arrayListOf(melding)
+            } else {
+                var list = meldingenMap[path]
+                if (list != null) {
+                    list.add(melding)
+                    meldingenMap[path] = list
+                }
+            }
+        }
     }
 
     override fun deleteMelding(melding: Melding) {
         meldingenList.remove(melding)
-        melding.getPaths().forEach { path ->
+        lateinit var paths: List<String>
+        when(melding) {
+            is InkomendeMelding -> {
+                paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.INKOMEND.path)
+            }
+            is AfgeslotenMelding -> {
+                paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.AFGESLOTEN.path)
+            }
+        }
+        paths.forEach { path ->
             meldingenMap[path]?.remove(melding)
         }
     }

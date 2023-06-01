@@ -2,8 +2,6 @@ package applab.veiligthuis.repository.melding
 
 
 import android.util.Log
-import applab.veiligthuis.domain.model.melding.AfgeslotenMelding
-import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.util.MeldingType
 
@@ -25,14 +23,14 @@ class MeldingRepositoryImpl : MeldingRepository {
         ref.keepSynced(true)
     }
 
-    override fun <T: Melding> getMeldingen(paths: List<String>, meldingtype: Class<T>): Flow<List<Melding?>> {
+    override fun getMeldingen(paths: List<String>, meldingtype: MeldingType): Flow<List<Melding?>> {
         return callbackFlow {
             val postListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val items = arrayListOf<Melding?>()
                     paths.forEach { path ->
                         snapshot.child(path).children.map { ds ->
-                            val melding = ds.getValue(meldingtype)
+                            val melding = ds.getValue(meldingtype.classType)
                             items.add(melding)
                         }
                     }
@@ -49,15 +47,9 @@ class MeldingRepositoryImpl : MeldingRepository {
 
     override fun getMelding(meldingKey: String, meldingType: MeldingType): Flow<Melding> {
         return callbackFlow {
-            lateinit var meldingClassType: Class<out Melding>
-            if(meldingType == MeldingType.Inkomend) {
-                meldingClassType = InkomendeMelding::class.java
-            } else {
-                meldingClassType = AfgeslotenMelding::class.java
-            }
             val meldingListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val melding = snapshot.child(MeldingPaths.MELDINGEN.path).child(meldingKey).getValue(meldingClassType)
+                    val melding = snapshot.child(MeldingPaths.MELDINGEN.path).child(meldingKey).getValue(meldingType.classType)
                     if (melding != null) {
                         trySend(melding)
                     }
@@ -71,8 +63,7 @@ class MeldingRepositoryImpl : MeldingRepository {
         }
     }
 
-
-    override fun addMelding(melding: Melding) {
+    override fun insertOrUpdateMelding(melding: Melding) {
         if(melding.key == null) {
             val key = ref.child(melding.getPaths()[0]).push().key
             if(key == null) {
@@ -80,10 +71,6 @@ class MeldingRepositoryImpl : MeldingRepository {
             }
             melding.key = key
         }
-        editMelding(melding)
-    }
-
-    override fun editMelding(melding: Melding) {
         val childUpdates = hashMapOf<String, Any>()
         melding.getPaths().forEach { path ->
             childUpdates[path] = melding.toMap()

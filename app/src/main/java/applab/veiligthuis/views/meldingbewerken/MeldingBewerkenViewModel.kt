@@ -92,7 +92,7 @@ class MeldingBewerkenViewModel @Inject constructor(
                         }
                     }
                     if(_uiState.value.uneditedMelding != null) {
-                        meldingUseCases.updateMelding(_uiState.value.uneditedMelding!!, _uiState.value.status, _uiState.value.typeGeweld)
+                        meldingUseCases.editMelding(_uiState.value.uneditedMelding!!, _uiState.value.status, _uiState.value.typeGeweld)
                     }
                 }
             }

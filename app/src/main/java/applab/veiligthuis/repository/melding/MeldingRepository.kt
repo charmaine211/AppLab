@@ -7,9 +7,8 @@ import applab.veiligthuis.domain.util.MeldingType
 import kotlinx.coroutines.flow.Flow
 
 interface MeldingRepository {
-    fun<T: Melding> getMeldingen(paths: List<String>, meldingType: Class<T>): Flow<List<Melding?>>
+    fun getMeldingen(paths: List<String>, meldingType: MeldingType): Flow<List<Melding?>>
     fun getMelding(meldingKey: String, meldingType: MeldingType): Flow<Melding>
-    fun addMelding(melding: Melding)
-    fun editMelding(melding: Melding)
+    fun insertOrUpdateMelding(melding: Melding)
     fun deleteMelding(melding: Melding)
 }

@@ -48,7 +48,7 @@ class GetMeldingTest {
             ))
         }
         testMeldingen.shuffle()
-        testMeldingen.forEach { testMeldingRepository.addMelding(it) }
+        testMeldingen.forEach { testMeldingRepository.insertOrUpdateMelding(it) }
     }
 
     @Test
