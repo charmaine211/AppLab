@@ -17,8 +17,8 @@ import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun MeldingStatusDisplay(
-    modifier: Modifier = Modifier,
     meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
+    modifier: Modifier = Modifier,
     ){
         Text (
             text = meldingStatus.status,

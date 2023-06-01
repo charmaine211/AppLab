@@ -55,6 +55,15 @@ class MeldingBewerkenViewModel @Inject constructor(
                     }
                 }
             }
+            is MeldingBewerkenEvent.OnClickTypeGeweld -> {
+                viewModelScope.launch {
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            typeGeweldExpanded = currentState.typeGeweldExpanded.not()
+                        )
+                    }
+                }
+            }
             is MeldingBewerkenEvent.Status -> {
                 viewModelScope.launch {
                     _uiState.update { currentState ->

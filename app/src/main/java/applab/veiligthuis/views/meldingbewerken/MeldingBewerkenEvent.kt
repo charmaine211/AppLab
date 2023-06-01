@@ -7,4 +7,5 @@ sealed class MeldingBewerkenEvent {
     data class TypeGeweld(val typeGeweld: String): MeldingBewerkenEvent()
     data class Beroepsmatig(val beroepmatig: Boolean): MeldingBewerkenEvent()
     object SaveMelding: MeldingBewerkenEvent()
+    object OnClickTypeGeweld: MeldingBewerkenEvent()
 }
