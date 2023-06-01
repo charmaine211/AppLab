@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- styles.xml in src/test/resources/values -->
+<resources>
+    <style name="Theme_VeiligThuis_Test" parent="Theme.AppCompat.Light">
+    </style>
+</resources>
