@@ -76,7 +76,7 @@ public class MeldingMakenFragment extends Fragment {
 
                 if (uid != null) {
                     meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString(), uid);
-                    Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_LONG).show();
                 } else {
                     firebaseRepository.signInAnonymously(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -86,7 +86,7 @@ public class MeldingMakenFragment extends Fragment {
                                         String uid = firebaseRepository.getCurrentUserId();
 
                                         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString(), uid);
-                                        Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "Melding is succesvol verstuurd", Toast.LENGTH_LONG).show();
                                     } else {
                                         String errorMessage = task.getException().getMessage();
                                         Log.e("Firebase", "Error creating anonymous user: " + errorMessage);
