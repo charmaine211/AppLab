@@ -24,9 +24,8 @@ object AppModule {
     fun provideMeldingUseCases(repository: MeldingRepository): MeldingUseCases {
         return MeldingUseCases(
             getMeldingen = GetMeldingen(repository),
-            deleteMelding = DeleteMelding(repository),
-            addMelding = AddMelding(repository),
-            updateMelding = UpdateMelding(repository),
+            insertInkomendeMelding = InsertInkomendeMelding(repository),
+            editMelding = EditMelding(repository),
             getMelding = GetMelding(repository)
         )
     }

@@ -3,8 +3,6 @@ package applab.veiligthuis.viewmodel;
 import androidx.lifecycle.ViewModel;
 
 
-import java.util.ArrayList;
-
 import applab.veiligthuis.domain.model.melding.MeldingStatus;
 import applab.veiligthuis.domain.model.melding.InkomendeMelding;
 import applab.veiligthuis.domain.model.melding.Melding;
@@ -26,6 +24,6 @@ public class MeldingViewModel extends ViewModel {
 
     public void insertMelding(String plaatsnaam, String beschrijving, Long datum){
         Melding melding = new InkomendeMelding(datum, MeldingStatus.ONBEHANDELD, beschrijving, plaatsnaam, null, "Ongecategoriseerd" , false);
-        meldingRepo.addMelding(melding);
+        meldingRepo.insertOrUpdateMelding(melding);
     }
 }

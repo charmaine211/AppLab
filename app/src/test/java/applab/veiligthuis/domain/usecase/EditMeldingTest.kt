@@ -14,14 +14,14 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class UpdateMeldingTest {
-    private lateinit var updateMelding: UpdateMelding
+class EditMeldingTest {
+    private lateinit var editMelding: EditMelding
     private lateinit var testMeldingRepository: MeldingRepository
 
     @Before
     fun setUp() {
         testMeldingRepository = TestMeldingRepository()
-        updateMelding = UpdateMelding(testMeldingRepository)
+        editMelding = EditMelding(testMeldingRepository)
 
         val testMeldingen = mutableListOf<Melding>()
         ('a'..'c').forEachIndexed { index, c ->
@@ -51,7 +51,7 @@ class UpdateMeldingTest {
             )
         }
         testMeldingen.shuffle()
-        testMeldingen.forEach { testMeldingRepository.addMelding(it) }
+        testMeldingen.forEach { testMeldingRepository.insertOrUpdateMelding(it) }
     }
 
     @Test
@@ -60,7 +60,7 @@ class UpdateMeldingTest {
         val melding = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
         assertEquals("geweld a", melding.typeGeweld)
 
-        updateMelding(melding, melding.status!!, "Testwaarde")
+        editMelding(melding, melding.status!!, "Testwaarde")
         val meldingEdited = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
         assertNotEquals(meldingEdited.typeGeweld, melding.typeGeweld)
     }
@@ -71,7 +71,7 @@ class UpdateMeldingTest {
         val melding = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
         assertEquals(MeldingStatus.ONBEHANDELD, melding.status)
 
-        updateMelding(melding, MeldingStatus.IN_BEHANDELING, melding.typeGeweld)
+        editMelding(melding, MeldingStatus.IN_BEHANDELING, melding.typeGeweld)
         val meldingNewStatus = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
         assertEquals(MeldingStatus.IN_BEHANDELING, meldingNewStatus.status)
     }
@@ -82,25 +82,39 @@ class UpdateMeldingTest {
         val melding = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
         assertEquals(MeldingStatus.ONBEHANDELD, melding.status)
 
-        updateMelding(melding, MeldingStatus.AFGESLOTEN, melding.typeGeweld)
+        editMelding(melding, MeldingStatus.AFGESLOTEN, melding.typeGeweld)
         val meldingAfgeslotenStatus = testMeldingRepository.getMelding(meldingKey, MeldingType.Afgesloten).first()
         assertEquals(MeldingStatus.AFGESLOTEN, meldingAfgeslotenStatus.status)
     }
 
     @Test
     fun `UpdateMelding - check if path gets updated on status change from onbehandeld in behandeling to afgesloten`() = runBlocking {
-
         val meldingKey = "a"
         val melding = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
 
-        updateMelding(melding, MeldingStatus.AFGESLOTEN, melding.typeGeweld)
+        var meldingenAfgesloten = testMeldingRepository.getMeldingen(listOf(MeldingPaths.AFGESLOTEN.path), MeldingType.Afgesloten).first()
+        var meldingenInkomend = testMeldingRepository.getMeldingen(listOf(MeldingPaths.INKOMEND.path), MeldingType.Inkomend).first()
+
+        assertTrue(meldingenInkomend.contains(melding))
+        assertFalse(meldingenAfgesloten.contains(melding))
+        assertEquals(3, meldingenAfgesloten.size)
+        assertEquals(3, meldingenInkomend.size)
+
+        editMelding(melding, MeldingStatus.AFGESLOTEN, melding.typeGeweld)
         val meldingAfgesloten = testMeldingRepository.getMelding(meldingKey, MeldingType.Afgesloten).first()
 
-        val meldingenAfgesloten = testMeldingRepository.getMeldingen(listOf(MeldingPaths.MELDINGEN.path), AfgeslotenMelding::class.java).first()
-        val meldingenInkomend = testMeldingRepository.getMeldingen(listOf(MeldingPaths.INKOMEND.path), InkomendeMelding::class.java).first()
+        meldingenAfgesloten = testMeldingRepository.getMeldingen(listOf(MeldingPaths.AFGESLOTEN.path), MeldingType.Afgesloten).first()
+        meldingenInkomend = testMeldingRepository.getMeldingen(listOf(MeldingPaths.INKOMEND.path), MeldingType.Inkomend).first()
 
         assertTrue(meldingenAfgesloten.contains(meldingAfgesloten))
         assertFalse(meldingenInkomend.contains(melding))
+        assertEquals(4, meldingenAfgesloten.size)
+        assertEquals(2, meldingenInkomend.size)
+    }
+
+    @Test
+    fun `UpdateMelding - non existing melding`() {
+
     }
 
 
