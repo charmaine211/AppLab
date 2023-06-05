@@ -7,18 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
 
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
+import applab.veiligthuis.common.VeiligThuisApp;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((VeiligThuisApp) getApplication()).addActivity(this);
 
         setContentView(R.layout.activity_main);
 
@@ -27,9 +29,16 @@ public class MainActivity extends AppCompatActivity {
         initTipsBeherenButton();
         initMaakMeldingButton();
         initSluitAppButton();
+    }
 
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (((VeiligThuisApp) getApplication()).isLastActivity(this)) {
+            //TODO: uitloggen via viewmodel en repo
+        }
 
+        ((VeiligThuisApp) getApplication()).removeActivity(this);
     }
 
     private void initSluitAppButton() {

@@ -114,7 +114,7 @@ public class TipBuilder extends AppCompatActivity {
                             .updateChildren(updateValues);
                 } else{
                     String tipId = databaseReference.push().getKey();
-                    Tip tip = new Tip(tipId, titel, beschrijving, TipCategorie.valueOf(categorie));
+                    Tip tip = new Tip(tipId, titel, beschrijving, TipCategorie.parseString(categorie));
 
                     databaseReference.child(tipId).setValue(tip);
                 }
