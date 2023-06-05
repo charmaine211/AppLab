@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;

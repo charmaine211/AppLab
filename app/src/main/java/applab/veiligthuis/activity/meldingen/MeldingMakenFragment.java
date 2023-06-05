@@ -37,9 +37,6 @@ public class MeldingMakenFragment extends Fragment {
     }
 
 
-    /**
-     *
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,9 +48,6 @@ public class MeldingMakenFragment extends Fragment {
         initOpslaanButton();
     }
 
-    /**
-     *
-     */
     public void initPlaatsnaamSpinner(){
         Spinner plaatsnaamSpinner = getView().findViewById(R.id.plaatsnaam_spinner);
 
@@ -63,9 +57,7 @@ public class MeldingMakenFragment extends Fragment {
         plaatsnaamSpinner.setAdapter(adapter);
     }
 
-    /**
-     *
-     */
+
     public void initOpslaanButton(){
 
         getView().findViewById(R.id.opslaan_button).setOnClickListener(new View.OnClickListener() {

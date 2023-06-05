@@ -24,7 +24,6 @@ public class MeldingViewModel extends ViewModel {
         firebaseRepository = new FirebaseRepository();
         uid = firebaseRepository.getCurrentUserId();
 
-        //TODO juiste error/successmessage voor het inloggen van de gebruiker.
         if (uid == null){
             firebaseRepository.signInAnonymously(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -50,6 +49,7 @@ public class MeldingViewModel extends ViewModel {
         meldingRepo.addMelding(melding);
     }
 
+    // Voor het maken van een beroepsmatige melding
     public void insertMelding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
         Melding melding = new Melding(plaatsnaam, beroepsmatig, beschrijving, datum);
         MeldingRepositoryImpl meldingRepo = new MeldingRepositoryImpl();
