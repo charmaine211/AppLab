@@ -1,36 +1,58 @@
 package applab.veiligthuis.viewmodel;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 
+import applab.veiligthuis.data.FirebaseRepository;
 import applab.veiligthuis.model.Melding;
 import applab.veiligthuis.repository.MeldingRepositoryImpl;
 
 public class MeldingViewModel extends ViewModel {
 
     MeldingRepositoryImpl meldingRepo;
+    FirebaseRepository firebaseRepository;
+    String uid;
 
     public MeldingViewModel(){
+
         meldingRepo = new MeldingRepositoryImpl();
+        firebaseRepository = new FirebaseRepository();
+        uid = firebaseRepository.getCurrentUserId();
+
+        if (uid == null){
+            firebaseRepository.signInAnonymously(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        uid = firebaseRepository.getCurrentUserId();
+                    }
+                }
+            });
+        }
     }
 
-    public void insertMelding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
-        Melding melding = new Melding(plaatsnaam, beroepsmatig, beschrijving, datum);
-        MeldingRepositoryImpl meldingRepo = new MeldingRepositoryImpl();
-        meldingRepo.addMelding(melding);
+    public LiveData<String> getErrorMessage(){
+        return this.meldingRepo.getErrorMessage();
+    }
+
+    public LiveData<String> getSuccessMessage(){
+        return this.meldingRepo.getSuccessMessage();
     }
 
     public void insertMelding(String plaatsnaam, String beschrijving, String datum){
-        Melding melding = new Melding(plaatsnaam, beschrijving, datum);
+        Melding melding = new Melding(plaatsnaam, beschrijving, datum, this.uid);
         meldingRepo.addMelding(melding);
     }
 
-    public void insertMelding(String plaatsnaam, String beschrijving, String datum, String uid){
-        Melding melding = new Melding(plaatsnaam, beschrijving, datum, uid);
+    // Voor het maken van een beroepsmatige melding
+    public void insertMelding(String plaatsnaam, boolean beroepsmatig, String beschrijving, String datum){
+        Melding melding = new Melding(plaatsnaam, beroepsmatig, beschrijving, datum);
+        MeldingRepositoryImpl meldingRepo = new MeldingRepositoryImpl();
         meldingRepo.addMelding(melding);
     }
 }

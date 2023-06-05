@@ -7,9 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.meldingen.MeldingMakenFragment">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar" />
+    <applab.veiligthuis.common.VeiligThuisToolbar
+        android:id="@+id/veilig_thuis_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/veiligThuisToolbarHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/meldingmaken_editTextTextMultiLine"
@@ -36,11 +39,14 @@
         app:layout_constraintTop_toBottomOf="@+id/meldingmaken_editTextTextMultiLine" />
 
     <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/opslaan_button"
+        android:layout_width="150dp"
+        android:layout_height="49dp"
         android:layout_marginTop="64dp"
-        android:text="Button"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/meldingOpslaan_button"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plaatsnaam_spinner" />
@@ -52,7 +58,7 @@
         android:layout_marginTop="36dp"
         android:fontFamily="@font/montserrat"
         android:scrollbarSize="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="@+id/veilig_thuis_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bijlage_textView" />
 

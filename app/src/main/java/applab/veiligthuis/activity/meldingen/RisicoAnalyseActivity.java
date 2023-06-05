@@ -14,16 +14,12 @@ public class RisicoAnalyseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risico_analyse);
 
-        // Create a new instance of the risicoAnalyseFragment
         RisicoAnalyseFragment risicoAnalyseFragment = new RisicoAnalyseFragment();
 
-        // Start a new fragment transaction to display the fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // Replace the fragment_container with the risicoAnalyseFragment
         transaction.replace(R.id.risicoAnalyse_FragmentContainerView, risicoAnalyseFragment);
 
-        // Commit the transaction
         transaction.commit();
     }
 }

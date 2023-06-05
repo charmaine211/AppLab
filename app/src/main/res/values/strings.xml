@@ -21,6 +21,7 @@
     <string name="nav_logIn">log in</string>
     <string name="logIn_password">password</string>
     <string name="logIn_name">name</string>
+    <string name="meldingOpslaan_button">Maak melding</string>
 
     // Array met alle plaatnamen
     <string-array name="plaatsnamen">
