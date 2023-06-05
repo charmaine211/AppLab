@@ -43,9 +43,10 @@ public class MeldingMakenFragment extends Fragment {
         meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
         initMeldingObservers();
 
-        // Create spinners en knoppen
+        // Maak spinners en knoppen
         initPlaatsnaamSpinner();
         initOpslaanButton();
+        initSluitAppButton();
     }
 
     public void initPlaatsnaamSpinner(){
@@ -135,7 +136,16 @@ public class MeldingMakenFragment extends Fragment {
         Intent mainIntent = new Intent(getActivity(), MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
-        // Finish the current activity if needed
         getActivity().finish();
+    }
+
+    private void initSluitAppButton() {
+        View sluitButton = getView().findViewById(R.id.sluitApp);
+        sluitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.exit(0); // Sluit de hele app
+            }
+        });
     }
 }

@@ -47,6 +47,7 @@ public class RisicoAnalyseFragment extends Fragment {
         initJaButton();
         initTwijfelButton();
         initNeeButton();
+        initSluitAppButton();
 
     }
 
@@ -133,6 +134,16 @@ public class RisicoAnalyseFragment extends Fragment {
                 // Navigeer naar de MeldingMakenActivity
                 Intent meldingMakenIntent = new Intent(getActivity(), MeldingMakenActivity.class);
                 startActivity(meldingMakenIntent);
+            }
+        });
+    }
+
+    private void initSluitAppButton() {
+        View sluitButton = getView().findViewById(R.id.sluitApp);
+        sluitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.exit(0); // Sluit de hele app
             }
         });
     }

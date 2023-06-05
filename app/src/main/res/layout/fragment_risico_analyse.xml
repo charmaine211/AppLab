@@ -8,10 +8,24 @@
     android:visibility="visible"
     tools:context=".activity.meldingen.RisicoAnalyseFragment">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar"
-        android:visibility="visible" />
+    <applab.veiligthuis.common.VeiligThuisToolbar
+        android:id="@+id/veilig_thuis_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/veiligThuisToolbarHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sluitApp"
+        android:layout_width="89dp"
+        android:layout_height="203dp"
+        android:src="@drawable/veiligthuis_sluitapp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.119" />
 
     <TextView
         android:id="@+id/risicoAnalyse_textView"

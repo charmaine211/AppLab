@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         sluitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                System.exit(0); // Sluit de hele app
             }
         });
     }
