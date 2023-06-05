@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.time.LocalDateTime;
 
-import applab.veiligthuis.MainActivity;
+import applab.veiligthuis.activity.home.MainActivity;
 import applab.veiligthuis.R;
 import applab.veiligthuis.viewmodel.MeldingViewModel;
 
@@ -99,11 +99,7 @@ public class MeldingMakenFragment extends Fragment {
         });
     }
 
-    /**
-     *
-     * @param plaatsnaam
-     * @param beschrijving
-     */
+
     public void slaMeldingOp(String plaatsnaam, String beschrijving){
         LocalDateTime datum = LocalDateTime.now();
 
@@ -111,9 +107,6 @@ public class MeldingMakenFragment extends Fragment {
         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
     }
 
-    /**
-     *
-     */
     public void initMeldingObservers(){
         meldingViewModel.getErrorMessage().observe(getViewLifecycleOwner(), errorMessage -> {
             if (errorMessage != null) {
@@ -129,9 +122,6 @@ public class MeldingMakenFragment extends Fragment {
         });
     }
 
-    /**
-     *
-     */
     public void returnToMain(){
         Intent mainIntent = new Intent(getActivity(), MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
