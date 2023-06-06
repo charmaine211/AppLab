@@ -26,8 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-import applab.veiligthuis.R;
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
+import applab.veiligthuis.activity.home.MainActivity;
 import applab.veiligthuis.activity.profile.Profile;
 
 public class VeiligThuisToolbar extends Toolbar {
@@ -73,10 +72,11 @@ public class VeiligThuisToolbar extends Toolbar {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, view);
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    popupMenu.getMenuInflater().inflate(R.menu.menu_profile_logged_in, popupMenu.getMenu());
-                } else {
+                if( FirebaseAuth.getInstance().getCurrentUser() == null || FirebaseAuth.getInstance().getCurrentUser().isAnonymous() ){
                     popupMenu.getMenuInflater().inflate(R.menu.menu_profile_not_logged_in, popupMenu.getMenu());
+                }
+                else {
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_profile_logged_in, popupMenu.getMenu());
                 }
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -87,6 +87,7 @@ public class VeiligThuisToolbar extends Toolbar {
                                 return true;
                             case R.id.sign_out:
                                 mAuth.signOut();
+                                returnToMain();
                                 return true;
                             case R.id.sign_in:
                                 context.startActivity(new Intent(context, LogInActivity.class));
@@ -100,6 +101,17 @@ public class VeiligThuisToolbar extends Toolbar {
             }
         });
     }
+
+    private void returnToMain() {
+        Context context = getContext();
+        Intent mainIntent = new Intent(context, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(mainIntent);
+        if (context instanceof Activity) {
+            ((Activity) context).finish();
+        }
+    }
+
 
     public void finishAndLogoutIfTaskRoot(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

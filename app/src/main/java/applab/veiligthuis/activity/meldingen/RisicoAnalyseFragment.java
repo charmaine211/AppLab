@@ -50,10 +50,13 @@ public class RisicoAnalyseFragment extends Fragment {
 
     }
 
+    /**
+     *
+     */
     public void initJaButton() {
         Button jaButton =  getView().findViewById(R.id.ja_button);
         if (jaButton == null) {
-            throw new RuntimeException("Button with ID 'ja_button' not found");
+            throw new RuntimeException("Knop met id 'ja_button' niet gevonden");
         }
         jaButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +81,20 @@ public class RisicoAnalyseFragment extends Fragment {
             }
         });
     }
+
+    /**
+     *
+     */
     public void initTwijfelButton() {
 
         Button twijfelButton = getView().findViewById(R.id.twijfel_button);
         if (twijfelButton == null) {
-            throw new RuntimeException("Button with ID 'twijfel_button' not found");
+            throw new RuntimeException("Knop met id 'twijfel_button' niet gevonden");
         }
+
+        /**
+         *
+         */
         twijfelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,10 +119,13 @@ public class RisicoAnalyseFragment extends Fragment {
         });
     }
 
+    /**
+     *
+     */
     public void initNeeButton() {
         Button neeButton =  getView().findViewById(R.id.nee_button);
         if (neeButton == null) {
-            throw new RuntimeException("Button with ID 'nee_button' not found");
+            throw new RuntimeException("Knop met id 'nee_button' niet gevonden");
         }
         neeButton.setOnClickListener(new View.OnClickListener() {
             @Override
