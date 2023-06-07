@@ -18,14 +18,9 @@ import applab.veiligthuis.R;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
 
-/**
- * A simple {@link Fragment} subclass.
-    * create an instance of this fragment.
- */
 public class RisicoAnalyseFragment extends Fragment {
 
     public RisicoAnalyseFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -35,7 +30,6 @@ public class RisicoAnalyseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_risico_analyse, container, false);
     }
 
@@ -43,7 +37,6 @@ public class RisicoAnalyseFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Create buttons
         initJaButton();
         initTwijfelButton();
         initNeeButton();
@@ -51,9 +44,6 @@ public class RisicoAnalyseFragment extends Fragment {
 
     }
 
-    /**
-     *
-     */
     public void initJaButton() {
         Button jaButton =  getView().findViewById(R.id.ja_button);
         if (jaButton == null) {
@@ -83,9 +73,6 @@ public class RisicoAnalyseFragment extends Fragment {
         });
     }
 
-    /**
-     *
-     */
     public void initTwijfelButton() {
 
         Button twijfelButton = getView().findViewById(R.id.twijfel_button);
@@ -93,9 +80,6 @@ public class RisicoAnalyseFragment extends Fragment {
             throw new RuntimeException("Knop met id 'twijfel_button' niet gevonden");
         }
 
-        /**
-         *
-         */
         twijfelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,9 +104,6 @@ public class RisicoAnalyseFragment extends Fragment {
         });
     }
 
-    /**
-     *
-     */
     public void initNeeButton() {
         Button neeButton =  getView().findViewById(R.id.nee_button);
         if (neeButton == null) {
