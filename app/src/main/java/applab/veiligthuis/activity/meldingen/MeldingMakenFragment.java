@@ -43,7 +43,6 @@ public class MeldingMakenFragment extends Fragment {
         meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
         initMeldingObservers();
 
-        // Maak spinners en knoppen
         initPlaatsnaamSpinner();
         initOpslaanButton();
         initSluitAppButton();
@@ -103,7 +102,6 @@ public class MeldingMakenFragment extends Fragment {
     public void slaMeldingOp(String plaatsnaam, String beschrijving){
         LocalDateTime datum = LocalDateTime.now();
 
-        // Sla de melding op in de database
         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
     }
 
