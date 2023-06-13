@@ -6,8 +6,10 @@ import android.os.Bundle
 
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -65,7 +67,7 @@ class MeldingLijstActivity : AppCompatActivity() {
                             ) {
                                 val viewModel = hiltViewModel<MeldingBewerkenViewModel>()
                                 val state by viewModel.uiState.collectAsState()
-                                MeldingBewerkenScreen(state = state, onEvent = viewModel::onEvent, {})
+                                MeldingBewerkenScreen(state = state, onEvent = viewModel::onEvent, navController = navController)
                             }
                         }
                     }

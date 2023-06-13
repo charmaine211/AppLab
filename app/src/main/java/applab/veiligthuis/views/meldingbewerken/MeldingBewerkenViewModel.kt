@@ -29,7 +29,7 @@ class MeldingBewerkenViewModel @Inject constructor(
     init {
         val meldingTypeStr = savedStateHandle.get<String>("meldingtype")
         val meldingType: MeldingType
-        if(meldingTypeStr == "inkomend"){
+        if(meldingTypeStr == MeldingType.Inkomend.value){
             meldingType = MeldingType.Inkomend
         } else {
             meldingType = MeldingType.Afgesloten
@@ -84,24 +84,8 @@ class MeldingBewerkenViewModel @Inject constructor(
             }
             is MeldingBewerkenEvent.SaveMelding -> {
                 viewModelScope.launch {
-                    lateinit var newMelding: Melding
                     if(_uiState.value.uneditedMelding != null) {
-                        if(_uiState.value.uneditedMelding!!.status != MeldingStatus.AFGESLOTEN && _uiState.value.status == MeldingStatus.AFGESLOTEN) {
-                            newMelding = AfgeslotenMelding(
-                                datum = _uiState.value.uneditedMelding!!.datum,
-                                status = _uiState.value.status,
-                                beschrijving = _uiState.value.uneditedMelding!!.beschrijving,
-                                plaatsNaam = _uiState.value.uneditedMelding!!.plaatsNaam,
-                                key = _uiState.value.uneditedMelding!!.key,
-                                typeGeweld = _uiState.value.typeGeweld,
-                                beroepsmatig = _uiState.value.beroepsmatig,
-                            )
-                        } else {
-                            newMelding = _uiState.value.uneditedMelding!!.copy(status = _uiState.value.status, typeGeweld = _uiState.value.typeGeweld, beroepsmatig = _uiState.value.beroepsmatig)
-                        }
-                    }
-                    if(_uiState.value.uneditedMelding != null) {
-                        meldingUseCases.editMelding(_uiState.value.uneditedMelding!!, _uiState.value.status, _uiState.value.typeGeweld)
+                        meldingUseCases.editMelding(_uiState.value.uneditedMelding, _uiState.value.status, _uiState.value.typeGeweld)
                     }
                 }
             }
@@ -114,7 +98,9 @@ class MeldingBewerkenViewModel @Inject constructor(
             .onEach { melding ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        uneditedMelding = melding
+                        uneditedMelding = melding,
+                        status = melding.status!!,
+
                     )
                 }
             }

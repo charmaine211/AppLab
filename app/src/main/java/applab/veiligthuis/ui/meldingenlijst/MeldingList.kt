@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
+import applab.veiligthuis.domain.util.MeldingType
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -15,7 +16,7 @@ import java.time.ZoneOffset
 @Composable
 fun MeldingList(
     list: List<Melding?>,
-    onCardClick: (String, String) -> Unit,
+    onCardClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -26,7 +27,7 @@ fun MeldingList(
             if(melding != null){
             val datumParsed = LocalDateTime.ofEpochSecond(melding.datum!!, 0, ZoneOffset.UTC)
                 MeldingItem(
-                    onCardClick = { onCardClick("inkomend", melding.key!!) },
+                    onCardClick = { onCardClick(melding.key!!) },
                     datum = "" + datumParsed.dayOfMonth + "-" + datumParsed.monthValue + "-" + datumParsed.year + " " + datumParsed.hour + ":" + datumParsed.minute,
                     description = melding.beschrijving!!,
                     meldingStatus = melding.status!!
@@ -36,16 +37,13 @@ fun MeldingList(
     }
 }
 
-private fun parseDate(datum: String) {
-    val parsed = LocalDateTime.parse(datum)
-}
-
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewMeldingList() {
-//    val list = List(30) { InkomendeMelding(datum = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)) }
-//    MeldingList(
-//        list = list
-//    )
+    val list = List(30) { InkomendeMelding(datum = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)) }
+    MeldingList(
+        list = list,
+        onCardClick = {b ->},
+    )
 }
 

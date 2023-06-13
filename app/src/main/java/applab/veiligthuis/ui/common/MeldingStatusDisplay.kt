@@ -22,13 +22,13 @@ fun MeldingStatusDisplay(
     ){
         Text (
             text = meldingStatus.status,
-            fontSize = 10.sp,
+            fontSize = 12.sp,
             color = Color.White,
             textAlign = TextAlign.Center,
             modifier = modifier
                 .background(color = meldingStatus.color, shape = RoundedCornerShape(45))
-                .padding(8.dp, 4.dp)
-                .width(80.dp),
+                .padding(8.dp, 6.dp)
+                .width(100.dp),
         )
 }
 

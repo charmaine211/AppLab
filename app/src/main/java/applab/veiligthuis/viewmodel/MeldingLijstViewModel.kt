@@ -96,6 +96,9 @@ class MeldingLijstViewModel @Inject constructor(
                     )
                 }
             }
+            is MeldingLijstEvent.UpdateFilter -> {
+
+            }
         }
     }
 

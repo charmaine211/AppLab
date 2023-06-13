@@ -9,5 +9,6 @@ sealed class MeldingLijstEvent {
     data class Status(val id: Int, val checked: Boolean ): MeldingLijstEvent()
     data class SoortGeweld(val id: Int, val checked: Boolean): MeldingLijstEvent()
     data class Beroepsmatig(val id: Int, val checked: Boolean): MeldingLijstEvent()
+    object UpdateFilter: MeldingLijstEvent()
 
 }

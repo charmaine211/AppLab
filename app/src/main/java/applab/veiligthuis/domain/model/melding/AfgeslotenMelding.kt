@@ -7,7 +7,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 @IgnoreExtraProperties
 class AfgeslotenMelding(
     datum: Long? = null,
-    status: MeldingStatus? = null,
+    status: MeldingStatus = MeldingStatus.AFGESLOTEN,
     beschrijving: String = "",
     plaatsNaam: String = "",
     key: String? = null,
@@ -26,7 +26,7 @@ class AfgeslotenMelding(
     @Exclude
     override fun copy(
         datum: Long?,
-        status: MeldingStatus?,
+        status: MeldingStatus,
         beschrijving: String,
         plaatsNaam: String,
         key: String?,

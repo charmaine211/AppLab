@@ -10,7 +10,7 @@ data class MeldingBewerkenState(
     val meldingKey: String = "",
     val meldingType: MeldingType = MeldingType.Inkomend,
     val status: MeldingStatus = MeldingStatus.ONBEHANDELD,
-    val typeGeweld: String = "",
+    val typeGeweld: String = "Type Geweld",
     val beroepsmatig: Boolean = false,
     val typeGeweldExpanded: Boolean = false,
 )

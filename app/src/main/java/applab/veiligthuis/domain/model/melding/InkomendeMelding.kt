@@ -7,7 +7,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 @IgnoreExtraProperties
 class InkomendeMelding(
     datum: Long? = null,
-    status: MeldingStatus? = null,
+    status: MeldingStatus = MeldingStatus.ONBEHANDELD,
     beschrijving: String = "",
     plaatsNaam: String = "",
     key: String? = null,
@@ -26,7 +26,7 @@ class InkomendeMelding(
     @Exclude
     override fun copy(
         datum: Long?,
-        status: MeldingStatus?,
+        status: MeldingStatus,
         beschrijving: String,
         plaatsNaam: String,
         key: String?,
