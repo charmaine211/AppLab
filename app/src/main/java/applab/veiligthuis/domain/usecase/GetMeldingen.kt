@@ -4,8 +4,8 @@ import applab.veiligthuis.domain.util.MeldingOrder
 import applab.veiligthuis.domain.util.OrderType
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.util.MeldingType
-import applab.veiligthuis.repository.melding.MeldingPaths
-import applab.veiligthuis.repository.melding.MeldingRepository
+import applab.veiligthuis.data.melding.MeldingPaths
+import applab.veiligthuis.data.melding.MeldingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

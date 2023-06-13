@@ -1,6 +1,6 @@
 package applab.veiligthuis.domain.model.melding
 
-import applab.veiligthuis.repository.melding.MeldingPaths
+import applab.veiligthuis.data.melding.MeldingPaths
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 

@@ -1,12 +1,9 @@
 package applab.veiligthuis.domain.usecase
 
-import applab.veiligthuis.domain.model.melding.AfgeslotenMelding
-import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.util.MeldingType
-import applab.veiligthuis.repository.melding.MeldingNotFoundException
-import applab.veiligthuis.repository.melding.MeldingPaths
-import applab.veiligthuis.repository.melding.MeldingRepository
+import applab.veiligthuis.data.melding.MeldingNotFoundException
+import applab.veiligthuis.data.melding.MeldingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 

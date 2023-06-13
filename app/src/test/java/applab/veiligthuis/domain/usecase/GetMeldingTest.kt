@@ -6,7 +6,7 @@ import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.domain.util.MeldingType
-import applab.veiligthuis.repository.melding.MeldingNotFoundException
+import applab.veiligthuis.data.melding.MeldingNotFoundException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*

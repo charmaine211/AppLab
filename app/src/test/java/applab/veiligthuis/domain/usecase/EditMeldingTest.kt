@@ -6,8 +6,8 @@ import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.domain.util.MeldingType
-import applab.veiligthuis.repository.melding.MeldingPaths
-import applab.veiligthuis.repository.melding.MeldingRepository
+import applab.veiligthuis.data.melding.MeldingPaths
+import applab.veiligthuis.data.melding.MeldingRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*

@@ -1,4 +1,4 @@
-package applab.veiligthuis.repository.melding
+package applab.veiligthuis.data.melding
 
 
 import android.util.Log

@@ -3,7 +3,7 @@ package applab.veiligthuis.domain.usecase
 import applab.veiligthuis.domain.model.melding.AfgeslotenMelding
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
-import applab.veiligthuis.repository.melding.MeldingRepository
+import applab.veiligthuis.data.melding.MeldingRepository
 
 class EditMelding(
     private val repository: MeldingRepository

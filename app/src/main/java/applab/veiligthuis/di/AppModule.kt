@@ -1,8 +1,8 @@
 package applab.veiligthuis.di
 
 import applab.veiligthuis.domain.usecase.*
-import applab.veiligthuis.repository.melding.MeldingRepository
-import applab.veiligthuis.repository.melding.MeldingRepositoryImpl
+import applab.veiligthuis.data.melding.MeldingRepository
+import applab.veiligthuis.data.melding.MeldingRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

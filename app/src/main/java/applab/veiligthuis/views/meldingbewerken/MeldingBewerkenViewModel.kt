@@ -9,7 +9,7 @@ import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingType
-import applab.veiligthuis.repository.melding.MeldingNotFoundException
+import applab.veiligthuis.data.melding.MeldingNotFoundException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*

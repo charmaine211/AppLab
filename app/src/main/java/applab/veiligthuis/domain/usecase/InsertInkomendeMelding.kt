@@ -2,7 +2,7 @@ package applab.veiligthuis.domain.usecase
 
 import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
-import applab.veiligthuis.repository.melding.MeldingRepository
+import applab.veiligthuis.data.melding.MeldingRepository
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
