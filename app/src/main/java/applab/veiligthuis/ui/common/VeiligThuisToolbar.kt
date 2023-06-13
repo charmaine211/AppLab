@@ -1,6 +1,7 @@
 package applab.veiligthuis.ui
 
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,14 +19,16 @@ import applab.veiligthuis.R
 
 @Composable
 fun veiligThuisToolbar(
-    onHome: Unit,
     onProfile: Unit,
 ) {
+    val activity = LocalContext.current as Activity
     TopAppBar(
         title = {},
         backgroundColor =  Color.White,
         navigationIcon = {
-            IconButton(onClick = {onHome}) {
+            IconButton(onClick = {
+                activity.finish()
+            }) {
                 Image(
                     painter = painterResource(id = R.drawable.veiligthuis_logo),
                     contentDescription = "Veilig thuis logo knop",
@@ -56,5 +60,5 @@ fun veiligThuisToolbar(
 @Preview(showBackground = true)
 @Composable
 fun previewToolbar() {
-    veiligThuisToolbar(Unit, Unit)
+    veiligThuisToolbar(Unit)
 }

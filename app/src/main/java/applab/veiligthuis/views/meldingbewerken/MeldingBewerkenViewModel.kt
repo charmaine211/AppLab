@@ -100,7 +100,7 @@ class MeldingBewerkenViewModel @Inject constructor(
                     currentState.copy(
                         uneditedMelding = melding,
                         status = melding.status!!,
-
+                        typeGeweld = melding.typeGeweld
                     )
                 }
             }

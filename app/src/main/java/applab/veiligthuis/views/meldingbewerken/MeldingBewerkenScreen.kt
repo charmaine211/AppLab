@@ -38,7 +38,7 @@ fun MeldingBewerkenScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { veiligThuisToolbar(onHome = Unit, onProfile = Unit)},
+        topBar = { veiligThuisToolbar(onProfile = Unit)},
         bottomBar = { BottomAppBar(modifier = Modifier.fillMaxHeight(0.1F), backgroundColor = Color.White, elevation = 0.dp) {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
                 Text(
