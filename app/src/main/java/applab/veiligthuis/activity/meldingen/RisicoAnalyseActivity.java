@@ -1,11 +1,11 @@
 package applab.veiligthuis.activity.meldingen;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import applab.veiligthuis.R;
-
-import android.os.Bundle;
 
 public class RisicoAnalyseActivity extends AppCompatActivity {
 

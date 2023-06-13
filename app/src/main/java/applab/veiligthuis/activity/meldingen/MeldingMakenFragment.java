@@ -17,8 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.time.LocalDateTime;
 
-import applab.veiligthuis.activity.home.MainActivity;
 import applab.veiligthuis.R;
+import applab.veiligthuis.activity.home.MainActivity;
 import applab.veiligthuis.viewmodel.MeldingViewModel;
 
 public class MeldingMakenFragment extends Fragment {
