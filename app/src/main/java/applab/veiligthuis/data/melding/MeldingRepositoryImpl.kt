@@ -63,11 +63,13 @@ class MeldingRepositoryImpl : MeldingRepository {
         }
     }
 
+    @Throws(MeldingInsertException::class)
     override fun insertOrUpdateMelding(melding: Melding) {
         if(melding.key == null) {
             val key = ref.child(melding.getPaths()[0]).push().key
             if(key == null) {
                 Log.w("REP", "Melding niet naar db gepushed.")
+                throw MeldingInsertException("Aanmaken van meldingen mislukt.")
             }
             melding.key = key
         }

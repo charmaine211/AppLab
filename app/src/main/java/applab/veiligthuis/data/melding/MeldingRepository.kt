@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface MeldingRepository {
     fun getMeldingen(paths: List<String>, meldingType: MeldingType): Flow<List<Melding?>>
     fun getMelding(meldingKey: String, meldingType: MeldingType): Flow<Melding>
+    @Throws(MeldingInsertException::class)
     fun insertOrUpdateMelding(melding: Melding)
     fun deleteMelding(melding: Melding)
 }

@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.meldingen.MeldingenActivity;
+import applab.veiligthuis.activity.meldingen.MeldingLijstActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
