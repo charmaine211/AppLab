@@ -1,15 +1,15 @@
 package applab.veiligthuis;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import android.os.Build;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,14 +18,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 
 import java.lang.reflect.Field;
 
 import applab.veiligthuis.activity.home.FragmentNotLoggedIn;
 import applab.veiligthuis.activity.home.MainActivity;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
     private MainActivityMock mainActivityMock;
