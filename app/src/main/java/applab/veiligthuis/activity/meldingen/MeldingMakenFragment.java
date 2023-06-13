@@ -45,6 +45,7 @@ public class MeldingMakenFragment extends Fragment {
 
         initPlaatsnaamSpinner();
         initOpslaanButton();
+        initSluitAppButton();
     }
 
     public void initPlaatsnaamSpinner(){
@@ -62,26 +63,21 @@ public class MeldingMakenFragment extends Fragment {
         getView().findViewById(R.id.opslaan_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // De waarde van de spinner
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
 
-                // De waarde van de edittext
                 final EditText meldingEditText = getView().findViewById(R.id.meldingmaken_editTextTextMultiLine);
                 String beschrijving = meldingEditText.getText().toString().trim();
 
-                // Controleer of de edittext of plaatsneem leeg zijn
                 if (plaatsnaam.isEmpty() || beschrijving.isEmpty()){
                     Toast.makeText(getActivity(), "Zorg dat de beschrijving en de plaatsnaam ingevuld zijn.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    // Zo niet, vraag de gebruiker dan om te bevestigen om de melding te maken en deze naar de db te sturen
                     AlertDialog.Builder builder = new AlertDialog.Builder(MeldingMakenFragment.this.getContext());
                     builder.setMessage("Wil je je melding opsturen?")
                             .setCancelable(true)
                             .setPositiveButton("Bevestig", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     slaMeldingOp(plaatsnaam, beschrijving);
-                                    // Ga terug naar de main activity
                                     returnToMain();
                                 }
                             })
@@ -113,7 +109,6 @@ public class MeldingMakenFragment extends Fragment {
         });
         meldingViewModel.getSuccessMessage().observe(getViewLifecycleOwner(), successMessage -> {
             if (successMessage != null) {
-                // Show a Toast or handle the success message
                 Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show();
             }
         });
@@ -124,5 +119,15 @@ public class MeldingMakenFragment extends Fragment {
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mainIntent);
         getActivity().finish();
+    }
+
+    private void initSluitAppButton() {
+        View sluitButton = getView().findViewById(R.id.sluitApp);
+        sluitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.exit(0);
+            }
+        });
     }
 }
