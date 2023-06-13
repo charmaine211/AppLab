@@ -1,11 +1,6 @@
 package applab.veiligthuis.common;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageView;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,13 +14,12 @@ import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 
-import applab.veiligthuis.R;
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
+import applab.veiligthuis.R;
+import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import applab.veiligthuis.activity.home.MainActivity;
 import applab.veiligthuis.activity.profile.Profile;
 

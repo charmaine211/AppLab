@@ -16,7 +16,6 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
 
     @Override
     public boolean isEnabled(int position) {
-        // Disable the first item
         return position != 0;
     }
 
@@ -25,7 +24,6 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         View view = super.getDropDownView(position, convertView, parent);
         TextView textView = (TextView) view.findViewById(android.R.id.text1);
 
-        // Set the color of the first item to gray
         if (position == 0) {
             textView.setTextColor(Color.GRAY);
         } else {
