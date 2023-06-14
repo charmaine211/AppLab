@@ -1,7 +1,6 @@
 package applab.veiligthuis.activity.meldingen;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +11,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.time.LocalDateTime;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.home.MainActivity;
+import applab.veiligthuis.common.BaseFragment;
 import applab.veiligthuis.viewmodel.MeldingViewModel;
 
-public class MeldingMakenFragment extends Fragment {
+public class MeldingMakenFragment extends BaseFragment {
 
     private MeldingViewModel meldingViewModel;
 
@@ -45,7 +43,6 @@ public class MeldingMakenFragment extends Fragment {
 
         initPlaatsnaamSpinner();
         initOpslaanButton();
-        initSluitAppButton();
     }
 
     public void initPlaatsnaamSpinner(){
@@ -114,20 +111,4 @@ public class MeldingMakenFragment extends Fragment {
         });
     }
 
-    public void returnToMain(){
-        Intent mainIntent = new Intent(getActivity(), MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(mainIntent);
-        getActivity().finish();
-    }
-
-    private void initSluitAppButton() {
-        View sluitButton = getView().findViewById(R.id.sluitApp);
-        sluitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.exit(0);
-            }
-        });
-    }
 }

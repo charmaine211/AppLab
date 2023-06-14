@@ -1,26 +1,25 @@
 package applab.veiligthuis.common;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.view.MenuItem;
 import android.widget.PopupMenu;
 import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 
+import applab.veiligthuis.R;
+import applab.veiligthuis.activity.SignInUp.LogInActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-import applab.veiligthuis.R;
-import applab.veiligthuis.activity.SignInUp.LogInActivity;
-import applab.veiligthuis.activity.home.MainActivity;
 import applab.veiligthuis.activity.profile.Profile;
 
 public class VeiligThuisToolbar extends Toolbar {
@@ -28,7 +27,7 @@ public class VeiligThuisToolbar extends Toolbar {
     private ImageView homeImageView;
     private ImageView profileImageView;
     private FirebaseAuth mAuth;
-
+    private BaseActivity returnToMainListener;
 
     public VeiligThuisToolbar(Context context) {
         super(context);
@@ -45,6 +44,9 @@ public class VeiligThuisToolbar extends Toolbar {
         init(context);
     }
 
+    public void setReturnToMainListener(BaseActivity listener) {
+        this.returnToMainListener = listener;
+    }
 
     private void init(Context context) {
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +83,7 @@ public class VeiligThuisToolbar extends Toolbar {
                                 return true;
                             case R.id.sign_out:
                                 mAuth.signOut();
-                                returnToMain();
+                                returnToMainListener.returnToMain();
                                 return true;
                             case R.id.sign_in:
                                 context.startActivity(new Intent(context, LogInActivity.class));
@@ -95,17 +97,6 @@ public class VeiligThuisToolbar extends Toolbar {
             }
         });
     }
-
-    private void returnToMain() {
-        Context context = getContext();
-        Intent mainIntent = new Intent(context, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(mainIntent);
-        if (context instanceof Activity) {
-            ((Activity) context).finish();
-        }
-    }
-
 
     public void finishAndLogoutIfTaskRoot(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
