@@ -15,7 +15,8 @@ class GetMeldingen(
     operator fun invoke(
         meldingOrder: MeldingOrder = MeldingOrder.Datum(OrderType.Descending),
         meldingType: MeldingType = MeldingType.Inkomend,
-        plaatsen: List<String> = listOf()
+        plaatsen: List<String> = listOf(),
+        filterPredicates: List<(Melding) -> Boolean> = listOf()
     ): Flow<List<Melding?>> {
         lateinit var paths: List<String>
         when(meldingType) {
@@ -26,22 +27,48 @@ class GetMeldingen(
                 paths = if(plaatsen.isEmpty()) listOf(MeldingPaths.AFGESLOTEN.path) else plaatsen.map { plaats -> "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaats" }
             }
         }
-        return repository.getMeldingen(paths, meldingType)
-            .map { meldingen ->
-                when(meldingOrder.orderType) {
-                    is OrderType.Ascending -> {
-                        when(meldingOrder) {
-                            is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
-                            is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
+        if(filterPredicates.isEmpty()) {
+
+            return repository.getMeldingen(paths, meldingType)
+                .map { meldingen ->
+                    when(meldingOrder.orderType) {
+                        is OrderType.Ascending -> {
+                            when(meldingOrder) {
+                                is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
+                                is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
+                            }
                         }
-                    }
-                    is OrderType.Descending -> {
-                        when(meldingOrder) {
-                            is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
-                            is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
+                        is OrderType.Descending -> {
+                            when(meldingOrder) {
+                                is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
+                                is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
+                            }
                         }
                     }
                 }
-            }
+        } else {
+            return repository.getMeldingen(paths, meldingType)
+                .map { meldingen ->
+                    meldingen.filter { melding ->
+                        filterPredicates.all { it(melding!!) }
+                    }
+                }
+                .map { meldingen ->
+                    when(meldingOrder.orderType) {
+                        is OrderType.Ascending -> {
+                            when(meldingOrder) {
+                                is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
+                                is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
+                            }
+                        }
+                        is OrderType.Descending -> {
+                            when(meldingOrder) {
+                                is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
+                                is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
+                            }
+                        }
+                    }
+                }
+        }
     }
 }

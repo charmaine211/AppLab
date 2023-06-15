@@ -4,6 +4,8 @@ package applab.veiligthuis.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import applab.veiligthuis.domain.model.melding.Melding
+import applab.veiligthuis.domain.model.melding.MeldingStatus
 import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingOrder
 import applab.veiligthuis.domain.util.MeldingType
@@ -15,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.function.BiPredicate
 import javax.inject.Inject
 
 
@@ -32,7 +35,7 @@ class MeldingLijstViewModel @Inject constructor(
     private var getMeldingenJob: Job? = null
 
     init {
-        getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend)
+        getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend, _filterState.value.filterPredicates)
         Log.w("VM", "Meldingen opgehaald.")
     }
 
@@ -44,7 +47,7 @@ class MeldingLijstViewModel @Inject constructor(
                 ) {
                     return
                 }
-                getMeldingen(event.meldingOrder, _uiState.value.meldingType)
+                getMeldingen(event.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
             }
             is MeldingLijstEvent.ToggleFilterSection -> {
                 viewModelScope.launch {
@@ -69,7 +72,7 @@ class MeldingLijstViewModel @Inject constructor(
                             isInkomendSelected = currentState.isInkomendSelected.not()
                         )
                     }
-                    getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType)
+                    getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
                 }
             }
             is MeldingLijstEvent.Status -> {
@@ -96,15 +99,30 @@ class MeldingLijstViewModel @Inject constructor(
                     )
                 }
             }
-            is MeldingLijstEvent.UpdateFilter -> {
-
+            is MeldingLijstEvent.ApplyFilter -> {
+                val filterPredicates = mutableListOf<(Melding) -> Boolean>()
+                if(_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
+                    filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD || melding.status == MeldingStatus.IN_BEHANDELING}
+                } else if (_filterState.value.statusFilter[0].checked && !_filterState.value.statusFilter[1].checked) {
+                    filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }
+                } else if (!_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
+                    filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.IN_BEHANDELING }
+                }
+                filterPredicates.add { melding: Melding -> melding.datum!! >= 1686649315 }
+                filterPredicates.add { melding: Melding -> melding.datum!! < 1686649572 }
+                _filterState.update { currentState ->
+                    currentState.copy(
+                        filterPredicates = filterPredicates
+                    )
+                }
+                getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
             }
         }
     }
 
-    private fun getMeldingen(meldingOrder: MeldingOrder, meldingType: MeldingType) {
+    private fun getMeldingen(meldingOrder: MeldingOrder, meldingType: MeldingType, filterPredicate: List<(Melding) -> Boolean>) {
         getMeldingenJob?.cancel()
-        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder, meldingType)
+        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder, meldingType, filterPredicates = listOf({ melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }, { melding: Melding -> melding.datum!! >= 1686649315 }, { melding: Melding -> melding.datum!! < 1686649572 }))
             .onEach { meldingen ->
                 _uiState.update { currentState ->
                     currentState.copy(
@@ -115,5 +133,13 @@ class MeldingLijstViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun parseStatus(status: String): MeldingStatus {
+        return when (status) {
+            MeldingStatus.IN_BEHANDELING.status -> MeldingStatus.IN_BEHANDELING
+            MeldingStatus.ONBEHANDELD.status -> MeldingStatus.ONBEHANDELD
+            else -> MeldingStatus.AFGESLOTEN
+        }
     }
 }
