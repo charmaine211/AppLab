@@ -20,7 +20,7 @@ import applab.veiligthuis.viewmodel.MeldingLijstViewModel
 @Composable
 fun MeldingLijstScreen(
     navController: NavController,
-    viewModel: MeldingLijstViewModel = hiltViewModel()
+    viewModel: MeldingLijstViewModel
 ) {
     val state = viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()

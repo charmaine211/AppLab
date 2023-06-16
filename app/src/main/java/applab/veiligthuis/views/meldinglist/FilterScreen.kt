@@ -17,7 +17,7 @@ import applab.veiligthuis.ui.theme.AppTheme
 @Composable
 fun FilterScreen(
     navController: NavController,
-    viewModel: MeldingLijstViewModel = hiltViewModel()
+    viewModel: MeldingLijstViewModel
 ) {
     val filterState = viewModel.filterState.collectAsState()
 
@@ -36,7 +36,7 @@ fun FilterScreen(
 
         Button( onClick = {
             viewModel.onEvent(MeldingLijstEvent.ApplyFilter)
-            navController.popBackStack()
+            navController.popBackStack(route = "melding_list_screen", inclusive = false)
         }) {
             Text( text = "Apply Filter")
         }
