@@ -7,14 +7,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import applab.veiligthuis.ui.meldingenlijst.MeldingList
 import applab.veiligthuis.ui.meldingenlijst.filterButtonsBar
 import applab.veiligthuis.ui.veiligThuisToolbar
 import applab.veiligthuis.views.meldinglist.MeldingLijstEvent
 import applab.veiligthuis.viewmodel.MeldingLijstViewModel
-
+import applab.veiligthuis.views.Screens
 
 
 @Composable
@@ -44,7 +43,7 @@ fun MeldingLijstScreen(
                     isInkomendSelected = state.value.isInkomendSelected,
                     toggleInkomendSelected = { viewModel.onEvent(MeldingLijstEvent.ToggleMeldingStatusLijst) },
                     expandedFilter = state.value.isFilterExpanded,
-                    onClickExpandFilter = { navController.navigate("melding_list_filter") },
+                    onClickExpandFilter = { navController.navigate(Screens.FilterMeldingen.route) },
                     selectedLocatie = ""
                 )
                 Divider(
@@ -55,7 +54,7 @@ fun MeldingLijstScreen(
                     )
                 MeldingList(list = state.value.meldingen, onCardClick = {
                         meldingKey -> navController.navigate(
-                    "melding_bewerken_screen" +
+                    Screens.MeldingBewerken.route +
                             "?meldingtype=${state.value.meldingType.value}&meldingKey=$meldingKey")
                 } )
             }
