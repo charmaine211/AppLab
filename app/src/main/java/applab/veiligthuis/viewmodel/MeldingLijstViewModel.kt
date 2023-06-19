@@ -2,7 +2,6 @@ package applab.veiligthuis.viewmodel
 
 
 import android.util.Log
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import applab.veiligthuis.domain.model.melding.Melding
@@ -18,7 +17,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.function.BiPredicate
 import javax.inject.Inject
 
 
@@ -102,21 +100,12 @@ class MeldingLijstViewModel @Inject constructor(
                 }
             }
             is MeldingLijstEvent.ApplyFilter -> {
-                val filterPredicates = mutableListOf<(Melding) -> Boolean>()
-                if(_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
-                    filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD || melding.status == MeldingStatus.IN_BEHANDELING}
-                } else if (_filterState.value.statusFilter[0].checked && !_filterState.value.statusFilter[1].checked) {
-                    filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }
-                } else if (!_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
-                    filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.IN_BEHANDELING }
-                }
                 _filterState.update { currentState ->
                     currentState.copy(
-                        filterPredicates = filterPredicates
+                        filterPredicates = generatePredicates()
                     )
                 }
                 getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
-
             }
         }
     }
@@ -134,5 +123,18 @@ class MeldingLijstViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun generatePredicates(): List<(Melding) -> Boolean> {
+        val filterPredicates = mutableListOf<(Melding) -> Boolean>()
+        // Status
+        if(_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
+            filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD || melding.status == MeldingStatus.IN_BEHANDELING}
+        } else if (_filterState.value.statusFilter[0].checked && !_filterState.value.statusFilter[1].checked) {
+            filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }
+        } else if (!_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
+            filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.IN_BEHANDELING }
+        }
+        return filterPredicates
     }
 }
