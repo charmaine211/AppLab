@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,9 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.home.MainActivity;
+import applab.veiligthuis.common.BaseActivity;
 
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends BaseActivity {
     EditText editTextUserName;
     EditText editTextPassword;
     TextView textViewForgotPassWord;
@@ -111,10 +110,4 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-    private void returnToMain() {
-        Intent mainIntent = new Intent(LogInActivity.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(mainIntent);
-        finish();
-    }
 }
