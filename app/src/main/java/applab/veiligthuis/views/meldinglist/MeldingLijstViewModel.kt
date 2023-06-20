@@ -1,4 +1,4 @@
-package applab.veiligthuis.viewmodel
+package applab.veiligthuis.views.meldinglist
 
 
 import android.util.Log
@@ -10,9 +10,6 @@ import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingOrder
 import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.domain.util.OrderType
-import applab.veiligthuis.views.meldinglist.MeldingLijstEvent
-import applab.veiligthuis.views.meldinglist.MeldingLijstFilterState
-import applab.veiligthuis.views.meldinglist.MeldingLijstState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*

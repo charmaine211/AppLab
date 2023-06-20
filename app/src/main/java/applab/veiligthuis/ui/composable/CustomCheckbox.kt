@@ -29,7 +29,7 @@ fun CheckboxItem(
 ){
     Box(modifier = modifier
         .fillMaxWidth()
-        .padding(vertical = 3.dp)
+        .padding(vertical = 5.dp)
         .height(25.dp)
         .toggleable(
             value = item.checked,

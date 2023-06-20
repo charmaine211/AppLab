@@ -28,7 +28,6 @@ class GetMeldingen(
             }
         }
         if(filterPredicates.isEmpty()) {
-
             return repository.getMeldingen(paths, meldingType)
                 .map { meldingen ->
                     when(meldingOrder.orderType) {

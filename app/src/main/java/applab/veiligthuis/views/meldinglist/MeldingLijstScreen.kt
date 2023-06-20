@@ -12,7 +12,7 @@ import applab.veiligthuis.ui.meldingenlijst.MeldingList
 import applab.veiligthuis.ui.meldingenlijst.filterButtonsBar
 import applab.veiligthuis.ui.veiligThuisToolbar
 import applab.veiligthuis.views.meldinglist.MeldingLijstEvent
-import applab.veiligthuis.viewmodel.MeldingLijstViewModel
+import applab.veiligthuis.views.meldinglist.MeldingLijstViewModel
 import applab.veiligthuis.views.Screens
 
 
