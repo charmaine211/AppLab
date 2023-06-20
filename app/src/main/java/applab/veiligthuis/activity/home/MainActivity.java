@@ -13,10 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.meldingen.MeldingLijstActivity;
-import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
-import applab.veiligthuis.activity.tip.TipBeheren;
-import applab.veiligthuis.activity.tip.TipInzien;
+
 import applab.veiligthuis.common.BaseActivity;
 import applab.veiligthuis.common.VeiligThuisToolbar;
 
@@ -71,16 +68,6 @@ public class MainActivity extends BaseActivity {
     private boolean checkLoginState() {
         FirebaseUser user = mAuth.getCurrentUser();
         return (user != null && !user.isAnonymous());
-    }
-
-    private void initSluitAppButton() {
-        androidx.appcompat.widget.AppCompatImageView sluitButton = findViewById(R.id.sluitApp);
-        sluitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void initViews() {
