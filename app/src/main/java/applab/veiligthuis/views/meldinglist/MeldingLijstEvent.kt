@@ -9,7 +9,7 @@ sealed class MeldingLijstEvent {
     data class FilterStatus(val id: Int, val checked: Boolean ): MeldingLijstEvent()
     data class FilterSoortGeweld(val id: Int, val checked: Boolean): MeldingLijstEvent()
     data class FilterBeroepsmatig(val id: Int, val checked: Boolean): MeldingLijstEvent()
-    data class FilterDatum(val id: Int, val checked: Boolean): MeldingLijstEvent()
+    data class FilterDatum(val selected: String?): MeldingLijstEvent()
     object SluitFilter: MeldingLijstEvent()
 
 }

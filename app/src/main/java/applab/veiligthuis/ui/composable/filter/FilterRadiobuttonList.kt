@@ -9,29 +9,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import applab.veiligthuis.ui.composable.CheckBoxItemState
-import applab.veiligthuis.ui.composable.CheckBoxList
+import applab.veiligthuis.ui.composable.RadioButtonList
 import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
-fun FilterList(
+fun FilterRadioButtonList(
     headerText: String,
-    filterItems: List<CheckBoxItemState>,
-    onItemChecked: (Int, Boolean) -> Unit,
+    items: List<String>,
+    selected: String?,
+    onSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(bottom = 18.dp)) {
         Divider(modifier = Modifier.padding(bottom = 18.dp))
         Text(text = headerText, modifier = Modifier.padding(start= 20.dp, bottom = 10.dp), style = MaterialTheme.typography.h1  )
-        CheckBoxList(items = filterItems, onChecked = onItemChecked, modifier = Modifier.padding(start = 20.dp))
+        RadioButtonList(items = items, selectedItem = selected, onItemSelected = onSelected, modifier = Modifier.padding(start = 20.dp))
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun FilterListPreview() {
+fun previewFilterRadioButtonList() {
     AppTheme {
-        FilterList(headerText = "Beroepsmatig", filterItems = listOf(CheckBoxItemState(1,false, "Onbehandeld"), CheckBoxItemState(2,false, "In behandeling")), onItemChecked = { a, b ->})
+        FilterRadioButtonList(headerText = "Datum", items = listOf("Vandaag", "Deze Week", "Deze Maand", "Afgelopen Maand"), selected = "Vandaag",  {})
     }
 }

@@ -15,6 +15,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import javax.inject.Inject
 
 
@@ -33,7 +35,7 @@ class MeldingLijstViewModel @Inject constructor(
 
 
     init {
-        getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend, _filterState.value.filterPredicates)
+        getMeldingen(MeldingOrder.Datum(OrderType.Descending), MeldingType.Inkomend, _filterState.value.filterStatusPredicates, _filterState.value.filterSoortGeweldPredicates, _filterState.value.filterDatumPredicates, _filterState.value.filterBeroepsmatigPredicates)
         Log.w("VM", "Meldingen opgehaald.")
     }
 
@@ -45,7 +47,7 @@ class MeldingLijstViewModel @Inject constructor(
                 ) {
                     return
                 }
-                getMeldingen(event.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
+                getMeldingen(event.meldingOrder, _uiState.value.meldingType, _filterState.value.filterStatusPredicates, _filterState.value.filterSoortGeweldPredicates, _filterState.value.filterDatumPredicates, _filterState.value.filterBeroepsmatigPredicates )
             }
             is MeldingLijstEvent.ToggleFilterSection -> {
                 viewModelScope.launch {
@@ -70,14 +72,14 @@ class MeldingLijstViewModel @Inject constructor(
                             isInkomendSelected = currentState.isInkomendSelected.not()
                         )
                     }
-                    getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
+                    getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterStatusPredicates, _filterState.value.filterSoortGeweldPredicates, _filterState.value.filterDatumPredicates, _filterState.value.filterBeroepsmatigPredicates)
                 }
             }
             is MeldingLijstEvent.FilterStatus -> {
                 val status = _filterState.value.statusFilter
                 _filterState.update { currentState ->
                     currentState.copy(
-                        statusFilter = status.map {updateCheckItem(it, event.id, event.checked)}
+                        statusFilter = status.map {updateCheckItem(it, event.id, event.checked)},
                     )
                 }
             }
@@ -94,25 +96,83 @@ class MeldingLijstViewModel @Inject constructor(
                 _filterState.update { currentState ->
                     currentState.copy(
                         soortGeweldFilter = soortGeweld.map {updateCheckItem(it, event.id, event.checked) }
+
                     )
                 }
             }
             is MeldingLijstEvent.FilterDatum -> {
-                val datum = _filterState.value.datumFilter
+                var newDatum: String?
+                if(event.selected == _filterState.value.datumSelectedFilter) {
+                    newDatum = null
+                } else {
+                    newDatum = event.selected
+                }
                 _filterState.update { currentState ->
                     currentState.copy(
-                        datumFilter = datum.map {updateCheckItem(it, event.id, event.checked)}
+                        datumSelectedFilter = newDatum
                     )
                 }
             }
 
             is MeldingLijstEvent.SluitFilter -> {
+                //Status
+                val filterStatusPred = mutableListOf<(Melding) -> Boolean>()
+                if(_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
+                    filterStatusPred.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD || melding.status == MeldingStatus.IN_BEHANDELING}
+                } else if (_filterState.value.statusFilter[0].checked && !_filterState.value.statusFilter[1].checked) {
+                    filterStatusPred.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }
+                } else if (!_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
+                    filterStatusPred.add { melding: Melding -> melding.status == MeldingStatus.IN_BEHANDELING }
+                }
+                // Soort geweld
+                val filterSoortGeweldPred = mutableListOf<(Melding) -> Boolean>()
+                if(_filterState.value.soortGeweldFilter[0].checked) {
+                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Ongecategoriseerd" }
+                }
+                if(_filterState.value.soortGeweldFilter[1].checked) {
+                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Lichamelijk geweld" }
+                }
+                if(_filterState.value.soortGeweldFilter[2].checked) {
+                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Stalking" }
+                }
+                if(_filterState.value.soortGeweldFilter[3].checked) {
+                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Psychisch geweld" }
+                }
+                if(_filterState.value.soortGeweldFilter[4].checked) {
+                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Financieel misbruik" }
+                }
+                val filterDatumPred = mutableListOf<(Melding) -> Boolean>()
+                filterDatumPred.add { melding: Melding -> melding.datum!! <= LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) }
+                // Datum
+                if(_filterState.value.datumSelectedFilter == "Vandaag") {
+                    filterDatumPred.add { melding: Melding -> melding.datum!! > LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - 86400 }
+                } else if (_filterState.value.datumSelectedFilter == "Deze Week") {
+                    filterDatumPred.add { melding: Melding -> melding.datum!! > LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - (86400*7) }
+                } else if (_filterState.value.datumSelectedFilter == "Deze Maand") {
+                    filterDatumPred.add { melding: Melding -> melding.datum!! > LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - (86400*30) }
+                } else if (_filterState.value.datumSelectedFilter == "Afgelopen 6 maanden"){
+                    filterDatumPred.add { melding: Melding -> melding.datum!! > LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - (86400*180) }
+                }
+
+                // Beroepsmatig
+                val filterBeroepsmatigPred = mutableListOf<(Melding) -> Boolean>()
+                if(_filterState.value.beroepsmatigFilter[0].checked) {
+                    filterBeroepsmatigPred.add { melding: Melding -> melding.beroepsmatig }
+                }
+                if(_filterState.value.beroepsmatigFilter[1].checked) {
+                    filterBeroepsmatigPred.add { melding: Melding -> !melding.beroepsmatig }
+                }
+
                 _filterState.update { currentState ->
                     currentState.copy(
-                        filterPredicates = generatePredicates()
+                        filterBeroepsmatigPredicates = filterBeroepsmatigPred,
+                        filterSoortGeweldPredicates = filterSoortGeweldPred,
+                        filterStatusPredicates = filterStatusPred,
+                        filterDatumPredicates = filterDatumPred
                     )
                 }
-                getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
+
+                getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterStatusPredicates, _filterState.value.filterSoortGeweldPredicates, _filterState.value.filterDatumPredicates, _filterState.value.filterBeroepsmatigPredicates)
             }
         }
     }
@@ -121,9 +181,9 @@ class MeldingLijstViewModel @Inject constructor(
          return if(id == item.id) item.copy(checked = checked) else item
     }
 
-    private fun getMeldingen(meldingOrder: MeldingOrder, meldingType: MeldingType, filterPredicate: List<(Melding) -> Boolean>) {
+    private fun getMeldingen(meldingOrder: MeldingOrder, meldingType: MeldingType, filterStatusPredicates: List<(Melding) -> Boolean>, filterSoortGeweldPrediactes: List<(Melding) -> Boolean>, filterDatumPredicates: List<(Melding) -> Boolean>, filterBeroepsmatigPredicates: List<(Melding) -> Boolean>) {
         getMeldingenJob?.cancel()
-        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder, meldingType, filterPredicates = filterPredicate)
+        getMeldingenJob = meldingUseCases.getMeldingen(meldingOrder, meldingType, filterStatusPredicates = filterStatusPredicates, filterSoortGeweldPredicates = filterSoortGeweldPrediactes, filterDatumPredicates = filterDatumPredicates, filterBeroepsmatigPredicates = filterBeroepsmatigPredicates)
             .onEach { meldingen ->
                 _uiState.update { currentState ->
                     currentState.copy(
@@ -136,16 +196,4 @@ class MeldingLijstViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private fun generatePredicates(): List<(Melding) -> Boolean> {
-        val filterPredicates = mutableListOf<(Melding) -> Boolean>()
-        // Status
-        if(_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
-            filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD || melding.status == MeldingStatus.IN_BEHANDELING}
-        } else if (_filterState.value.statusFilter[0].checked && !_filterState.value.statusFilter[1].checked) {
-            filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }
-        } else if (!_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
-            filterPredicates.add { melding: Melding -> melding.status == MeldingStatus.IN_BEHANDELING }
-        }
-        return filterPredicates
-    }
 }

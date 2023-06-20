@@ -19,14 +19,14 @@ import applab.veiligthuis.ui.theme.AppTheme
 fun RadioButtonList(
     items: List<String>,
     selectedItem: Any? = null,
+    onItemSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var selected by remember { mutableStateOf(selectedItem) }
-    Column(modifier = Modifier
+    Column(modifier = modifier
         .padding(top = 10.dp, bottom = 10.dp)
         .selectableGroup()){
         items.forEach { item ->
-            RadioButtonItem(text = item, selected = item == selected, onSelected = { item: Any -> selected = item  })
+            RadioButtonItem(text = item, selected = item == selectedItem, onSelected = { onItemSelected(item) })
         }
     }
 }
@@ -41,7 +41,7 @@ fun RadioButtonItem(
 ) {
     Box(modifier = modifier
         .fillMaxWidth()
-        .padding(vertical = 3.dp)
+        .padding(top= 3.dp, bottom = 3.dp)
         .height(25.dp)
         .selectable(
             selected = selected,
@@ -68,6 +68,6 @@ fun previewRadioButtonItem(){
 @Composable
 fun previewRadioButtonList(){
     AppTheme {
-        RadioButtonList(items = listOf("Vandaag", "Deze Week", "Deze Maand"), selectedItem = null)
+        RadioButtonList(items = listOf("Vandaag", "Deze Week", "Deze Maand"), selectedItem = null, {})
     }
 }

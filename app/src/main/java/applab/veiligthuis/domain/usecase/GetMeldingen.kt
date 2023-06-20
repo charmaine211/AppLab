@@ -8,6 +8,7 @@ import applab.veiligthuis.data.melding.MeldingPaths
 import applab.veiligthuis.data.melding.MeldingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.function.BiPredicate
 
 class GetMeldingen(
     private val repository: MeldingRepository
@@ -16,7 +17,11 @@ class GetMeldingen(
         meldingOrder: MeldingOrder = MeldingOrder.Datum(OrderType.Descending),
         meldingType: MeldingType = MeldingType.Inkomend,
         plaatsen: List<String> = listOf(),
-        filterPredicates: List<(Melding) -> Boolean> = listOf()
+        filterStatusPredicates: List<(Melding) -> Boolean> = listOf(),
+        filterSoortGeweldPredicates:  List<(Melding) -> Boolean> = listOf(),
+        filterDatumPredicates: List<(Melding) -> Boolean> = listOf(),
+        filterBeroepsmatigPredicates: List<(Melding) -> Boolean> = listOf()
+
     ): Flow<List<Melding?>> {
         lateinit var paths: List<String>
         when(meldingType) {
@@ -27,47 +32,53 @@ class GetMeldingen(
                 paths = if(plaatsen.isEmpty()) listOf(MeldingPaths.AFGESLOTEN.path) else plaatsen.map { plaats -> "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaats" }
             }
         }
-        if(filterPredicates.isEmpty()) {
-            return repository.getMeldingen(paths, meldingType)
-                .map { meldingen ->
-                    when(meldingOrder.orderType) {
-                        is OrderType.Ascending -> {
-                            when(meldingOrder) {
-                                is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
-                                is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
-                            }
+        return repository.getMeldingen(paths, meldingType)
+            .map { meldingen ->
+                meldingen
+                    .filter { melding ->
+                        if(filterStatusPredicates.isNotEmpty()) {
+                            filterStatusPredicates.any { it(melding!!) }
+                        } else {
+                            true
                         }
-                        is OrderType.Descending -> {
-                            when(meldingOrder) {
-                                is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
-                                is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
-                            }
+                    }
+                    .filter { melding ->
+                        if(filterSoortGeweldPredicates.isNotEmpty()) {
+                            filterSoortGeweldPredicates.any {it(melding!!)}
+                        } else {
+                            true
+                        }
+                    }
+                    .filter { melding ->
+                        if(filterDatumPredicates.isNotEmpty()) {
+                            filterDatumPredicates.all {it(melding!!)}
+                        } else {
+                            true
+                        }
+                    }
+                    .filter { melding ->
+                        if(filterBeroepsmatigPredicates.isNotEmpty()) {
+                            filterBeroepsmatigPredicates.any {it(melding!!)}
+                        } else {
+                            true
+                        }
+                    }
+            }
+            .map { meldingen ->
+                when(meldingOrder.orderType) {
+                    is OrderType.Ascending -> {
+                        when(meldingOrder) {
+                            is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
+                            is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
+                        }
+                    }
+                    is OrderType.Descending -> {
+                        when(meldingOrder) {
+                            is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
+                            is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
                         }
                     }
                 }
-        } else {
-            return repository.getMeldingen(paths, meldingType)
-                .map { meldingen ->
-                    meldingen.filter { melding ->
-                        filterPredicates.all { it(melding!!) }
-                    }
-                }
-                .map { meldingen ->
-                    when(meldingOrder.orderType) {
-                        is OrderType.Ascending -> {
-                            when(meldingOrder) {
-                                is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
-                                is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
-                            }
-                        }
-                        is OrderType.Descending -> {
-                            when(meldingOrder) {
-                                is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
-                                is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
-                            }
-                        }
-                    }
-                }
-        }
+            }
     }
 }

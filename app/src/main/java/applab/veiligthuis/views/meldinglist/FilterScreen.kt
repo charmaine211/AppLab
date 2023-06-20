@@ -48,10 +48,10 @@ fun FilterScreen(
                 }
             }
         }
-        FilterList(headerText = "Soort Geweld", filterItems = filterState.value.soortGeweldFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterSoortGeweld(id, checked)) })
-        FilterList(headerText = "Status", filterItems = filterState.value.statusFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterStatus(id, checked)) })
-        FilterList(headerText = "Datum", filterItems = filterState.value.datumFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterDatum(id, checked)) })
-        FilterList(headerText = "Beroepsmatig", filterItems = filterState.value.beroepsmatigFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterBeroepsmatig(id, checked)) })
+        FilterCheckBoxList(headerText = "Soort Geweld", filterItems = filterState.value.soortGeweldFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterSoortGeweld(id, checked)) })
+        FilterCheckBoxList(headerText = "Status", filterItems = filterState.value.statusFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterStatus(id, checked)) })
+        FilterRadioButtonList(headerText = "Datum", items = listOf("Vandaag", "Deze Week", "Deze Maand", "Afgelopen Maand"), selected = filterState.value.datumSelectedFilter, onSelected = { selected -> viewModel.onEvent(MeldingLijstEvent.FilterDatum(selected)) })
+        FilterCheckBoxList(headerText = "Beroepsmatig", filterItems = filterState.value.beroepsmatigFilter, onItemChecked = { id, checked -> viewModel.onEvent(MeldingLijstEvent.FilterBeroepsmatig(id, checked)) })
     }
 }
 
