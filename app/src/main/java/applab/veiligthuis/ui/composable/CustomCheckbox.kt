@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import applab.veiligthuis.ui.theme.AppTheme
 
 
-data class CheckBoxItem(
+data class CheckBoxItemState(
     val id: Int = 0,
     val checked: Boolean = false,
     val text: String = "",
@@ -23,7 +23,7 @@ data class CheckBoxItem(
 
 @Composable
 fun CheckboxItem(
-    item: CheckBoxItem,
+    item: CheckBoxItemState,
     onChecked:(Boolean) -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -48,14 +48,14 @@ fun CheckboxItem(
 @Composable
 fun PreviewCheckBoxItem() {
     AppTheme {
-        CheckboxItem(item = CheckBoxItem(1,false,"Ongecategoriseerd"), onChecked = {})
+        CheckboxItem(item = CheckBoxItemState(1,false,"Ongecategoriseerd"), onChecked = {})
     }
 }
 
 
 @Composable
 fun CheckBoxList(
-    items: List<CheckBoxItem>,
+    items: List<CheckBoxItemState>,
     onChecked: (Int, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -72,6 +72,6 @@ fun CheckBoxList(
 @Composable
 fun PreviewCheckBoxList() {
     AppTheme {
-        CheckBoxList(items = listOf(CheckBoxItem(1, false,"Ongecategoriseerd"),CheckBoxItem(2,false,"Stalking")), {a,b ->})
+        CheckBoxList(items = listOf(CheckBoxItemState(1, false,"Ongecategoriseerd"),CheckBoxItemState(2,false,"Stalking")), { a, b ->})
     }
 }

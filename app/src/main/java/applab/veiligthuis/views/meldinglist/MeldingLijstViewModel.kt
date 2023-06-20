@@ -10,6 +10,7 @@ import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingOrder
 import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.domain.util.OrderType
+import applab.veiligthuis.ui.composable.CheckBoxItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -72,31 +73,40 @@ class MeldingLijstViewModel @Inject constructor(
                     getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
                 }
             }
-            is MeldingLijstEvent.Status -> {
+            is MeldingLijstEvent.FilterStatus -> {
                 val status = _filterState.value.statusFilter
                 _filterState.update { currentState ->
                     currentState.copy(
-                        statusFilter = status.map { item -> if(event.id == item.id) item.copy(checked = event.checked) else item }
+                        statusFilter = status.map {updateCheckItem(it, event.id, event.checked)}
                     )
                 }
             }
-            is MeldingLijstEvent.Beroepsmatig -> {
+            is MeldingLijstEvent.FilterBeroepsmatig -> {
                 val beroepsmatig = _filterState.value.beroepsmatigFilter
                 _filterState.update { currentState ->
                     currentState.copy(
-                        beroepsmatigFilter = beroepsmatig.map { item -> if(event.id == item.id) item.copy(checked = event.checked) else item }
+                        beroepsmatigFilter = beroepsmatig.map {updateCheckItem(it, event.id, event.checked) }
                     )
                 }
             }
-            is MeldingLijstEvent.SoortGeweld -> {
+            is MeldingLijstEvent.FilterSoortGeweld -> {
                 val soortGeweld = _filterState.value.soortGeweldFilter
                 _filterState.update { currentState ->
                     currentState.copy(
-                        soortGeweldFilter = soortGeweld.map { item -> if(event.id == item.id) item.copy(checked = event.checked) else item }
+                        soortGeweldFilter = soortGeweld.map {updateCheckItem(it, event.id, event.checked) }
                     )
                 }
             }
-            is MeldingLijstEvent.ApplyFilter -> {
+            is MeldingLijstEvent.FilterDatum -> {
+                val datum = _filterState.value.datumFilter
+                _filterState.update { currentState ->
+                    currentState.copy(
+                        datumFilter = datum.map {updateCheckItem(it, event.id, event.checked)}
+                    )
+                }
+            }
+
+            is MeldingLijstEvent.SluitFilter -> {
                 _filterState.update { currentState ->
                     currentState.copy(
                         filterPredicates = generatePredicates()
@@ -105,6 +115,10 @@ class MeldingLijstViewModel @Inject constructor(
                 getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterPredicates)
             }
         }
+    }
+
+    private fun updateCheckItem(item: CheckBoxItemState, id: Int, checked: Boolean): CheckBoxItemState {
+         return if(id == item.id) item.copy(checked = checked) else item
     }
 
     private fun getMeldingen(meldingOrder: MeldingOrder, meldingType: MeldingType, filterPredicate: List<(Melding) -> Boolean>) {

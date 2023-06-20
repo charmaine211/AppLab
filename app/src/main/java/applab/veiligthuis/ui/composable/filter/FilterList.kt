@@ -1,4 +1,4 @@
-package applab.veiligthuis.ui.composable
+package applab.veiligthuis.ui.composable.filter
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -7,15 +7,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import applab.veiligthuis.ui.composable.CheckBoxItemState
+import applab.veiligthuis.ui.composable.CheckBoxList
 import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun FilterList(
     headerText: String,
-    filterItems: List<CheckBoxItem>,
+    filterItems: List<CheckBoxItemState>,
     onItemChecked: (Int, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -31,6 +32,6 @@ fun FilterList(
 @Composable
 fun FilterListPreview() {
     AppTheme {
-        FilterList(headerText = "Beroepsmatig", filterItems = listOf(CheckBoxItem(1,false, "Onbehandeld"), CheckBoxItem(2,false, "In behandeling")), onItemChecked = {a,b ->})
+        FilterList(headerText = "Beroepsmatig", filterItems = listOf(CheckBoxItemState(1,false, "Onbehandeld"), CheckBoxItemState(2,false, "In behandeling")), onItemChecked = { a, b ->})
     }
 }
