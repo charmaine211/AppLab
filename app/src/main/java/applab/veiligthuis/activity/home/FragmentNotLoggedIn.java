@@ -10,9 +10,7 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.meldingen.MeldingenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
-import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
 
 public class FragmentNotLoggedIn extends Fragment {

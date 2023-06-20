@@ -1,29 +1,22 @@
 package applab.veiligthuis.activity.home;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.meldingen.MeldingenActivity;
-import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
-import applab.veiligthuis.activity.tip.TipBeheren;
-import applab.veiligthuis.activity.tip.TipInzien;
+import applab.veiligthuis.common.BaseActivity;
+import applab.veiligthuis.common.VeiligThuisToolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     protected FirebaseAuth mAuth;
     private Guideline guideline;
@@ -35,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        VeiligThuisToolbar toolbar = findViewById(R.id.veilig_thuis_toolbar);
+        toolbar.setReturnToMainListener(this);
 
         initViews();
         initSluitAppButton();
@@ -71,16 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkLoginState() {
         FirebaseUser user = mAuth.getCurrentUser();
         return (user != null && !user.isAnonymous());
-    }
-
-    private void initSluitAppButton() {
-        androidx.appcompat.widget.AppCompatImageView sluitButton = findViewById(R.id.sluitApp);
-        sluitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void initViews() {

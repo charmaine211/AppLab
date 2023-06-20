@@ -1,7 +1,5 @@
 package applab.veiligthuis.model;
 
-import java.time.LocalDateTime;
-
 public class Melding {
 
     private String key;
