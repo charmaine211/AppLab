@@ -2,6 +2,7 @@ package applab.veiligthuis.activity.meldingen;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -11,14 +12,15 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
+import android.app.Activity;
 import android.content.Intent;
 
 import applab.veiligthuis.R;
 import applab.veiligthuis.activity.home.MainActivity;
 
 import androidx.fragment.app.testing.FragmentScenario;
-import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import junit.framework.TestCase;
 
@@ -26,20 +28,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(AndroidJUnit4.class)
 public class RisicoAnalyseFragmentTest extends TestCase {
 
     FragmentScenario<RisicoAnalyseFragment> scenario;
-    @Rule
-    public ActivityScenarioRule<MainActivity> activityRule;
 
-    public void setUp(){
+    @Rule
+    public ActivityScenarioRule<RisicoAnalyseActivity> activityRule = new ActivityScenarioRule<>(RisicoAnalyseActivity.class);
+
+    public void setUp() {
         scenario = FragmentScenario.launchInContainer(RisicoAnalyseFragment.class);
-        activityRule = new ActivityScenarioRule<>(MainActivity.class);
     }
 
     @Before
-    public void setUpIntent(){
+    public void setUpIntent() {
         Intents.init();
     }
 
@@ -48,51 +52,73 @@ public class RisicoAnalyseFragmentTest extends TestCase {
         Intents.release();
     }
 
+
     @Test
-    public void testKnopZichtbaar(){
-        onView(withId(R.id.ja_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.twijfel_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.nee_button)).check(matches(isDisplayed()));
+    public void testKnopZichtbaar() {
+        try{
+            onView(withId(R.id.ja_button)).check(matches(isDisplayed()));
+            onView(withId(R.id.twijfel_button)).check(matches(isDisplayed()));
+            onView(withId(R.id.nee_button)).check(matches(isDisplayed()));
+        } catch (Exception e){
+            fail("Foutmelding: " + e.toString());
+        }
     }
 
     @Test
     public void testJaButtonPos() {
-        onView(withId(R.id.ja_button)).perform(click());
-        onView(withText("We raden u aan om 112 te bellen.")).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click()); // PositiveButton
-        Intents.intended(IntentMatchers.hasAction(Intent.ACTION_DIAL));
+        try{
+            onView(withId(R.id.ja_button)).perform(click());
+            onView(withText("We raden u aan om 112 te bellen.")).check(matches(isDisplayed()));
+            onView(withId(android.R.id.button1)).perform(click()); // PositiveButton
+            Intents.intended(IntentMatchers.hasAction(Intent.ACTION_DIAL));
+        } catch (Exception e){
+            fail("Foutmelding: " + e.toString());
+        }
     }
 
     @Test
     public void testJaButtonNeg() {
-        onView(withId(R.id.ja_button)).perform(click());
-        onView(withText("We raden u aan om 112 te bellen.")).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button2)).perform(click()); // NegativeButton
-        onView(withText("We raden u aan om 112 te bellen.")).check(doesNotExist());
+        try{
+            onView(withId(R.id.ja_button)).perform(click());
+            onView(withText("We raden u aan om 112 te bellen.")).check(matches(isDisplayed()));
+            onView(withId(android.R.id.button2)).perform(click()); // NegativeButton
+            onView(withText("We raden u aan om 112 te bellen.")).check(doesNotExist());
+        } catch (Exception e){
+            fail("Foutmelding: " + e.toString());
+        }
     }
 
     @Test
     public void testTwijfelButtonPos() {
-        onView(withId(R.id.twijfel_button)).perform(click());
-        onView(withText("We raden u aan ons te bellen.")).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button1)).perform(click()); // PositiveButton
-        Intents.intended(IntentMatchers.hasAction(Intent.ACTION_DIAL));
-
+        try{
+            onView(withId(R.id.twijfel_button)).perform(click());
+            onView(withText("We raden u aan ons te bellen.")).check(matches(isDisplayed()));
+            onView(withId(android.R.id.button1)).perform(click()); // PositiveButton
+            Intents.intended(IntentMatchers.hasAction(Intent.ACTION_DIAL));
+        } catch (Exception e){
+            fail("Foutmelding: " + e.toString());
+        }
     }
 
     @Test
     public void testTwijfelButtonNeg() {
-        onView(withId(R.id.twijfel_button)).perform(click());
-        onView(withText("We raden u aan ons te bellen.")).check(matches(isDisplayed()));
-        onView(withId(android.R.id.button2)).perform(click()); // NegativeButton
-        onView(withText("We raden u aan ons te bellen.")).check(doesNotExist());
+        try{
+            onView(withId(R.id.twijfel_button)).perform(click());
+            onView(withText("We raden u aan ons te bellen.")).check(matches(isDisplayed()));
+            onView(withId(android.R.id.button2)).perform(click()); // NegativeButton
+            onView(withText("We raden u aan ons te bellen.")).check(doesNotExist());
+        } catch (Exception e){
+            fail("Foutmelding: " + e.toString());
+        }
     }
 
     @Test
     public void testNeeButton() {
-        onView(withId(R.id.nee_button)).perform(click());
-        Intents.intended(IntentMatchers.hasComponent(MeldingMakenActivity.class.getName()));
+        try{
+            onView(withId(R.id.nee_button)).perform(click());
+            Intents.intended(IntentMatchers.hasComponent(MeldingMakenActivity.class.getName()));
+        } catch (Exception e){
+            fail("Foutmelding: " + e.toString());
+        }
     }
-
-
 }
