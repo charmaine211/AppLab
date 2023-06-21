@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import applab.veiligthuis.R;
+
 import applab.veiligthuis.common.BaseActivity;
 import applab.veiligthuis.common.VeiligThuisToolbar;
 

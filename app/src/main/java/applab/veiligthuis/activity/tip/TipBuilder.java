@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.tipsmodel.Tip;
-import applab.veiligthuis.model.tipsmodel.TipCategorie;
+import applab.veiligthuis.domain.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.tipsmodel.TipCategorie;
 
 public class TipBuilder extends AppCompatActivity {
 

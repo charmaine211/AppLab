@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import applab.veiligthuis.R;
 import applab.veiligthuis.common.BaseFragment;
@@ -94,19 +95,16 @@ public class MeldingMakenFragment extends BaseFragment {
     public void slaMeldingOp(String plaatsnaam, String beschrijving){
         LocalDateTime datum = LocalDateTime.now();
 
-        meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toString());
+        meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toEpochSecond(ZoneOffset.UTC));
     }
 
     public void initMeldingObservers(){
-        meldingViewModel.getErrorMessage().observe(getViewLifecycleOwner(), errorMessage -> {
-            if (errorMessage != null) {
+        meldingViewModel.getSuccessMessage().observe(getViewLifecycleOwner(), successfull -> {
+            if (successfull) {
                 // Show a Toast or handle the error message
-                Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-        meldingViewModel.getSuccessMessage().observe(getViewLifecycleOwner(), successMessage -> {
-            if (successMessage != null) {
-                Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Bedankt voor het maken van de melding.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "Fout bij opslaan melding ", Toast.LENGTH_SHORT).show();
             }
         });
     }
