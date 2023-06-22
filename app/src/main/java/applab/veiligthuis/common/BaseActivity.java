@@ -5,6 +5,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import applab.veiligthuis.R;
 import applab.veiligthuis.activity.home.MainActivity;
 
@@ -16,6 +18,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                FirebaseAuth.getInstance().signOut();
             }
         });
     }
