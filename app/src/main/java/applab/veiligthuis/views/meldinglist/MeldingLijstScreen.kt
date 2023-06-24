@@ -41,7 +41,7 @@ fun MeldingLijstScreen(
             Column() {
                 filterButtonsBar(
                     isInkomendSelected = state.value.isInkomendSelected,
-                    toggleInkomendSelected = { viewModel.onEvent(MeldingLijstEvent.ToggleMeldingStatusLijst) },
+                    toggleInkomendSelected = {inkomend -> viewModel.onEvent(MeldingLijstEvent.ToggleMeldingStatusLijst(inkomend)) },
                     expandedFilter = state.value.isFilterExpanded,
                     onClickExpandFilter = { navController.navigate(Screens.FilterMeldingen.route) },
                     selectedLocatie = ""
@@ -52,11 +52,14 @@ fun MeldingLijstScreen(
                             .padding(11.dp, 0.dp, 11.dp, 4.dp),
                         thickness = 1.dp
                     )
-                MeldingList(list = state.value.meldingen, onCardClick = {
-                        meldingKey -> navController.navigate(
-                    Screens.MeldingBewerken.route +
-                            "?meldingtype=${state.value.meldingType.value}&meldingKey=$meldingKey")
-                } )
+                MeldingList(
+                    list = state.value.meldingen,
+                    onCardClick = { meldingKey ->
+                            navController.navigate(route = Screens.MeldingBewerken.route + "?meldingtype=${state.value.meldingType.value}&meldingKey=$meldingKey")
+                        },
+                    modifier = Modifier.padding(top = 10.dp, start = 15.dp, end = 15.dp)
+
+                )
             }
         }
     }

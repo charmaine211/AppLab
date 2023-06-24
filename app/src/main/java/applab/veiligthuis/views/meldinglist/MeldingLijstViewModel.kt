@@ -60,8 +60,9 @@ class MeldingLijstViewModel @Inject constructor(
             }
             is MeldingLijstEvent.ToggleMeldingStatusLijst -> {
                 viewModelScope.launch {
+                    Log.i("VM",  " Verander meldingtype")
                     val newMeldingPath: MeldingType
-                    if(_uiState.value.isInkomendSelected){
+                    if(!event.inkomend){
                         newMeldingPath = MeldingType.Afgesloten
                     } else {
                         newMeldingPath = MeldingType.Inkomend
@@ -69,7 +70,7 @@ class MeldingLijstViewModel @Inject constructor(
                     _uiState.update { currentState ->
                         currentState.copy(
                             meldingType = newMeldingPath,
-                            isInkomendSelected = currentState.isInkomendSelected.not()
+                            isInkomendSelected = event.inkomend
                         )
                     }
                     getMeldingen(_uiState.value.meldingOrder, _uiState.value.meldingType, _filterState.value.filterStatusPredicates, _filterState.value.filterSoortGeweldPredicates, _filterState.value.filterDatumPredicates, _filterState.value.filterBeroepsmatigPredicates)
