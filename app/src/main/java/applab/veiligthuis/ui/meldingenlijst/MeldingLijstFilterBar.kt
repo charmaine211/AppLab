@@ -18,15 +18,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import applab.veiligthuis.ui.common.CustomSwitchThumb
 
 import applab.veiligthuis.ui.theme.filter_blue
 import applab.veiligthuis.ui.theme.filter_grey
 import applab.veiligthuis.ui.common.listDialogSpinner
+import applab.veiligthuis.ui.theme.veilig_thuis_blauw
 
 @Composable
 fun filterButtonsBar (
     isInkomendSelected: Boolean,
-    toggleInkomendSelected: () -> Unit,
+    toggleInkomendSelected: (Boolean) -> Unit,
     expandedFilter: Boolean,
     onClickExpandFilter: () -> Unit,
     selectedLocatie: String?,
@@ -38,15 +40,23 @@ fun filterButtonsBar (
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(11.dp, 0.dp, 11.dp, 0.dp)
-        ){
-            meldingFilterButtons(inkomendSelected = isInkomendSelected, onClick = toggleInkomendSelected)
+                .padding(11.dp, 40.dp, 11.dp, 25.dp)
+        ) {
+            //meldingFilterButtons(inkomendSelected = isInkomendSelected, onClick = toggleInkomendSelected)
+            CustomSwitchThumb(
+                leftText = "Inkomend", rightText = "Afgesloten",
+                trackColor = filter_grey, thumbColor = veilig_thuis_blauw,
+                textColor = Color.White,
+                trackWidth = 200.dp, trackHeight = 30.dp,
+                thumbWidth = 100.dp,
+                onSwipe = toggleInkomendSelected,
+            )
             Button(
                 onClick = onClickExpandFilter,
                 shape = RoundedCornerShape(50),
                 colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
                 modifier = modifier.height(30.dp)
-            ){
+            ) {
                 Text(
                     text = "Filter",
                     fontSize = 10.sp,

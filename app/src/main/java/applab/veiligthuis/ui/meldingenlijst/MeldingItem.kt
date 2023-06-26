@@ -25,23 +25,34 @@ fun MeldingItem(
     description: String,
     modifier: Modifier = Modifier,
 ) {
-    Card(colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),modifier = modifier
-        .fillMaxWidth()
-        .padding(vertical = 5.dp, horizontal = 0.dp)
-        .requiredHeight(80.dp)
-        .clickable(onClick = onCardClick)
+    Card(
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 5.dp, horizontal = 0.dp)
+            .requiredHeight(80.dp)
+            .clickable(onClick = onCardClick)
     ) {
-        Row(modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Column(modifier = Modifier
-                .fillMaxWidth(0.7f)
-                .fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(0.65f)
+                    .fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
                 Text(text = datum, fontWeight = FontWeight.Bold)
                 Text(text = description ,fontSize = 12.sp, maxLines = 3)
             }
-            Column(modifier = Modifier
-                .align(Alignment.CenterVertically)) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+            ) {
                 MeldingStatusDisplay(meldingStatus = meldingStatus)
             }
         }
