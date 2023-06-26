@@ -97,39 +97,65 @@ class MeldingLijstViewModel @Inject constructor(
                 }
             }
             is MeldingLijstEvent.FilterStatus -> {
+                val filterCountChange =
+                    if (event.checked) {
+                        1
+                    } else {
+                        -1
+                    }
                 val status = _filterState.value.statusFilter
                 _filterState.update { currentState ->
                     currentState.copy(
-                        statusFilter = status.map { updateCheckItem(it, event.id, event.checked) },
+                        statusFilter = status.map {
+                            updateCheckItem(
+                                item = it,
+                                id = event.id,
+                                checked = event.checked
+                            )
+                        },
+                        filterCountSelected = currentState.filterCountSelected + filterCountChange
                     )
                 }
             }
             is MeldingLijstEvent.FilterBeroepsmatig -> {
+                val filterCountChange =
+                    if (event.checked) {
+                        1
+                    } else {
+                        -1
+                    }
                 val beroepsmatig = _filterState.value.beroepsmatigFilter
                 _filterState.update { currentState ->
                     currentState.copy(
                         beroepsmatigFilter = beroepsmatig.map {
                             updateCheckItem(
-                                it,
-                                event.id,
-                                event.checked
+                                item = it,
+                                id = event.id,
+                                checked = event.checked
                             )
-                        }
+                        },
+                        filterCountSelected = currentState.filterCountSelected + filterCountChange
                     )
                 }
             }
             is MeldingLijstEvent.FilterSoortGeweld -> {
+                val filterCountChange =
+                    if (event.checked) {
+                        1
+                    } else {
+                        -1
+                    }
                 val soortGeweld = _filterState.value.soortGeweldFilter
                 _filterState.update { currentState ->
                     currentState.copy(
                         soortGeweldFilter = soortGeweld.map {
                             updateCheckItem(
-                                it,
-                                event.id,
-                                event.checked
+                                item = it,
+                                id = event.id,
+                                checked = event.checked
                             )
-                        }
-
+                        },
+                        filterCountSelected = currentState.filterCountSelected + filterCountChange
                     )
                 }
             }
@@ -140,9 +166,16 @@ class MeldingLijstViewModel @Inject constructor(
                     } else {
                         event.selected
                     }
+                var changeCount = 0
+                if (_filterState.value.datumSelectedFilter == null) {
+                    changeCount = 1
+                } else if (_filterState.value.datumSelectedFilter != null && event.selected == _filterState.value.datumSelectedFilter) {
+                    changeCount = -1
+                }
                 _filterState.update { currentState ->
                     currentState.copy(
-                        datumSelectedFilter = newDatum
+                        datumSelectedFilter = newDatum,
+                        filterCountSelected = currentState.filterCountSelected + changeCount
                     )
                 }
             }
