@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
@@ -20,21 +19,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 @Composable
-fun<E> listDialogSpinner(
+fun <E> ListDialogSpinner(
     textValueDefault: String,
     textValueState: String?,
     label: String,
     items: List<E>,
     itemSelectedOnClick: (String) -> Unit,
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     var dialogOpen by remember { mutableStateOf(false) }
     Box(modifier = modifier.height(IntrinsicSize.Min)) {
-        var textValue: TextFieldValue
-        if(textValueState == null){
-            textValue = TextFieldValue(text = textValueDefault)
+        val textValue: TextFieldValue = if (textValueState == null) {
+            TextFieldValue(text = textValueDefault)
         } else {
-            textValue = TextFieldValue(text = textValueState)
+            TextFieldValue(text = textValueState)
         }
         OutlinedTextField(
             value = textValue,
@@ -44,12 +42,13 @@ fun<E> listDialogSpinner(
             onValueChange = { }
         )
 
-        Surface(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 8.dp)
-            .clickable(enabled = true) {
-                dialogOpen = true
-            },
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 8.dp)
+                .clickable(enabled = true) {
+                    dialogOpen = true
+                },
             color = Color.Transparent
         ) {
 
@@ -58,21 +57,23 @@ fun<E> listDialogSpinner(
 
     fun callBackCloseDialog(
         itemSelectedTextValue: String?
-    ){
+    ) {
         dialogOpen = false
         if (itemSelectedTextValue != null) {
             itemSelectedOnClick(itemSelectedTextValue)
         }
     }
 
-    if(dialogOpen){
-        Dialog(onDismissRequest = {dialogOpen = false}) {
+    if (dialogOpen) {
+        Dialog(onDismissRequest = { dialogOpen = false }) {
             Surface(
                 shape = RoundedCornerShape(12.dp)
-            ){
-                LazyColumn(){
-                    items(items) {
-                            item -> dialogListItem(itemText = item.toString(), onClickItem = { callBackCloseDialog(item.toString())} )
+            ) {
+                LazyColumn {
+                    items(items) { item ->
+                        DialogListItem(
+                            itemText = item.toString(),
+                            onClickItem = { callBackCloseDialog(item.toString()) })
                     }
                 }
             }
@@ -81,12 +82,12 @@ fun<E> listDialogSpinner(
 }
 
 @Composable
-private fun dialogListItem(
+private fun DialogListItem(
     itemText: String,
     onClickItem: () -> Unit
 ) {
     Card(
-        border=null,
+        border = null,
         modifier = Modifier
             .fillMaxWidth()
             .padding(2.dp)
@@ -107,16 +108,22 @@ private fun dialogListItem(
 
 @Preview
 @Composable
-fun previewDialogListItem() {
-    dialogListItem("Amsterdam", {})
+fun PreviewDialogListItem() {
+    DialogListItem("Amsterdam") {}
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun previewListDialogSpinner() {
-    var locaties = listOf("Amsterdam", "Eindhoven","Groningen", "Utrecht", "Rotterdam")
-    listDialogSpinner(textValueDefault = "Geen Locatie geselecteerd", textValueState = null, label = "Locaties", items = locaties, {})
+fun PreviewListDialogSpinner() {
+    val locaties = listOf("Amsterdam", "Eindhoven", "Groningen", "Utrecht", "Rotterdam")
+    ListDialogSpinner(
+        textValueDefault = "Geen Locatie geselecteerd",
+        textValueState = null,
+        label = "Locaties",
+        items = locaties,
+        itemSelectedOnClick = {}
+    )
 }
 
 

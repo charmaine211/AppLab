@@ -22,19 +22,25 @@ import applab.veiligthuis.ui.common.CustomSwitchThumb
 
 import applab.veiligthuis.ui.theme.filter_blue
 import applab.veiligthuis.ui.theme.filter_grey
-import applab.veiligthuis.ui.common.listDialogSpinner
+import applab.veiligthuis.ui.common.ListDialogSpinner
 import applab.veiligthuis.ui.theme.veilig_thuis_blauw
 
 @Composable
-fun filterButtonsBar (
-    isInkomendSelected: Boolean,
+fun FilterButtonsBar(
     toggleInkomendSelected: (Boolean) -> Unit,
     expandedFilter: Boolean,
     onClickExpandFilter: () -> Unit,
     selectedLocatie: String?,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.animateContentSize(animationSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMediumLow))) {
+    Column(
+        modifier = Modifier.animateContentSize(
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessMediumLow
+            )
+        )
+    ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -64,44 +70,107 @@ fun filterButtonsBar (
                 )
             }
         }
-        if(expandedFilter){
+        if (expandedFilter) {
             Column(
                 modifier = Modifier
                     .padding(11.dp, 0.dp)
             ) {
-                listDialogSpinner(
+                ListDialogSpinner(
                     textValueDefault = "Selecteer een locatie",
                     textValueState = selectedLocatie,
                     label = "Locatie",
-                    items = listOf("Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam","Amsterdam", "Groningen", "Eindhoven", "Rotterdam"),
-                    itemSelectedOnClick = {plaatsnaam : String -> } ,
-                    modifier = Modifier.padding(bottom=4.dp)
+                    items = listOf(
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam",
+                        "Amsterdam",
+                        "Groningen",
+                        "Eindhoven",
+                        "Rotterdam"
+                    ),
+                    itemSelectedOnClick = { },
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()){
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Button(
-                        onClick = {  },
+                        onClick = { },
                         shape = RoundedCornerShape(50),
                         colors = ButtonDefaults.buttonColors(backgroundColor = filter_blue),
                         modifier = modifier.height(30.dp)
-                    ){
+                    ) {
                         Text(
                             text = "Reset filter",
                             fontSize = 10.sp,
                             color = Color.White,
                         )
                     }
-                    Box() {
+                    Box {
                         var expanded by remember { mutableStateOf(false) }
                         IconButton(onClick = { expanded = !expanded }) {
-                            Icon(imageVector = Icons.Default.Menu, contentDescription = "More", modifier = Modifier.padding(0.dp))
+                            Icon(
+                                imageVector = Icons.Default.Menu,
+                                contentDescription = "More",
+                                modifier = Modifier.padding(0.dp)
+                            )
                         }
                         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                            DropdownMenuItem( onClick = {  }) {
-                                Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = "Sorting by date descending")
+                            DropdownMenuItem(onClick = { }) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = "Sorting by date descending"
+                                )
                                 Text(text = "Sort Datum Desc")
                             }
-                            DropdownMenuItem( onClick = {  }) {
-                                Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = "Sorting by date ascending")
+                            DropdownMenuItem(onClick = { }) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowUp,
+                                    contentDescription = "Sorting by date ascending"
+                                )
                                 Text(text = "Sort Datum Asc")
                             }
                         }
@@ -113,47 +182,14 @@ fun filterButtonsBar (
 }
 
 
+@Preview(showBackground = true)
 @Composable
-private fun meldingFilterButtons(
-    inkomendSelected: Boolean,
-    onClick: () -> Unit
-){
-    Row(
-    ){
-        meldingFilterButton("Inkomend", inkomendSelected, onClick )
-        meldingFilterButton("Afgesloten", !inkomendSelected, onClick )
-    }
-}
-
-@Composable
-private fun meldingFilterButton(
-    buttonText: String,
-    enabledButton: Boolean,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = onClick,
-        shape = RoundedCornerShape(45),
-        colors = ButtonDefaults.buttonColors(disabledBackgroundColor = filter_blue, backgroundColor = filter_grey),
-        modifier = Modifier,
-        enabled = !enabledButton
-    ) {
-        Text(
-            text = buttonText,
-            color = Color.White,
-            fontSize = 12.sp
-        )
-    }
+fun PreviewExpandedBar() {
+    FilterButtonsBar({ }, true, { }, null)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun previewExpandedBar() {
-    filterButtonsBar(true, { }, true, { }, null)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun previewUnexpandedBar() {
-    filterButtonsBar(true, { }, false, { }, null)
+fun PreviewUnexpandedBar() {
+    FilterButtonsBar({ }, false, { }, null)
 }

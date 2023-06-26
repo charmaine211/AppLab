@@ -17,19 +17,19 @@ import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun MeldingStatusDisplay(
-    meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
     modifier: Modifier = Modifier,
-    ){
-        Text (
-            text = meldingStatus.status,
-            fontSize = 12.sp,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            modifier = modifier
-                .background(color = meldingStatus.color, shape = RoundedCornerShape(45))
-                .padding(8.dp, 6.dp)
-                .width(100.dp),
-        )
+    meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
+) {
+    Text(
+        text = meldingStatus.status,
+        fontSize = 12.sp,
+        color = Color.White,
+        textAlign = TextAlign.Center,
+        modifier = modifier
+            .background(color = meldingStatus.color, shape = RoundedCornerShape(45))
+            .padding(8.dp, 6.dp)
+            .width(100.dp),
+    )
 }
 
 @Preview

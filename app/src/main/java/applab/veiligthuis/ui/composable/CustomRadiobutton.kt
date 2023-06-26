@@ -18,15 +18,20 @@ import applab.veiligthuis.ui.theme.AppTheme
 @Composable
 fun RadioButtonList(
     items: List<String>,
-    selectedItem: Any? = null,
     onItemSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedItem: Any? = null,
 ) {
-    Column(modifier = modifier
-        .padding(top = 10.dp, bottom = 10.dp)
-        .selectableGroup()){
+    Column(
+        modifier = modifier
+            .padding(top = 10.dp, bottom = 10.dp)
+            .selectableGroup()
+    ) {
         items.forEach { item ->
-            RadioButtonItem(text = item, selected = item == selectedItem, onSelected = { onItemSelected(item) })
+            RadioButtonItem(
+                text = item,
+                selected = item == selectedItem,
+                onSelected = { onItemSelected(item) })
         }
     }
 }
@@ -39,18 +44,23 @@ fun RadioButtonItem(
     onSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .padding(top= 3.dp, bottom = 3.dp)
-        .height(25.dp)
-        .selectable(
-            selected = selected,
-            onClick = { onSelected(text) },
-            role = Role.RadioButton
-        )
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 3.dp, bottom = 3.dp)
+            .height(25.dp)
+            .selectable(
+                selected = selected,
+                onClick = { onSelected(text) },
+                role = Role.RadioButton
+            )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(selected = selected, onClick = null, colors = RadioButtonDefaults.colors(selectedColor = Color.Black))
+            RadioButton(
+                selected = selected,
+                onClick = null,
+                colors = RadioButtonDefaults.colors(selectedColor = Color.Black)
+            )
             Text(text = text, modifier = Modifier.padding(start = 10.dp))
         }
     }
@@ -58,7 +68,7 @@ fun RadioButtonItem(
 
 @Preview(showBackground = true)
 @Composable
-fun previewRadioButtonItem(){
+fun PreviewRadioButtonItem() {
     AppTheme {
         RadioButtonItem("Vandaag", false, {})
     }
@@ -66,8 +76,12 @@ fun previewRadioButtonItem(){
 
 @Preview(showBackground = true)
 @Composable
-fun previewRadioButtonList(){
+fun PreviewRadioButtonList() {
     AppTheme {
-        RadioButtonList(items = listOf("Vandaag", "Deze Week", "Deze Maand"), selectedItem = null, {})
+        RadioButtonList(
+            items = listOf("Vandaag", "Deze Week", "Deze Maand"),
+            selectedItem = null,
+            onItemSelected = {}
+        )
     }
 }

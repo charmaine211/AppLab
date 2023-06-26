@@ -1,7 +1,5 @@
 package applab.veiligthuis.viewmodel;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -28,14 +26,14 @@ public class MeldingViewModel extends ViewModel {
 
     MutableLiveData<Boolean> successMessage;
 
-    public MeldingViewModel(){
+    public MeldingViewModel() {
 
         meldingRepo = new MeldingRepositoryImpl();
         firebaseRepository = new FirebaseRepository();
         uid = firebaseRepository.getCurrentUserId();
         successMessage = new MutableLiveData<>();
 
-        if (uid == null){
+        if (uid == null) {
             firebaseRepository.signInAnonymously(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

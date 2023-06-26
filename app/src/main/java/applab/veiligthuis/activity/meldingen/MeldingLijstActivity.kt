@@ -1,7 +1,6 @@
 package applab.veiligthuis.activity.meldingen
 
 
-
 import android.os.Bundle
 
 import androidx.activity.compose.setContent
@@ -19,7 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 
-import applab.veiligthuis.ui.screens.MeldingLijstScreen
+import applab.veiligthuis.views.meldinglist.MeldingLijstScreen
 import applab.veiligthuis.ui.theme.AppTheme
 import applab.veiligthuis.views.meldinglist.MeldingLijstViewModel
 import applab.veiligthuis.views.Screens
@@ -38,16 +37,23 @@ class MeldingLijstActivity : AppCompatActivity() {
                 setContent {
                     AppTheme {
                         val navController = rememberNavController()
-                        NavHost(navController = navController, startDestination = Screens.MeldingLijst.route) {
+                        NavHost(
+                            navController = navController,
+                            startDestination = Screens.MeldingLijst.route
+                        ) {
                             composable(route = Screens.MeldingLijst.route) {
                                 val meldingLijstViewModel = hiltViewModel<MeldingLijstViewModel>()
-                                MeldingLijstScreen(navController = navController, meldingLijstViewModel)
+                                MeldingLijstScreen(
+                                    navController = navController,
+                                    meldingLijstViewModel
+                                )
                             }
                             composable(route = Screens.FilterMeldingen.route) { backStackEntry ->
                                 val parentEntry = remember(backStackEntry) {
                                     navController.getBackStackEntry(Screens.MeldingLijst.route)
                                 }
-                                val parentViewModel = hiltViewModel<MeldingLijstViewModel>(parentEntry)
+                                val parentViewModel =
+                                    hiltViewModel<MeldingLijstViewModel>(parentEntry)
                                 FilterScreen(navController = navController, parentViewModel)
                             }
                             composable(
@@ -68,9 +74,14 @@ class MeldingLijstActivity : AppCompatActivity() {
                                     }
                                 )
                             ) {
-                                val meldingBewerkenViewModel = hiltViewModel<MeldingBewerkenViewModel>()
+                                val meldingBewerkenViewModel =
+                                    hiltViewModel<MeldingBewerkenViewModel>()
                                 val state by meldingBewerkenViewModel.uiState.collectAsState()
-                                MeldingBewerkenScreen(state = state, onEvent = meldingBewerkenViewModel::onEvent, navController = navController)
+                                MeldingBewerkenScreen(
+                                    state = state,
+                                    onEvent = meldingBewerkenViewModel::onEvent,
+                                    navController = navController
+                                )
                             }
                         }
                     }
