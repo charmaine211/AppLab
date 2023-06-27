@@ -97,7 +97,6 @@ public class MeldingMakenFragment extends BaseFragment {
 
     public void slaMeldingOp(String plaatsnaam, String beschrijving){
         LocalDateTime datum = LocalDateTime.now();
-
         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toEpochSecond(ZoneOffset.UTC));
     }
 

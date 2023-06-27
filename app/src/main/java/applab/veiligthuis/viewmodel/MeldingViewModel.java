@@ -49,7 +49,7 @@ public class MeldingViewModel extends ViewModel {
     }
 
     public void insertMelding(String plaatsnaam, String beschrijving, Long datum){
-        Melding melding = new InkomendeMelding(datum, MeldingStatus.ONBEHANDELD, beschrijving, plaatsnaam, null, "ongecategoriseerd", false);
+        Melding melding = new InkomendeMelding(datum, MeldingStatus.ONBEHANDELD, beschrijving, plaatsnaam, null, "ongecategoriseerd", userLoggedIn());
         try {
             meldingRepo.insertOrUpdateMelding(melding);
             successMessage.postValue(true);
@@ -60,15 +60,5 @@ public class MeldingViewModel extends ViewModel {
 
     public boolean userLoggedIn(){
         return repository.userLoggedIn();
-    }
-
-    public void insertMelding(String plaatsnaam, boolean beroepsmatig, String beschrijving, Long datum){
-        Melding melding = new InkomendeMelding(datum, MeldingStatus.ONBEHANDELD, beschrijving, plaatsnaam, null, "ongecategoriseerd", false);
-        try {
-            meldingRepo.insertOrUpdateMelding(melding);
-            successMessage.postValue(true);
-        } catch(MeldingInsertException e) {
-            successMessage.postValue(false);
-        }
     }
 }
