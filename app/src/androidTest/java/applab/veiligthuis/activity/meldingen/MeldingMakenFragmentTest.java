@@ -2,8 +2,6 @@ package applab.veiligthuis.activity.meldingen;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.espresso.IdlingPolicies;
-import androidx.test.espresso.PerformException;
-import androidx.test.espresso.Root;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
@@ -22,17 +20,11 @@ import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsAnything.anything;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-
-import android.os.IBinder;
-import android.view.WindowManager;
-
 import applab.veiligthuis.R;
 import applab.veiligthuis.activity.home.MainActivity;
 
 import junit.framework.TestCase;
 
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -64,76 +56,41 @@ public class MeldingMakenFragmentTest extends TestCase {
 
     @Test
     public void testWeergave() {
-        try{
-            onView(withId(R.id.meldingmaken_editTextTextMultiLine)).check(matches(isDisplayed()));
-            onView(withId(R.id.opslaan_button)).check(matches(isDisplayed()));
 
-            // Controleer of de spinner niet leeg is
-            onView(withId(R.id.plaatsnaam_spinner)).check(matches(isDisplayed()));
+        onView(withId(R.id.meldingmaken_editTextTextMultiLine)).check(matches(isDisplayed()));
+        onView(withId(R.id.opslaan_button)).check(matches(isDisplayed()));
 
-            onData(anything())
-                    .inAdapterView(withId(R.id.plaatsnaam_spinner))
-                    .atPosition(0) // Adjust the position if needed
-                    .check(matches(isDisplayed()));
-        } catch(Exception e){
-            fail("Foutmelding: " + e.toString());
-        }
+        // Controleer of de spinner niet leeg is
+        onView(withId(R.id.plaatsnaam_spinner)).check(matches(isDisplayed()));
+
+        onData(anything())
+                .inAdapterView(withId(R.id.plaatsnaam_spinner))
+                .atPosition(0) // Adjust the position if needed
+                .check(matches(isDisplayed()));
+
     }
 
     @Test
+    // Deze test faalt: androidx.test.espresso.PerformException
+    // Ik heb verschillende dingen geprobeerd maar krijg het toch niet aan de praat
     public void testMaakMelding() {
-        try{
-            onView(withId(R.id.plaatsnaam_spinner)).perform(click());
-            onData(allOf(is(instanceOf(String.class)), is("Groningen"))).perform(click());
-            onView(withId(R.id.meldingmaken_editTextTextMultiLine)).perform(typeText("Ik wil een melding maken van..."), closeSoftKeyboard());
-            IdlingPolicies.setMasterPolicyTimeout(240, TimeUnit.SECONDS);
-            IdlingPolicies.setIdlingResourceTimeout(120, TimeUnit.SECONDS);
-            closeSoftKeyboard();
-            onView(withId(R.id.opslaan_button)).check(matches(isDisplayed()));
-            onView(withId(R.id.opslaan_button))
-                    .perform(ViewActions.click());
-            Intents.intended(IntentMatchers.hasComponent(MainActivity.class.getName()));
-        } catch (Exception e){
-            fail("Foutmelding: " + e.toString());
-        }
+        onView(withId(R.id.plaatsnaam_spinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Groningen"))).perform(click());
+        onView(withId(R.id.meldingmaken_editTextTextMultiLine)).perform(typeText("Ik wil een melding maken van..."), closeSoftKeyboard());
+        IdlingPolicies.setMasterPolicyTimeout(240, TimeUnit.SECONDS);
+        IdlingPolicies.setIdlingResourceTimeout(120, TimeUnit.SECONDS);
+        closeSoftKeyboard();
+        onView(withId(R.id.opslaan_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.opslaan_button))
+                .perform(ViewActions.click());
+        Intents.intended(IntentMatchers.hasComponent(MainActivity.class.getName()));
     }
 
     @Test
+    // Deze test is ook niet goed geïmplementeerd in verband met het niet lukken van het testen van de toast.
     public void testMaakMeldingLeeg() {
-        try{
-            onView(withId(R.id.opslaan_button)).check(matches(isDisplayed())).perform(click());
-            //onView(withText("Zorg dat de beschrijving en de plaatsnaam ingevuld zijn."))
-            //TODO: test toast
-        } catch (Exception e){
-            fail("Foutmelding: " + e.toString());
-        }
-    }
-
-    private class ToastMatcher extends TypeSafeMatcher<Root> {
-
-        private final List<Integer> windowTypes = Arrays.asList(
-                WindowManager.LayoutParams.TYPE_TOAST,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY
-        );
-
-        @Override
-        public void describeTo(Description description){
-            description.appendText("is toast");
-        }
-
-        @Override
-        public boolean matchesSafely(Root root){
-            int type = root.getWindowLayoutParams().get().type;
-            if (windowTypes.contains(type)){
-                IBinder windowToken = root.getDecorView().getWindowToken();
-                IBinder appToken = root.getDecorView().getApplicationWindowToken();
-                if (windowToken == appToken){
-                    return true;
-                }
-            }
-            return false;
-        }
+        onView(withId(R.id.opslaan_button)).check(matches(isDisplayed())).perform(click());
+        //onView(withText("Zorg dat de beschrijving en de plaatsnaam ingevuld zijn."))
+        // Test Toast melding
     }
 }
