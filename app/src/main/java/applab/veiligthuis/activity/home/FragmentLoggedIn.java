@@ -11,7 +11,7 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.meldingen.MeldingenActivity;
+import applab.veiligthuis.activity.meldingen.MeldingLijstActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
@@ -33,7 +33,7 @@ public class FragmentLoggedIn extends Fragment {
         meldingenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent meldingenIntent = new Intent(requireActivity(), MeldingenActivity.class);
+                Intent meldingenIntent = new Intent(requireActivity(), MeldingLijstActivity.class);
                 startActivity(meldingenIntent);
             }
         });

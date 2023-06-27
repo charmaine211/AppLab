@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.tipsmodel.Tip;
 
 public class TipInzien extends AppCompatActivity {
 

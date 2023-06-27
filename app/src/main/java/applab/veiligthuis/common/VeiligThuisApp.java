@@ -3,14 +3,26 @@ package applab.veiligthuis.common;
 import android.app.Activity;
 import android.app.Application;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+
+import dagger.hilt.android.HiltAndroidApp;
 
 /**
  *  Aangepaste applicatieklasse voor de VeiligThuis Android-applicatie.
  *  Deze klasse breidt de basis {@link android.app.Application} klasse uit en
  *  maakt het mogelijk om de levenscyclus van de applicatie te beheren en actieve activiteiten bij te houden.
  */
+
+@HiltAndroidApp
 public class VeiligThuisApp extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
 
     private ArrayList<Activity> activeActivities = new ArrayList<>();
 
