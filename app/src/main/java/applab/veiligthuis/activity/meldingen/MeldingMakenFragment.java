@@ -41,9 +41,12 @@ public class MeldingMakenFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         meldingViewModel = new ViewModelProvider(requireActivity()).get(MeldingViewModel.class);
         initMeldingObservers();
-
         initPlaatsnaamSpinner();
         initOpslaanButton();
+        if (meldingViewModel.userLoggedIn()){
+            View sluitApp = getView().findViewById(R.id.sluitApp);
+            sluitApp.setVisibility(View.GONE);
+        }
     }
 
     public void initPlaatsnaamSpinner(){

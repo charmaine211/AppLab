@@ -46,6 +46,8 @@ public class MainActivity extends BaseActivity {
         FrameLayout loggedInContainer = findViewById(R.id.logged_in_fragment_container);
 
         if (isLoggedIn) {
+            View sluitApp = findViewById(R.id.sluitApp);
+            sluitApp.setVisibility(View.GONE);
             notLoggedInContainer.setVisibility(View.GONE);
             loggedInContainer.setVisibility(View.VISIBLE);
         } else {
