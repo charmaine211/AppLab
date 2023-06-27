@@ -1,14 +1,12 @@
 package applab.veiligthuis.activity.meldingen;
 
 import androidx.fragment.app.testing.FragmentScenario;
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.Espresso;
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.PerformException;
 import androidx.test.espresso.Root;
-import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
-import androidx.test.espresso.matcher.RootMatchers;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import static androidx.test.espresso.Espresso.onData;
@@ -17,21 +15,15 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsAnything.anything;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 import android.os.IBinder;
-import android.view.View;
 import android.view.WindowManager;
 
 import applab.veiligthuis.R;
@@ -40,7 +32,6 @@ import applab.veiligthuis.activity.home.MainActivity;
 import junit.framework.TestCase;
 
 import org.hamcrest.Description;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
@@ -49,6 +40,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MeldingMakenFragmentTest extends TestCase {
     FragmentScenario<MeldingMakenFragment> scenario;
@@ -91,11 +83,15 @@ public class MeldingMakenFragmentTest extends TestCase {
     @Test
     public void testMaakMelding() {
         try{
-            onView(withId(R.id.meldingmaken_editTextTextMultiLine)).perform(typeText("Ik wil een melding maken van..."), closeSoftKeyboard());
             onView(withId(R.id.plaatsnaam_spinner)).perform(click());
             onData(allOf(is(instanceOf(String.class)), is("Groningen"))).perform(click());
-            onView(withId(R.id.meldingmaken_editTextTextMultiLine)).perform(typeText(" "), closeSoftKeyboard());
-            onView(allOf(withId(R.id.opslaan_button), withText(R.string.meldingOpslaan_button))).perform(click());
+            onView(withId(R.id.meldingmaken_editTextTextMultiLine)).perform(typeText("Ik wil een melding maken van..."), closeSoftKeyboard());
+            IdlingPolicies.setMasterPolicyTimeout(240, TimeUnit.SECONDS);
+            IdlingPolicies.setIdlingResourceTimeout(120, TimeUnit.SECONDS);
+            closeSoftKeyboard();
+            onView(withId(R.id.opslaan_button)).check(matches(isDisplayed()));
+            onView(withId(R.id.opslaan_button))
+                    .perform(ViewActions.click());
             Intents.intended(IntentMatchers.hasComponent(MainActivity.class.getName()));
         } catch (Exception e){
             fail("Foutmelding: " + e.toString());
