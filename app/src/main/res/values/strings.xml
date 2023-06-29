@@ -6,7 +6,7 @@
     <string name="ja_button">Ja</string>
     <string name="twijfel_button">Ik twijfel</string>
     <string name="nee_button">Nee</string>
-    <string name="bijlage">Voeg bijlage(s) toe</string>
+    <string name="bijlage"></string>
     <string name="nav_logIn">log in</string>
     <string name="logIn_password">password</string>
     <string name="logIn_name">name</string>
