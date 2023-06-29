@@ -12,11 +12,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
-import android.app.Activity;
-import android.content.Intent;
 
+import android.content.Intent;
 import applab.veiligthuis.R;
-import applab.veiligthuis.activity.home.MainActivity;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
