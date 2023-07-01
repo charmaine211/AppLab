@@ -43,8 +43,12 @@ public class MeldingMakenFragment extends BaseFragment {
         initMeldingObservers();
         initPlaatsnaamSpinner();
         initOpslaanButton();
-        super.initSluitAppButton();
-
+        if (meldingViewModel.userLoggedIn()){
+            View sluitApp = getView().findViewById(R.id.sluitApp);
+            sluitApp.setVisibility(View.GONE);
+        } else{
+            super.initSluitAppButton();
+        }
     }
 
     public void initPlaatsnaamSpinner(){
@@ -94,7 +98,6 @@ public class MeldingMakenFragment extends BaseFragment {
 
     public void slaMeldingOp(String plaatsnaam, String beschrijving){
         LocalDateTime datum = LocalDateTime.now();
-
         meldingViewModel.insertMelding(plaatsnaam, beschrijving, datum.toEpochSecond(ZoneOffset.UTC));
     }
 

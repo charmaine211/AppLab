@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import applab.veiligthuis.R;
 import applab.veiligthuis.activity.meldingen.MeldingLijstActivity;
+import applab.veiligthuis.activity.meldingen.MeldingMakenActivity;
 import applab.veiligthuis.activity.meldingen.RisicoAnalyseActivity;
 import applab.veiligthuis.activity.tip.TipBeheren;
 import applab.veiligthuis.activity.tip.TipInzien;
@@ -22,7 +23,6 @@ public class FragmentLoggedIn extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_logged_in, container, false);
         initMeldingenButton(view);
-        initTipsInzienButton(view);
         initTipsBeherenButton(view);
         initMaakMeldingButton(view);
         return view;
@@ -50,23 +50,12 @@ public class FragmentLoggedIn extends Fragment {
         });
     }
 
-    public void initTipsInzienButton(View view) {
-        Button tipsInzienBtn = view.findViewById(R.id.tipsInzienButton);
-        tipsInzienBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent tipsIntent = new Intent(requireActivity(), TipInzien.class);
-                startActivity(tipsIntent);
-            }
-        });
-    }
-
     public void initMaakMeldingButton(View view) {
         Button maakMeldingBtn = view.findViewById(R.id.maakMeldingButton);
         maakMeldingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(requireActivity(), RisicoAnalyseActivity.class);
+                Intent intent = new Intent(requireActivity(), MeldingMakenActivity.class);
                 startActivity(intent);
             }
         });
