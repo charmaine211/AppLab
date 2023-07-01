@@ -46,6 +46,8 @@ public class MeldingMakenFragment extends BaseFragment {
         if (meldingViewModel.userLoggedIn()){
             View sluitApp = getView().findViewById(R.id.sluitApp);
             sluitApp.setVisibility(View.GONE);
+        } else{
+            super.initSluitAppButton();
         }
     }
 
@@ -65,7 +67,6 @@ public class MeldingMakenFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 String plaatsnaam = ((Spinner) getView().findViewById(R.id.plaatsnaam_spinner)).getSelectedItem().toString();
-
                 final EditText meldingEditText = getView().findViewById(R.id.meldingmaken_editTextTextMultiLine);
                 String beschrijving = meldingEditText.getText().toString().trim();
 

@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activity.meldingen.MeldingMakenFragment">
 
+    <Button
+        android:id="@+id/opslaan_button"
+        android:layout_width="150dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="43dp"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/meldingOpslaan_button"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plaatsnaam_spinner" />
+
     <applab.veiligthuis.common.VeiligThuisToolbar
         android:id="@+id/veilig_thuis_toolbar"
         android:layout_width="match_parent"
@@ -48,19 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meldingmaken_editTextTextMultiLine" />
-
-    <Button
-        android:id="@+id/opslaan_button"
-        android:layout_width="150dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="64dp"
-        android:background="@drawable/button_veilig_thuis_homescreen"
-        android:fontFamily="@font/montserrat"
-        android:text="@string/meldingOpslaan_button"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plaatsnaam_spinner" />
 
     <Spinner
         android:id="@+id/plaatsnaam_spinner"
