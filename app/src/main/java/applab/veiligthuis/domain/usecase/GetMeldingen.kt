@@ -65,13 +65,13 @@ class GetMeldingen(
             .map { meldingen ->
                 when (meldingOrder.orderType) {
                     is OrderType.Ascending -> {
-                        when(meldingOrder) {
+                        when (meldingOrder) {
                             is MeldingOrder.Datum -> meldingen.sortedBy { it?.datum }
                             is MeldingOrder.Status -> meldingen.sortedBy { it?.status }
                         }
                     }
                     is OrderType.Descending -> {
-                        when(meldingOrder) {
+                        when (meldingOrder) {
                             is MeldingOrder.Datum -> meldingen.sortedByDescending { it?.datum }
                             is MeldingOrder.Status -> meldingen.sortedByDescending { it?.status }
                         }

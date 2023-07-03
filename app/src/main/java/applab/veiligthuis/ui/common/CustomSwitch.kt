@@ -45,7 +45,7 @@ fun CustomSwitchThumb(
             .swipeable(
                 state = swipeableState,
                 anchors = anchors,
-                thresholds = { _, _, -> FractionalThreshold(0.5f) },
+                thresholds = { _, _ -> FractionalThreshold(0.5f) },
                 orientation = Orientation.Horizontal
             ),
     ) {
@@ -84,6 +84,15 @@ fun CustomSwitchThumb(
 @Composable
 fun PreviewCustomSwitchThumb() {
     AppTheme {
-        CustomSwitchThumb("Inkomend", "Afgesloten", filter_grey, filter_blue, Color.White, 200.dp, 30.dp, 100.dp, {})
+        CustomSwitchThumb(
+            "Inkomend",
+            "Afgesloten",
+            filter_grey,
+            filter_blue,
+            Color.White,
+            200.dp,
+            30.dp,
+            100.dp,
+            {})
     }
 }

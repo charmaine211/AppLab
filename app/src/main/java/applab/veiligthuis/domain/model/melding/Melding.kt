@@ -18,7 +18,15 @@ abstract class Melding(
     abstract fun getPaths(): List<String>
 
     @Exclude
-    abstract fun copy(datum: Long? = this.datum, status:MeldingStatus = this.status, beschrijving: String = this.beschrijving, plaatsNaam: String = this.plaatsNaam, key: String? = this.key, typeGeweld: String = this.typeGeweld, beroepsmatig: Boolean = this.beroepsmatig): Melding
+    abstract fun copy(
+        datum: Long? = this.datum,
+        status: MeldingStatus = this.status,
+        beschrijving: String = this.beschrijving,
+        plaatsNaam: String = this.plaatsNaam,
+        key: String? = this.key,
+        typeGeweld: String = this.typeGeweld,
+        beroepsmatig: Boolean = this.beroepsmatig
+    ): Melding
 
     @Exclude
     fun toMap(): Map<String, Any?> {

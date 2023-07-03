@@ -54,7 +54,7 @@ fun FilterHeader(
 @Composable
 fun PreviewHeader() {
     AppTheme {
-        FilterHeader(filterCount = 1, headerTitle = "filters", closeFilter = { /*TODO*/ })
+        FilterHeader(filterCount = 1, headerTitle = "filters", closeFilter = {  })
     }
 
 }
