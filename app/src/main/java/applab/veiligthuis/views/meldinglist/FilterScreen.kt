@@ -1,7 +1,6 @@
 package applab.veiligthuis.views.meldinglist
 
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -23,8 +22,8 @@ import applab.veiligthuis.R
 import applab.veiligthuis.ui.composable.filter.FilterCheckBoxList
 import applab.veiligthuis.ui.composable.filter.FilterHeader
 import applab.veiligthuis.ui.composable.filter.FilterRadioButtonList
+import applab.veiligthuis.ui.composable.filter.SelectedItem
 import applab.veiligthuis.ui.theme.AppTheme
-import applab.veiligthuis.ui.theme.filter_blue
 import applab.veiligthuis.ui.theme.veilig_thuis_oranje
 import applab.veiligthuis.views.Screens
 
@@ -38,9 +37,6 @@ fun FilterScreen(
     Column(
         modifier = Modifier
             .padding(start = 40.dp, end = 40.dp)
-            .verticalScroll(
-                rememberScrollState()
-            )
     ) {
         FilterHeader(
             filterCount = filterState.filterCountSelected,
@@ -54,73 +50,79 @@ fun FilterScreen(
             },
             modifier = Modifier.padding(bottom = 18.dp)
         )
-
-        Column {
-            Divider()
-            Box(modifier = Modifier.clickable { }) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 18.dp, bottom = 18.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = stringResource(R.string.filter_h1_plaats),
-                        style = MaterialTheme.typography.h1,
-                        modifier = Modifier.padding(start = 20.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = stringResource(R.string.filter_plaats_description),
-                        modifier = Modifier.padding(end = 20.dp)
-                    )
+        Column(
+            modifier = Modifier.verticalScroll(
+                rememberScrollState()
+            )
+        ) {
+            Column {
+                Divider()
+                Box(modifier = Modifier.clickable { navController.navigate(Screens.FilterPlaatsen.route) }) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 18.dp, bottom = 18.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = stringResource(R.string.filter_h1_plaats),
+                            style = MaterialTheme.typography.h1,
+                            modifier = Modifier.padding(start = 20.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = stringResource(R.string.filter_plaats_description),
+                            modifier = Modifier.padding(end = 20.dp)
+                        )
+                    }
+                }
+                if (filterState.filterPlaatsen.isNotEmpty()) {
+                    filterState.filterPlaatsen.map { plaats ->
+                        SelectedItem(
+                            strValue = plaats,
+                            onClose = { onEvent(MeldingLijstEvent.FilterPlaatsen(plaats)) })
+                    }
                 }
             }
-        }
-        FilterCheckBoxList(
-            headerText = stringResource(R.string.filter_h1_soort_geweld),
-            filterItems = filterState.soortGeweldFilter,
-            onItemChecked = { id, checked ->
-                onEvent(
-                    MeldingLijstEvent.FilterSoortGeweld(
-                        id,
-                        checked
+            FilterCheckBoxList(
+                headerText = stringResource(R.string.filter_h1_soort_geweld),
+                filterItems = stringArrayResource(id = R.array.filter_soort_geweld).asList(),
+                checkedItems = filterState.soortGeweldFilter,
+                onItemChecked = { selected ->
+                    onEvent(
+                        MeldingLijstEvent.FilterSoortGeweld(selected)
                     )
-                )
-            }
-        )
-        FilterCheckBoxList(
-            headerText = stringResource(R.string.filter_h1_status),
-            filterItems = filterState.statusFilter,
-            onItemChecked = { id, checked ->
-                onEvent(
-                    MeldingLijstEvent.FilterStatus(
-                        id,
-                        checked
+                }
+            )
+            FilterCheckBoxList(
+                headerText = stringResource(R.string.filter_h1_status),
+                filterItems = stringArrayResource(id = R.array.filter_status).asList(),
+                checkedItems = filterState.statusFilter,
+                onItemChecked = { selected ->
+                    onEvent(
+                        MeldingLijstEvent.FilterStatus(selected)
                     )
-                )
-            }
-        )
-        FilterRadioButtonList(
-            headerText = stringResource(R.string.filter_h1_datum),
-            items = stringArrayResource(id = R.array.datum_keuzes).asList(),
-            selected = filterState.datumSelectedFilter,
-            onSelected = { selected -> onEvent(MeldingLijstEvent.FilterDatum(selected)) }
-        )
-        FilterCheckBoxList(
-            headerText = stringResource(R.string.filter_h1_beroepsmatig),
-            filterItems = filterState.beroepsmatigFilter,
-            onItemChecked = { id, checked ->
-                onEvent(
-                    MeldingLijstEvent.FilterBeroepsmatig(
-                        id,
-                        checked
+                }
+            )
+            FilterRadioButtonList(
+                headerText = stringResource(R.string.filter_h1_datum),
+                items = stringArrayResource(id = R.array.datum_keuzes).asList(),
+                selected = filterState.datumSelectedFilter,
+                onSelected = { selected -> onEvent(MeldingLijstEvent.FilterDatum(selected)) }
+            )
+            FilterCheckBoxList(
+                headerText = stringResource(R.string.filter_h1_beroepsmatig),
+                filterItems = stringArrayResource(id = R.array.filter_beroepsmatig).asList(),
+                checkedItems = filterState.beroepsmatigFilter,
+                onItemChecked = { selected ->
+                    onEvent(
+                        MeldingLijstEvent.FilterBeroepsmatig(selected)
                     )
-                )
+                }
+            )
+            if (filterState.filterCountSelected > 0) {
+                Box(modifier = Modifier.height(100.dp))
             }
-        )
-        if (filterState.filterCountSelected > 0) {
-            Box(modifier = Modifier.height(100.dp))
         }
     }
     if (filterState.filterCountSelected > 0) {
@@ -150,7 +152,10 @@ fun FilterScreen(
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = veilig_thuis_oranje),
                     elevation = ButtonDefaults.elevation(defaultElevation = 10.dp),
-                    modifier = Modifier.padding(top = 20.dp).width(250.dp).height(55.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .width(250.dp)
+                        .height(55.dp)
 
                 ) {
                     Text(

@@ -45,6 +45,19 @@
         <item>Groningen</item>
     </string-array>
 
+    <string-array name="filter_soort_geweld">
+        <item>Ongecategoriseerd</item>
+        <item>Lichamelijk geweld</item>
+        <item>Stalking</item>
+        <item>Psychisch geweld</item>
+        <item>Financieel misbruik</item>
+    </string-array>
+
+    <string-array name="filter_status">
+        <item>Onbehandeld</item>
+        <item>In behandeling</item>
+    </string-array>
+
     <string-array name="datum_keuzes">
         <item>Vandaag</item>
         <item>Deze Week</item>
@@ -52,5 +65,8 @@
         <item>Afgelopen 6 maanden</item>
     </string-array>
 
-    // Array met ja/nee
+    <string-array name="filter_beroepsmatig">
+        <item>Ja</item>
+        <item>Nee</item>
+    </string-array>
 </resources>

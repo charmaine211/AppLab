@@ -24,6 +24,7 @@ import applab.veiligthuis.views.meldinglist.MeldingLijstViewModel
 import applab.veiligthuis.views.Screens
 import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenScreen
 import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenViewModel
+import applab.veiligthuis.views.meldinglist.FilterPlaatsScreen
 import applab.veiligthuis.views.meldinglist.FilterScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,6 +61,19 @@ class MeldingLijstActivity : AppCompatActivity() {
                                     hiltViewModel<MeldingLijstViewModel>(parentEntry)
                                 val filterState by parentViewModel.filterState.collectAsState()
                                 FilterScreen(
+                                    navController = navController,
+                                    filterState = filterState,
+                                    onEvent = parentViewModel::onEvent
+                                )
+                            }
+                            composable(route = Screens.FilterPlaatsen.route) { backStackEntry ->
+                                val parentEntry = remember(backStackEntry) {
+                                    navController.getBackStackEntry(Screens.MeldingLijst.route)
+                                }
+                                val parentViewModel =
+                                    hiltViewModel<MeldingLijstViewModel>(parentEntry)
+                                val filterState by parentViewModel.filterState.collectAsState()
+                                FilterPlaatsScreen(
                                     navController = navController,
                                     filterState = filterState,
                                     onEvent = parentViewModel::onEvent
