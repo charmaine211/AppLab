@@ -15,10 +15,29 @@ class TestMeldingRepository : MeldingRepository {
     private val meldingenMap = mutableMapOf<String, ArrayList<Melding>>()
 
     override fun getMeldingen(
-        paths: List<String>,
         meldingType: MeldingType,
     ): Flow<List<Melding?>> {
         val meldingen: ArrayList<Melding> = arrayListOf()
+        val path = if (meldingType == MeldingType.Inkomend) {
+            MeldingPaths.INKOMEND.path
+        } else {
+            MeldingPaths.AFGESLOTEN.path
+        }
+        meldingenMap[path]?.let { meldingen.addAll(it) }
+
+        return flow { emit(meldingen) }
+    }
+
+    override fun getMeldingenPlaatsen(
+        plaatsen: List<String>,
+        meldingType: MeldingType,
+    ): Flow<List<Melding?>> {
+        val meldingen: ArrayList<Melding> = arrayListOf()
+        val paths = if (meldingType == MeldingType.Inkomend) {
+            plaatsen.map { plaats -> "${MeldingPaths.INKOMEND_PLAATS.path}/$plaats" }
+        } else {
+            plaatsen.map { plaats -> "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaats" }
+        }
         paths.forEach { path ->
             meldingenMap[path]?.let { meldingen.addAll(it) }
         }
@@ -43,10 +62,18 @@ class TestMeldingRepository : MeldingRepository {
         lateinit var paths: List<String>
         when (melding) {
             is InkomendeMelding -> {
-                paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.INKOMEND.path)
+                paths = listOf(
+                    MeldingPaths.MELDINGEN.path,
+                    MeldingPaths.INKOMEND.path,
+                    "${MeldingPaths.INKOMEND_PLAATS.path}/${melding.plaatsNaam}"
+                )
             }
             is AfgeslotenMelding -> {
-                paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.AFGESLOTEN.path)
+                paths = listOf(
+                    MeldingPaths.MELDINGEN.path,
+                    MeldingPaths.AFGESLOTEN.path,
+                    "${MeldingPaths.AFGESLOTEN_PLAATS.path}/${melding.plaatsNaam}"
+                )
             }
         }
         paths.forEach { path ->

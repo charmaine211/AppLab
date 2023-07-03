@@ -97,11 +97,9 @@ class EditMeldingTest {
             val melding = testMeldingRepository.getMelding(meldingKey, MeldingType.Inkomend).first()
 
             var meldingenAfgesloten = testMeldingRepository.getMeldingen(
-                listOf(MeldingPaths.AFGESLOTEN.path),
                 MeldingType.Afgesloten
             ).first()
             var meldingenInkomend = testMeldingRepository.getMeldingen(
-                listOf(MeldingPaths.INKOMEND.path),
                 MeldingType.Inkomend
             ).first()
 
@@ -115,11 +113,9 @@ class EditMeldingTest {
                 testMeldingRepository.getMelding(meldingKey, MeldingType.Afgesloten).first()
 
             meldingenAfgesloten = testMeldingRepository.getMeldingen(
-                listOf(MeldingPaths.AFGESLOTEN.path),
                 MeldingType.Afgesloten
             ).first()
             meldingenInkomend = testMeldingRepository.getMeldingen(
-                listOf(MeldingPaths.INKOMEND.path),
                 MeldingType.Inkomend
             ).first()
 

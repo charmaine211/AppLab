@@ -75,7 +75,8 @@ class GetMeldingTest {
     @Test(expected = MeldingNotFoundException::class)
     fun `GetMelding - non existing key`() = runBlocking {
         val meldingKey = "abcdef"
-        getMelding(meldingKey, MeldingType.Inkomend).first()
+        val melding = getMelding(meldingKey, MeldingType.Inkomend).first()
+        assertEquals(melding.key, meldingKey)
     }
 
 
