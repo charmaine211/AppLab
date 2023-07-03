@@ -41,7 +41,7 @@ fun FilterPlaatsScreen(
             filterCount = filterState.filterCountSelected, headerTitle = stringResource(id = R.string.filter_header_title),
             closeFilter = {
                 onEvent(MeldingLijstEvent.SluitFilter)
-                navController.popBackStack(route = Screens.FilterMeldingen.route, inclusive = false)
+                navController.popBackStack(route = Screens.MeldingLijst.route, inclusive = false)
             },
             modifier = Modifier.padding(bottom = 18.dp)
         )
