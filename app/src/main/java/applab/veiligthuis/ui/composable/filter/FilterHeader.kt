@@ -27,13 +27,19 @@ fun FilterHeader(
     closeFilter: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.fillMaxWidth() , horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically) {
-        Row(verticalAlignment = Alignment.CenterVertically){
-            Box(modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape)
-                .background(color = veilig_thuis_oranje)
-                .wrapContentSize(Alignment.Center)){
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape)
+                    .background(color = veilig_thuis_oranje)
+                    .wrapContentSize(Alignment.Center)
+            ) {
                 Text(text = filterCount.toString(), color = Color.White, fontSize = 18.sp)
             }
             Text(text = headerTitle, modifier = Modifier.padding(start = 20.dp), fontSize = 18.sp)
@@ -48,7 +54,7 @@ fun FilterHeader(
 @Composable
 fun PreviewHeader() {
     AppTheme {
-        FilterHeader(filterCount = 1, headerTitle = "filters", closeFilter = { /*TODO*/ })
+        FilterHeader(filterCount = 1, headerTitle = "filters", closeFilter = {  })
     }
 
 }

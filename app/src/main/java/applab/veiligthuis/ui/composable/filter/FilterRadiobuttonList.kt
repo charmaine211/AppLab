@@ -22,15 +22,28 @@ fun FilterRadioButtonList(
 ) {
     Column(modifier = modifier.padding(bottom = 18.dp)) {
         Divider(modifier = Modifier.padding(bottom = 18.dp))
-        Text(text = headerText, modifier = Modifier.padding(start= 20.dp, bottom = 10.dp), style = MaterialTheme.typography.h1  )
-        RadioButtonList(items = items, selectedItem = selected, onItemSelected = onSelected, modifier = Modifier.padding(start = 20.dp))
+        Text(
+            text = headerText,
+            modifier = Modifier.padding(start = 20.dp, bottom = 10.dp),
+            style = MaterialTheme.typography.h1
+        )
+        RadioButtonList(
+            items = items,
+            selectedItem = selected,
+            onItemSelected = onSelected,
+            modifier = Modifier.padding(start = 20.dp)
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun previewFilterRadioButtonList() {
+fun PreviewFilterRadioButtonList() {
     AppTheme {
-        FilterRadioButtonList(headerText = "Datum", items = listOf("Vandaag", "Deze Week", "Deze Maand", "Afgelopen Maand"), selected = "Vandaag",  {})
+        FilterRadioButtonList(
+            headerText = "Datum",
+            items = listOf("Vandaag", "Deze Week", "Deze Maand", "Afgelopen Maand"),
+            selected = "Vandaag",
+            {})
     }
 }

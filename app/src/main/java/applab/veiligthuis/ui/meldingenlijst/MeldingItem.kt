@@ -21,9 +21,9 @@ import applab.veiligthuis.ui.theme.AppTheme
 fun MeldingItem(
     onCardClick: () -> Unit,
     datum: String,
-    meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
     description: String,
     modifier: Modifier = Modifier,
+    meldingStatus: MeldingStatus = MeldingStatus.ONBEHANDELD,
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -47,7 +47,7 @@ fun MeldingItem(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = datum, fontWeight = FontWeight.Bold)
-                Text(text = description ,fontSize = 12.sp, maxLines = 3)
+                Text(text = description, fontSize = 12.sp, maxLines = 3)
             }
             Column(
                 modifier = Modifier
@@ -61,8 +61,9 @@ fun MeldingItem(
 
 @Preview(showBackground = true)
 @Composable
-fun previewMeldingItem(){
-    val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+fun PreviewMeldingItem() {
+    val description =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     AppTheme {
         MeldingItem(onCardClick = {}, datum = "1-11-1111 11:11", description = description)
     }

@@ -4,12 +4,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import applab.veiligthuis.domain.model.melding.AfgeslotenMelding
-import applab.veiligthuis.domain.model.melding.Melding
-import applab.veiligthuis.domain.model.melding.MeldingStatus
+import applab.veiligthuis.data.melding.MeldingNotFoundException
 import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingType
-import applab.veiligthuis.data.melding.MeldingNotFoundException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -20,7 +17,7 @@ import javax.inject.Inject
 class MeldingBewerkenViewModel @Inject constructor(
     private val meldingUseCases: MeldingUseCases,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(MeldingBewerkenState())
     val uiState: StateFlow<MeldingBewerkenState> = _uiState.asStateFlow()
 
@@ -28,14 +25,13 @@ class MeldingBewerkenViewModel @Inject constructor(
 
     init {
         val meldingTypeStr = savedStateHandle.get<String>("meldingtype")
-        val meldingType: MeldingType
-        if(meldingTypeStr == MeldingType.Inkomend.value){
-            meldingType = MeldingType.Inkomend
+        val meldingType: MeldingType = if (meldingTypeStr == MeldingType.Inkomend.value) {
+            MeldingType.Inkomend
         } else {
-            meldingType = MeldingType.Afgesloten
+            MeldingType.Afgesloten
         }
         val key = savedStateHandle.get<String>("meldingKey")
-        if(key != null) {
+        if (key != null) {
             try {
                 getMelding(key, meldingType)
             } catch (e: MeldingNotFoundException) {
@@ -44,8 +40,8 @@ class MeldingBewerkenViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: MeldingBewerkenEvent){
-        when(event) {
+    fun onEvent(event: MeldingBewerkenEvent) {
+        when (event) {
             is MeldingBewerkenEvent.TypeGeweld -> {
                 viewModelScope.launch {
                     _uiState.update { currentState ->
@@ -84,9 +80,11 @@ class MeldingBewerkenViewModel @Inject constructor(
             }
             is MeldingBewerkenEvent.SaveMelding -> {
                 viewModelScope.launch {
-                    if(_uiState.value.uneditedMelding != null) {
-                        meldingUseCases.editMelding(_uiState.value.uneditedMelding, _uiState.value.status, _uiState.value.typeGeweld)
-                    }
+                    meldingUseCases.editMelding(
+                        _uiState.value.uneditedMelding,
+                        _uiState.value.status,
+                        _uiState.value.typeGeweld
+                    )
                 }
             }
         }
@@ -99,7 +97,7 @@ class MeldingBewerkenViewModel @Inject constructor(
                 _uiState.update { currentState ->
                     currentState.copy(
                         uneditedMelding = melding,
-                        status = melding.status!!,
+                        status = melding.status,
                         typeGeweld = melding.typeGeweld
                     )
                 }

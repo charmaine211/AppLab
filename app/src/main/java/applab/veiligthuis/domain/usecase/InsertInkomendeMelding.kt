@@ -9,7 +9,13 @@ import java.time.ZoneOffset
 class InsertInkomendeMelding(
     private val repository: MeldingRepository
 ) {
-    operator fun invoke(datum: LocalDateTime, beschrijving: String, plaatsNaam: String, typeGeweld: String, beroepsmatig: Boolean) {
+    operator fun invoke(
+        datum: LocalDateTime,
+        beschrijving: String,
+        plaatsNaam: String,
+        typeGeweld: String,
+        beroepsmatig: Boolean
+    ) {
         repository.insertOrUpdateMelding(
             InkomendeMelding(
                 datum = datum.toEpochSecond(ZoneOffset.UTC),

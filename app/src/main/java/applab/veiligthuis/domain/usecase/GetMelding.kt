@@ -15,6 +15,7 @@ class GetMelding(
         key: String,
         meldingType: MeldingType
     ): Flow<Melding> {
-        return repository.getMelding(key, meldingType).catch { throw MeldingNotFoundException("Melding niet gevonden") }
+        return repository.getMelding(key, meldingType)
+            .catch { throw MeldingNotFoundException("Melding niet gevonden") }
     }
 }

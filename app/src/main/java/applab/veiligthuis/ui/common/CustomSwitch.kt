@@ -1,13 +1,7 @@
 package applab.veiligthuis.ui.common
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.interaction.DragInteraction
-import androidx.compose.foundation.interaction.Interaction
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -42,9 +36,6 @@ fun CustomSwitchThumb(
     val swipeableState = rememberSwipeableState(initialValue = 0)
     val sizePx = with(LocalDensity.current) { thumbWidth.toPx() }
     val anchors = mapOf(0f to 0, sizePx to 1)
-    var initial by remember { mutableStateOf(true) }
-
-
 
     Box(
         modifier = modifier
@@ -54,9 +45,9 @@ fun CustomSwitchThumb(
             .swipeable(
                 state = swipeableState,
                 anchors = anchors,
-                thresholds = { _, _, -> FractionalThreshold(0.5f) },
+                thresholds = { _, _ -> FractionalThreshold(0.5f) },
                 orientation = Orientation.Horizontal
-            )
+            ),
     ) {
         Box(
             modifier = Modifier
@@ -65,15 +56,12 @@ fun CustomSwitchThumb(
                 .height(trackHeight)
                 .background(color = thumbColor, shape = RoundedCornerShape(50)),
         )
-        Row(
-            modifier = Modifier
-                //.clickable(interactionSource = MutableInteractionSource(), indication = null, onClick = {})
-        ) {
+        Row {
             Box(
                 modifier = Modifier
                     .width(thumbWidth)
                     .height(30.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = leftText, color = textColor)
             }
@@ -81,14 +69,13 @@ fun CustomSwitchThumb(
                 modifier = Modifier
                     .width(thumbWidth)
                     .height(30.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = rightText, color = textColor)
             }
         }
     }
     LaunchedEffect(swipeableState.currentValue) {
-        Log.i("LaunchEffect", "currentvalue wissel ${swipeableState.currentValue}")
         onSwipe(swipeableState.currentValue == 0)
     }
 }
@@ -97,6 +84,15 @@ fun CustomSwitchThumb(
 @Composable
 fun PreviewCustomSwitchThumb() {
     AppTheme {
-        CustomSwitchThumb("Inkomend", "Afgesloten", filter_grey, filter_blue, Color.White, 200.dp, 30.dp, 100.dp, {})
+        CustomSwitchThumb(
+            "Inkomend",
+            "Afgesloten",
+            filter_grey,
+            filter_blue,
+            Color.White,
+            200.dp,
+            30.dp,
+            100.dp,
+            {})
     }
 }

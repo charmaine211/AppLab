@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 import applab.veiligthuis.R
 
 @Composable
-fun veiligThuisToolbar(
+fun VeiligThuisToolbar(
     onProfile: Unit,
 ) {
     val activity = LocalContext.current as Activity
     TopAppBar(
         title = {},
-        backgroundColor =  Color.White,
+        backgroundColor = Color.White,
         navigationIcon = {
             IconButton(onClick = {
                 activity.finish()
@@ -39,7 +39,7 @@ fun veiligThuisToolbar(
                 )
             }
         }, actions = {
-            IconButton(onClick = {onProfile}) {
+            IconButton(onClick = { onProfile }) {
                 Image(
                     painter = painterResource(id = R.drawable.veiligthuis_gebruiker),
                     contentDescription = "Veilig thuis gebruiker knop",
@@ -59,6 +59,6 @@ fun veiligThuisToolbar(
 
 @Preview(showBackground = true)
 @Composable
-fun previewToolbar() {
-    veiligThuisToolbar(Unit)
+fun PreviewToolbar() {
+    VeiligThuisToolbar(Unit)
 }

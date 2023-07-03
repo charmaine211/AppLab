@@ -24,21 +24,26 @@ data class CheckBoxItemState(
 @Composable
 fun CheckboxItem(
     item: CheckBoxItemState,
-    onChecked:(Boolean) -> Unit,
+    onChecked: (Boolean) -> Unit,
     modifier: Modifier = Modifier
-){
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .padding(vertical = 5.dp)
-        .height(25.dp)
-        .toggleable(
-            value = item.checked,
-            onValueChange = {toggled -> onChecked(toggled) },
-            role = Role.Checkbox
-        )
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 5.dp)
+            .height(25.dp)
+            .toggleable(
+                value = item.checked,
+                onValueChange = { toggled -> onChecked(toggled) },
+                role = Role.Checkbox
+            )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(checked = item.checked, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = Color.Black))
+            Checkbox(
+                checked = item.checked,
+                onCheckedChange = null,
+                colors = CheckboxDefaults.colors(checkedColor = Color.Black)
+            )
             Text(text = item.text, modifier = modifier.padding(start = 10.dp))
         }
     }
@@ -48,7 +53,7 @@ fun CheckboxItem(
 @Composable
 fun PreviewCheckBoxItem() {
     AppTheme {
-        CheckboxItem(item = CheckBoxItemState(1,false,"Ongecategoriseerd"), onChecked = {})
+        CheckboxItem(item = CheckBoxItemState(1, false, "Ongecategoriseerd"), onChecked = {})
     }
 }
 
@@ -59,7 +64,7 @@ fun CheckBoxList(
     onChecked: (Int, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column( modifier = modifier) {
+    Column(modifier = modifier) {
         items.forEach { item ->
             CheckboxItem(item = item, onChecked = {
                 onChecked(item.id, it)
@@ -72,6 +77,10 @@ fun CheckBoxList(
 @Composable
 fun PreviewCheckBoxList() {
     AppTheme {
-        CheckBoxList(items = listOf(CheckBoxItemState(1, false,"Ongecategoriseerd"),CheckBoxItemState(2,false,"Stalking")), { a, b ->})
+        CheckBoxList(
+            items = listOf(
+                CheckBoxItemState(1, false, "Ongecategoriseerd"),
+                CheckBoxItemState(2, false, "Stalking")
+            ), { _, _ -> })
     }
 }
