@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".common.VeiligThuisApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,27 +19,41 @@
             android:name=".activity.SignInUp.LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".MeldingMaken"
+            android:name=".activity.SignInUp.RegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.tip.TipMaken"
+            android:name=".activity.tip.TipBuilder"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.profile.Profile"
+            android:exported="false" />
+        <activity
+            android:name=".activity.home.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MeldingenActivity">
+        <activity android:name=".activity.meldingen.MeldingLijstActivity">
         </activity>
-        <activity android:name=".activity.tip.TipInzien">
+        <activity android:name=".activity.tip.TipInzien" />
+        <activity android:name=".activity.tip.TipBeheren" />
+        <activity
+            android:name=".activity.meldingen.RisicoAnalyseActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activity.tip.TipBeheren">
-        </activity>
-        <activity android:name=".activity.tip.TipDetailActivity">
+        <activity
+            android:name=".activity.meldingen.MeldingMakenActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -1,23 +1,30 @@
 <resources>
     <string name="app_name">VeiligThuis</string>
     <string name="meldingenLijstButton">Meldingen</string>
-    <string name="tipMakenButton">tip aanmaken</string>
-    <string name="tip_categorie_prompt">Select a category</string>
-    <string-array name="tip_categorie_options">
-        <item>LichamelijkGeweld</item>
-        <item>FysiekGeweld</item>
-        <item>FinancieelMisbruik</item>
-        <item>Stalking</item>
-        <item>PsychischGeweld</item>
-    </string-array>
-    <string name="nav_signIn">Sign In</string>
-    <string name="nav_signUp">Sign Up</string>
-    <string name="logo">Logo veilig thuis</string>
-    <string name="signUp_username">naam</string>
-    <string name="signUp_mobile">GSM nummer</string>
-    <string name="signUp_email">email adres</string>
-    <string name="signUp_password">paswoord</string>
+    <string name="maakMeldingButton">Maak een melding</string>
+    <string name="risico_text_fragment">Verkeert u, of iemand in uw omgeving in direct gevaar?</string>
+    <string name="ja_button">Ja</string>
+    <string name="twijfel_button">Ik twijfel</string>
+    <string name="nee_button">Nee</string>
+    <string name="bijlage"></string>
     <string name="nav_logIn">log in</string>
     <string name="logIn_password">password</string>
     <string name="logIn_name">name</string>
+    <string name="meldingOpslaan_button">Maak melding</string>
+    <string name="signUp_username">naam</string>
+    <string name="signUp_password">wachtwoord</string>
+    <string name="signUp_mobile">mobielnummer</string>
+    <string name="signUp_email">email</string>
+    <string name="plaatsnaamTekst_spinner">Je woonplaats</string>
+
+    // Array met alle plaatnamen
+    <string-array name="plaatsnamen">
+        <item>Amsterdam</item>
+        <item>Rotterdam</item>
+        <item>Den Haag</item>
+        <item>Utrecht</item>
+        <item>Groningen</item>
+    </string-array>
+
+    // Array met ja/nee
 </resources>

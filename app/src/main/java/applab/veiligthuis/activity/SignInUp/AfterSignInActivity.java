@@ -1,8 +1,8 @@
 package applab.veiligthuis.activity.SignInUp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import applab.veiligthuis.R;
 

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".activity.meldingen.RisicoAnalyseFragment">
+
+    <applab.veiligthuis.common.VeiligThuisToolbar
+        android:id="@+id/veilig_thuis_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/veiligThuisToolbarHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sluitApp"
+        android:layout_width="89dp"
+        android:layout_height="203dp"
+        android:src="@drawable/veiligthuis_sluitapp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.119" />
+
+    <TextView
+        android:id="@+id/risicoAnalyse_textView"
+        android:layout_width="205dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="316dp"
+        android:layout_marginBottom="76dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/risico_text_fragment"
+        android:textAlignment="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/twijfel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/twijfel_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:minHeight="48dp"
+        android:text="@string/twijfel_button"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/risicoAnalyse_textView" />
+
+    <Button
+        android:id="@+id/ja_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:minHeight="48dp"
+        android:text="@string/ja_button"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/twijfel_button"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/risicoAnalyse_textView" />
+
+    <Button
+        android:id="@+id/nee_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/button_veilig_thuis_homescreen"
+        android:fontFamily="@font/montserrat"
+        android:minHeight="48dp"
+        android:text="@string/nee_button"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/twijfel_button"
+        app:layout_constraintTop_toBottomOf="@+id/risicoAnalyse_textView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

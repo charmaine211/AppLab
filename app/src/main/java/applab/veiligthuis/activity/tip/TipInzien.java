@@ -4,20 +4,11 @@ package applab.veiligthuis.activity.tip;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.ListView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import applab.veiligthuis.MainActivity;
 import applab.veiligthuis.R;
-import applab.veiligthuis.model.tipsmodel.Tip;
+import applab.veiligthuis.domain.model.tipsmodel.Tip;
 
 public class TipInzien extends AppCompatActivity {
 
@@ -43,14 +33,16 @@ public class TipInzien extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tip_inzien);
 
-        initLogoClickEventHandler();
-
         mTipList = new ArrayList<>();
         mTipListAdapter = new TipListAdapter(this, mTipList);
 
         ExpandableListView tipListView = findViewById(R.id.tipListView);
         tipListView.setAdapter(mTipListAdapter);
 
+        setupDatabaseReference();
+    }
+
+    private void setupDatabaseReference() {
         mDatabase = FirebaseDatabase.getInstance().getReference("tips");
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -72,18 +64,6 @@ public class TipInzien extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-
-    }
-
-    private void initLogoClickEventHandler() {
-        ImageView logo = findViewById(R.id.image_view);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
