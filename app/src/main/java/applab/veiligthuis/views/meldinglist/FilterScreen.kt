@@ -31,7 +31,7 @@ fun FilterScreen(
     ) {
 
         FilterHeader(
-            filterCount = 1, headerTitle = "filter",
+            filterCount = filterState.value.filterCountSelected, headerTitle = "filter",
             closeFilter = {
                 viewModel.onEvent(MeldingLijstEvent.SluitFilter)
                 navController.popBackStack(route = "melding_list_screen", inclusive = false)

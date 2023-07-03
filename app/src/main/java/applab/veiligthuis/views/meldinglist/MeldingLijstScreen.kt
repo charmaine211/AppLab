@@ -19,7 +19,8 @@ fun MeldingLijstScreen(
     navController: NavController,
     viewModel: MeldingLijstViewModel,
 ) {
-    val state = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsState()
+    val filterState = viewModel.filterState.collectAsState()
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -53,9 +54,8 @@ fun MeldingLijstScreen(
                             )
                         )
                     },
-                    expandedFilter = state.value.isFilterExpanded,
                     onClickExpandFilter = { navController.navigate(Screens.FilterMeldingen.route) },
-                    selectedLocatie = "",
+                    selectedFiltersCount = filterState.value.filterCountSelected
                 )
                 Divider(
                     color = Color.Black,
@@ -64,9 +64,9 @@ fun MeldingLijstScreen(
                     thickness = 1.dp,
                 )
                 MeldingList(
-                    list = state.value.meldingen,
+                    list = uiState.value.meldingen,
                     onCardClick = { meldingKey ->
-                        navController.navigate(route = Screens.MeldingBewerken.route + "?meldingtype=${state.value.meldingType.value}&meldingKey=$meldingKey")
+                        navController.navigate(route = Screens.MeldingBewerken.route + "?meldingtype=${uiState.value.meldingType.value}&meldingKey=$meldingKey")
                     },
                     modifier = Modifier.padding(top = 10.dp, start = 15.dp, end = 15.dp),
                 )

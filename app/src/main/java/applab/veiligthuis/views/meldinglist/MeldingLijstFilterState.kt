@@ -28,5 +28,5 @@ data class MeldingLijstFilterState(
     val filterSoortGeweldPredicates: List<(Melding) -> Boolean> = listOf(),
     val filterDatumPredicates: List<(Melding) -> Boolean> = listOf(),
     val filterBeroepsmatigPredicates: List<(Melding) -> Boolean> = listOf(),
-
+    val filterCountSelected: Int = 0,
 )
