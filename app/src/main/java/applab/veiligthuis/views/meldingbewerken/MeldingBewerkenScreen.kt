@@ -10,14 +10,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import applab.veiligthuis.R
 import applab.veiligthuis.domain.model.melding.InkomendeMelding
 import applab.veiligthuis.domain.model.melding.MeldingStatus
+import applab.veiligthuis.domain.util.GeweldType
 import applab.veiligthuis.ui.common.MeldingStatusDisplay
 import applab.veiligthuis.ui.theme.AppTheme
 import applab.veiligthuis.ui.theme.filter_blue
@@ -47,7 +50,7 @@ fun MeldingBewerkenScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Privacy verklaring",
+                        text = stringResource(R.string.privacy_verklaring_text),
                     )
                 }
             }
@@ -111,24 +114,34 @@ fun MeldingBewerkenScreen(
                             expanded = dropDownExpanded,
                             onDismissRequest = { dropDownExpanded = false }) {
                             DropdownMenuItem(onClick = {
-                                onEvent(MeldingBewerkenEvent.TypeGeweld("Ongecategoriseerd"))
+                                onEvent(MeldingBewerkenEvent.TypeGeweld(GeweldType.ONGECATEGORISEERD.value))
                                 dropDownExpanded = false
                             }) {
-                                Text(text = "Ongecategoriseerd")
+                                Text(text = stringResource(R.string.geweld_type_ongecategoriseerd))
                             }
-
                             DropdownMenuItem(onClick = {
-                                onEvent(MeldingBewerkenEvent.TypeGeweld("Huiselijk geweld"))
+                                onEvent(MeldingBewerkenEvent.TypeGeweld(GeweldType.FINANCIEEL.value))
                                 dropDownExpanded = false
                             }) {
-                                Text(text = "Huiselijk geweld")
+                                Text(text = stringResource(R.string.geweld_type_financieel_misbruik))
                             }
-
                             DropdownMenuItem(onClick = {
-                                onEvent(MeldingBewerkenEvent.TypeGeweld("Financieel"))
+                                onEvent(MeldingBewerkenEvent.TypeGeweld(GeweldType.LICHAMELIJK.value))
                                 dropDownExpanded = false
                             }) {
-                                Text(text = "Financieel")
+                                Text(text = stringResource(R.string.geweld_type_lichamelijk))
+                            }
+                            DropdownMenuItem(onClick = {
+                                onEvent(MeldingBewerkenEvent.TypeGeweld(GeweldType.STALKING.value))
+                                dropDownExpanded = false
+                            }) {
+                                Text(text = stringResource(R.string.geweld_type_stalking))
+                            }
+                            DropdownMenuItem(onClick = {
+                                onEvent(MeldingBewerkenEvent.TypeGeweld(GeweldType.PSYCHISCH.value))
+                                dropDownExpanded = false
+                            }) {
+                                Text(text = stringResource(R.string.geweld_type_psychisch))
                             }
                         }
 
@@ -146,7 +159,7 @@ fun MeldingBewerkenScreen(
 
                     ) {
                         Text(
-                            text = "Pas melding aan",
+                            text = stringResource(R.string.melding_bewerken_edit_button),
                             color = Color.White
                         )
                     }
@@ -158,7 +171,7 @@ fun MeldingBewerkenScreen(
 
                     ) {
                         Text(
-                            text = "Terug",
+                            text = stringResource(R.string.melding_bewerken_back_button),
                             color = Color.White
                         )
                     }
@@ -173,7 +186,7 @@ fun MeldingBewerkenScreen(
 
                     ) {
                         Text(
-                            text = "Sluit melding af ",
+                            text = stringResource(R.string.melding_bewerken_close_melding),
                             color = Color.White
                         )
                     }

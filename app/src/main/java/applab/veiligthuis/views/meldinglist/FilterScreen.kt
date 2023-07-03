@@ -5,23 +5,31 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import applab.veiligthuis.ui.composable.filter.*
+import applab.veiligthuis.R
+import applab.veiligthuis.ui.composable.filter.FilterCheckBoxList
+import applab.veiligthuis.ui.composable.filter.FilterHeader
+import applab.veiligthuis.ui.composable.filter.FilterRadioButtonList
+import applab.veiligthuis.views.Screens
 
 
 @Composable
 fun FilterScreen(
     navController: NavController,
-    viewModel: MeldingLijstViewModel
+    filterState: MeldingLijstFilterState,
+    onEvent: (MeldingLijstEvent) -> Unit,
 ) {
-    val filterState = viewModel.filterState.collectAsState()
-
     Column(
         modifier = Modifier
             .padding(start = 40.dp, end = 40.dp)
@@ -31,10 +39,11 @@ fun FilterScreen(
     ) {
 
         FilterHeader(
-            filterCount = filterState.value.filterCountSelected, headerTitle = "filter",
+            filterCount = filterState.filterCountSelected,
+            headerTitle = stringResource(R.string.filter_header_title),
             closeFilter = {
-                viewModel.onEvent(MeldingLijstEvent.SluitFilter)
-                navController.popBackStack(route = "melding_list_screen", inclusive = false)
+                onEvent(MeldingLijstEvent.SluitFilter)
+                navController.popBackStack(route = Screens.MeldingLijst.route, inclusive = false)
             },
             modifier = Modifier.padding(bottom = 18.dp)
         )
@@ -49,23 +58,23 @@ fun FilterScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Plaats",
+                        text = stringResource(R.string.filter_h1_plaats),
                         style = MaterialTheme.typography.h1,
                         modifier = Modifier.padding(start = 20.dp)
                     )
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Ga naar plaatsen",
+                        contentDescription = stringResource(R.string.filter_plaats_description),
                         modifier = Modifier.padding(end = 20.dp)
                     )
                 }
             }
         }
         FilterCheckBoxList(
-            headerText = "Soort Geweld",
-            filterItems = filterState.value.soortGeweldFilter,
+            headerText = stringResource(R.string.filter_h1_soort_geweld),
+            filterItems = filterState.soortGeweldFilter,
             onItemChecked = { id, checked ->
-                viewModel.onEvent(
+                onEvent(
                     MeldingLijstEvent.FilterSoortGeweld(
                         id,
                         checked
@@ -74,10 +83,10 @@ fun FilterScreen(
             }
         )
         FilterCheckBoxList(
-            headerText = "Status",
-            filterItems = filterState.value.statusFilter,
+            headerText = stringResource(R.string.filter_h1_status),
+            filterItems = filterState.statusFilter,
             onItemChecked = { id, checked ->
-                viewModel.onEvent(
+                onEvent(
                     MeldingLijstEvent.FilterStatus(
                         id,
                         checked
@@ -86,16 +95,16 @@ fun FilterScreen(
             }
         )
         FilterRadioButtonList(
-            headerText = "Datum",
-            items = listOf("Vandaag", "Deze Week", "Deze Maand", "Afgelopen Maand"),
-            selected = filterState.value.datumSelectedFilter,
-            onSelected = { selected -> viewModel.onEvent(MeldingLijstEvent.FilterDatum(selected)) }
+            headerText = stringResource(R.string.filter_h1_datum),
+            items = stringArrayResource(id = R.array.datum_keuzes).asList(),
+            selected = filterState.datumSelectedFilter,
+            onSelected = { selected -> onEvent(MeldingLijstEvent.FilterDatum(selected)) }
         )
         FilterCheckBoxList(
-            headerText = "Beroepsmatig",
-            filterItems = filterState.value.beroepsmatigFilter,
+            headerText = stringResource(R.string.filter_h1_beroepsmatig),
+            filterItems = filterState.beroepsmatigFilter,
             onItemChecked = { id, checked ->
-                viewModel.onEvent(
+                onEvent(
                     MeldingLijstEvent.FilterBeroepsmatig(
                         id,
                         checked

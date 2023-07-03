@@ -1,6 +1,7 @@
 package applab.veiligthuis.domain.model.melding
 
 import applab.veiligthuis.data.melding.MeldingPaths
+import applab.veiligthuis.domain.util.GeweldType
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
@@ -11,7 +12,7 @@ class AfgeslotenMelding(
     beschrijving: String = "",
     plaatsNaam: String = "",
     key: String? = null,
-    typeGeweld: String = "Ongecategoriseerd",
+    typeGeweld: String = GeweldType.ONGECATEGORISEERD.value,
     beroepsmatig: Boolean = false
 ) : Melding(datum, status, beschrijving, plaatsNaam, key, typeGeweld, beroepsmatig) {
     @Exclude

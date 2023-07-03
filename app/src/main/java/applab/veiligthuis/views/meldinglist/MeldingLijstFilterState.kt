@@ -1,6 +1,7 @@
 package applab.veiligthuis.views.meldinglist
 
 import applab.veiligthuis.domain.model.melding.Melding
+import applab.veiligthuis.domain.util.GeweldType
 import applab.veiligthuis.ui.composable.CheckBoxItemState
 
 data class MeldingLijstFilterState(
@@ -8,12 +9,12 @@ data class MeldingLijstFilterState(
         CheckBoxItemState(
             1,
             false,
-            "Ongecategoriseerd"
+            GeweldType.ONGECATEGORISEERD.value
         ),
-        CheckBoxItemState(2, false, "Lichamelijk geweld"),
-        CheckBoxItemState(3, false, "Stalking"),
-        CheckBoxItemState(4, false, "Psychisch geweld"),
-        CheckBoxItemState(5, false, "Financieel misbruik")
+        CheckBoxItemState(2, false, GeweldType.LICHAMELIJK.value),
+        CheckBoxItemState(3, false, GeweldType.STALKING.value),
+        CheckBoxItemState(4, false, GeweldType.PSYCHISCH.value),
+        CheckBoxItemState(5, false, GeweldType.FINANCIEEL.value)
     ),
     val statusFilter: List<CheckBoxItemState> = listOf(
         CheckBoxItemState(1, false, "Onbehandeld"),
