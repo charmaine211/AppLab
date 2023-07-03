@@ -1,6 +1,5 @@
 package applab.veiligthuis.domain.usecase
 
-import applab.veiligthuis.data.melding.MeldingPaths
 import applab.veiligthuis.data.melding.MeldingRepository
 import applab.veiligthuis.domain.model.melding.Melding
 import applab.veiligthuis.domain.util.MeldingOrder
@@ -22,15 +21,13 @@ class GetMeldingen(
         filterBeroepsmatigPredicates: List<(Melding) -> Boolean> = listOf()
 
     ): Flow<List<Melding?>> {
-        val paths: List<String> = when (meldingType) {
-            is MeldingType.Inkomend -> {
-                if (plaatsen.isEmpty()) listOf(MeldingPaths.INKOMEND.path) else plaatsen.map { plaats -> "${MeldingPaths.INKOMEND_PLAATS.path}/$plaats" }
-            }
-            is MeldingType.Afgesloten -> {
-                if (plaatsen.isEmpty()) listOf(MeldingPaths.AFGESLOTEN.path) else plaatsen.map { plaats -> "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaats" }
-            }
+        val meldingenRes: Flow<List<Melding?>> = if (plaatsen.isEmpty()) {
+            repository.getMeldingen(meldingType)
+        } else {
+            repository.getMeldingenPlaatsen(plaatsen = plaatsen, meldingType = meldingType)
         }
-        return repository.getMeldingen(paths, meldingType)
+
+        return meldingenRes
             .map { meldingen ->
                 meldingen
                     .filter { melding ->

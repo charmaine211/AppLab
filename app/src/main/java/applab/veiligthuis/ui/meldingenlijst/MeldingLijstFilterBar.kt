@@ -12,10 +12,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import applab.veiligthuis.R
 import applab.veiligthuis.ui.common.CustomSwitchThumb
 
 import applab.veiligthuis.ui.theme.filter_blue
@@ -45,8 +47,10 @@ fun FilterButtonsBar(
                 .padding(11.dp, 40.dp, 11.dp, 25.dp)
         ) {
             CustomSwitchThumb(
-                leftText = "Inkomend", rightText = "Afgesloten",
-                trackColor = filter_grey, thumbColor = veilig_thuis_blauw,
+                leftText = stringResource(R.string.filter_inkomend),
+                rightText = stringResource(R.string.filter_afgesloten),
+                trackColor = filter_grey,
+                thumbColor = veilig_thuis_blauw,
                 textColor = Color.White,
                 trackWidth = 200.dp, trackHeight = 30.dp,
                 thumbWidth = 100.dp,

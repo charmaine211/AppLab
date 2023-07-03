@@ -24,6 +24,7 @@ import applab.veiligthuis.views.meldinglist.MeldingLijstViewModel
 import applab.veiligthuis.views.Screens
 import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenScreen
 import applab.veiligthuis.views.meldingbewerken.MeldingBewerkenViewModel
+import applab.veiligthuis.views.meldinglist.FilterPlaatsScreen
 import applab.veiligthuis.views.meldinglist.FilterScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,9 +44,13 @@ class MeldingLijstActivity : AppCompatActivity() {
                         ) {
                             composable(route = Screens.MeldingLijst.route) {
                                 val meldingLijstViewModel = hiltViewModel<MeldingLijstViewModel>()
+                                val meldingLijstUiState by meldingLijstViewModel.uiState.collectAsState()
+                                val meldingLijstFilterState by meldingLijstViewModel.filterState.collectAsState()
                                 MeldingLijstScreen(
                                     navController = navController,
-                                    meldingLijstViewModel
+                                    uiState = meldingLijstUiState,
+                                    filterState = meldingLijstFilterState,
+                                    onEvent = meldingLijstViewModel::onEvent
                                 )
                             }
                             composable(route = Screens.FilterMeldingen.route) { backStackEntry ->
@@ -54,7 +59,25 @@ class MeldingLijstActivity : AppCompatActivity() {
                                 }
                                 val parentViewModel =
                                     hiltViewModel<MeldingLijstViewModel>(parentEntry)
-                                FilterScreen(navController = navController, parentViewModel)
+                                val filterState by parentViewModel.filterState.collectAsState()
+                                FilterScreen(
+                                    navController = navController,
+                                    filterState = filterState,
+                                    onEvent = parentViewModel::onEvent
+                                )
+                            }
+                            composable(route = Screens.FilterPlaatsen.route) { backStackEntry ->
+                                val parentEntry = remember(backStackEntry) {
+                                    navController.getBackStackEntry(Screens.MeldingLijst.route)
+                                }
+                                val parentViewModel =
+                                    hiltViewModel<MeldingLijstViewModel>(parentEntry)
+                                val filterState by parentViewModel.filterState.collectAsState()
+                                FilterPlaatsScreen(
+                                    navController = navController,
+                                    filterState = filterState,
+                                    onEvent = parentViewModel::onEvent
+                                )
                             }
                             composable(
                                 route = Screens.MeldingBewerken.route +

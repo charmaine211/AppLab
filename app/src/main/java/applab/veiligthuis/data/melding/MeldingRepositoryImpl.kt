@@ -23,9 +23,46 @@ class MeldingRepositoryImpl : MeldingRepository {
         ref.keepSynced(true)
     }
 
-    override fun getMeldingen(paths: List<String>, meldingType: MeldingType): Flow<List<Melding?>> {
+    override fun getMeldingen(meldingType: MeldingType): Flow<List<Melding?>> {
         return callbackFlow {
-            val postListener = object : ValueEventListener {
+            val path = if (meldingType == MeldingType.Inkomend) {
+                MeldingPaths.INKOMEND.path
+            } else {
+                MeldingPaths.AFGESLOTEN.path
+            }
+            val meldingenListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val items = arrayListOf<Melding?>()
+                    snapshot.child(path).children.map { ds ->
+                        val melding = ds.getValue(meldingType.classType)
+                        items.add(melding)
+                    }
+                    trySend(items)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    cancel()
+                }
+            }
+            ref.addValueEventListener(meldingenListener)
+            awaitClose { ref.removeEventListener(meldingenListener) }
+        }
+    }
+
+    override fun getMeldingenPlaatsen(
+        plaatsen: List<String>,
+        meldingType: MeldingType
+    ): Flow<List<Melding?>> {
+        return callbackFlow {
+            val paths: List<String> = when (meldingType) {
+                is MeldingType.Inkomend -> {
+                    plaatsen.map { plaats -> "${MeldingPaths.INKOMEND_PLAATS.path}/$plaats" }
+                }
+                is MeldingType.Afgesloten -> {
+                    plaatsen.map { plaats -> "${MeldingPaths.AFGESLOTEN_PLAATS.path}/$plaats" }
+                }
+            }
+            val meldingenListener = object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val items = arrayListOf<Melding?>()
                     paths.forEach { path ->
@@ -41,8 +78,8 @@ class MeldingRepositoryImpl : MeldingRepository {
                     cancel()
                 }
             }
-            ref.addValueEventListener(postListener)
-            awaitClose { ref.removeEventListener(postListener) }
+            ref.addValueEventListener(meldingenListener)
+            awaitClose { ref.removeEventListener(meldingenListener) }
         }
     }
 

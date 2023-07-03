@@ -8,105 +8,177 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import applab.veiligthuis.ui.composable.filter.*
+import androidx.navigation.compose.rememberNavController
+import applab.veiligthuis.R
+import applab.veiligthuis.ui.composable.filter.FilterCheckBoxList
+import applab.veiligthuis.ui.composable.filter.FilterHeader
+import applab.veiligthuis.ui.composable.filter.FilterRadioButtonList
+import applab.veiligthuis.ui.composable.filter.SelectedItem
+import applab.veiligthuis.ui.theme.AppTheme
+import applab.veiligthuis.ui.theme.veilig_thuis_oranje
+import applab.veiligthuis.views.Screens
 
 
 @Composable
 fun FilterScreen(
     navController: NavController,
-    viewModel: MeldingLijstViewModel
+    filterState: MeldingLijstFilterState,
+    onEvent: (MeldingLijstEvent) -> Unit,
 ) {
-    val filterState = viewModel.filterState.collectAsState()
-
     Column(
         modifier = Modifier
             .padding(start = 40.dp, end = 40.dp)
-            .verticalScroll(
-                rememberScrollState()
-            )
     ) {
-
         FilterHeader(
-            filterCount = filterState.value.filterCountSelected, headerTitle = "filter",
+            filterCount = filterState.filterCountSelected,
+            headerTitle = stringResource(R.string.filter_header_title),
             closeFilter = {
-                viewModel.onEvent(MeldingLijstEvent.SluitFilter)
-                navController.popBackStack(route = "melding_list_screen", inclusive = false)
+                onEvent(MeldingLijstEvent.SluitFilter)
+                navController.popBackStack(
+                    route = Screens.MeldingLijst.route,
+                    inclusive = false
+                )
             },
             modifier = Modifier.padding(bottom = 18.dp)
         )
-
-        Column {
-            Divider()
-            Box(modifier = Modifier.clickable { }) {
-                Row(
+        Column(
+            modifier = Modifier.verticalScroll(
+                rememberScrollState()
+            )
+        ) {
+            Column {
+                Divider()
+                Box(modifier = Modifier.clickable { navController.navigate(Screens.FilterPlaatsen.route) }) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 18.dp, bottom = 18.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = stringResource(R.string.filter_h1_plaats),
+                            style = MaterialTheme.typography.h1,
+                            modifier = Modifier.padding(start = 20.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = stringResource(R.string.filter_plaats_description),
+                            modifier = Modifier.padding(end = 20.dp)
+                        )
+                    }
+                }
+                if (filterState.filterPlaatsen.isNotEmpty()) {
+                    filterState.filterPlaatsen.map { plaats ->
+                        SelectedItem(
+                            strValue = plaats,
+                            onClose = { onEvent(MeldingLijstEvent.FilterPlaatsen(plaats)) })
+                    }
+                }
+            }
+            FilterCheckBoxList(
+                headerText = stringResource(R.string.filter_h1_soort_geweld),
+                filterItems = stringArrayResource(id = R.array.filter_soort_geweld).asList(),
+                checkedItems = filterState.soortGeweldFilter,
+                onItemChecked = { selected ->
+                    onEvent(
+                        MeldingLijstEvent.FilterSoortGeweld(selected)
+                    )
+                }
+            )
+            FilterCheckBoxList(
+                headerText = stringResource(R.string.filter_h1_status),
+                filterItems = stringArrayResource(id = R.array.filter_status).asList(),
+                checkedItems = filterState.statusFilter,
+                onItemChecked = { selected ->
+                    onEvent(
+                        MeldingLijstEvent.FilterStatus(selected)
+                    )
+                }
+            )
+            FilterRadioButtonList(
+                headerText = stringResource(R.string.filter_h1_datum),
+                items = stringArrayResource(id = R.array.datum_keuzes).asList(),
+                selected = filterState.datumSelectedFilter,
+                onSelected = { selected -> onEvent(MeldingLijstEvent.FilterDatum(selected)) }
+            )
+            FilterCheckBoxList(
+                headerText = stringResource(R.string.filter_h1_beroepsmatig),
+                filterItems = stringArrayResource(id = R.array.filter_beroepsmatig).asList(),
+                checkedItems = filterState.beroepsmatigFilter,
+                onItemChecked = { selected ->
+                    onEvent(
+                        MeldingLijstEvent.FilterBeroepsmatig(selected)
+                    )
+                }
+            )
+            if (filterState.filterCountSelected > 0) {
+                Box(modifier = Modifier.height(100.dp))
+            }
+        }
+    }
+    if (filterState.filterCountSelected > 0) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight(0.8F)
+                    .fillMaxWidth()
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.Center
+            ) {
+                Button(
+                    onClick = {
+                        onEvent(MeldingLijstEvent.SluitFilter)
+                        navController.popBackStack(
+                            route = Screens.MeldingLijst.route,
+                            inclusive = false
+                        )
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = veilig_thuis_oranje),
+                    elevation = ButtonDefaults.elevation(defaultElevation = 10.dp),
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 18.dp, bottom = 18.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .padding(top = 20.dp)
+                        .width(250.dp)
+                        .height(55.dp)
+
                 ) {
                     Text(
-                        text = "Plaats",
-                        style = MaterialTheme.typography.h1,
-                        modifier = Modifier.padding(start = 20.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = "Ga naar plaatsen",
-                        modifier = Modifier.padding(end = 20.dp)
+                        text = stringResource(R.string.filter_pas_toe),
+                        color = Color.White
                     )
                 }
             }
         }
-        FilterCheckBoxList(
-            headerText = "Soort Geweld",
-            filterItems = filterState.value.soortGeweldFilter,
-            onItemChecked = { id, checked ->
-                viewModel.onEvent(
-                    MeldingLijstEvent.FilterSoortGeweld(
-                        id,
-                        checked
-                    )
-                )
-            }
-        )
-        FilterCheckBoxList(
-            headerText = "Status",
-            filterItems = filterState.value.statusFilter,
-            onItemChecked = { id, checked ->
-                viewModel.onEvent(
-                    MeldingLijstEvent.FilterStatus(
-                        id,
-                        checked
-                    )
-                )
-            }
-        )
-        FilterRadioButtonList(
-            headerText = "Datum",
-            items = listOf("Vandaag", "Deze Week", "Deze Maand", "Afgelopen Maand"),
-            selected = filterState.value.datumSelectedFilter,
-            onSelected = { selected -> viewModel.onEvent(MeldingLijstEvent.FilterDatum(selected)) }
-        )
-        FilterCheckBoxList(
-            headerText = "Beroepsmatig",
-            filterItems = filterState.value.beroepsmatigFilter,
-            onItemChecked = { id, checked ->
-                viewModel.onEvent(
-                    MeldingLijstEvent.FilterBeroepsmatig(
-                        id,
-                        checked
-                    )
-                )
-            }
-        )
     }
+
 }
 
-
+@Preview(showBackground = true)
+@Composable
+fun PreviewFilterScreen() {
+    AppTheme {
+        FilterScreen(
+            navController = rememberNavController(),
+            filterState = MeldingLijstFilterState(),
+            onEvent = {})
+    }
+}
 
 
 
