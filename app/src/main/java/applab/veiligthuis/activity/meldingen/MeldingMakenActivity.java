@@ -1,13 +1,17 @@
 package applab.veiligthuis.activity.meldingen;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import applab.veiligthuis.R;
+import applab.veiligthuis.common.BaseActivity;
+import applab.veiligthuis.viewmodel.MeldingViewModel;
 
-public class MeldingMakenActivity extends AppCompatActivity {
+public class MeldingMakenActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,7 @@ public class MeldingMakenActivity extends AppCompatActivity {
 
         transaction.commit();
     }
+
 
 }
 

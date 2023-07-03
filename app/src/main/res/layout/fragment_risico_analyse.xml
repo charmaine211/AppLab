@@ -31,10 +31,12 @@
         android:layout_width="205dp"
         android:layout_height="37dp"
         android:layout_marginTop="316dp"
+        android:layout_marginBottom="76dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/risico_text_fragment"
         android:textAlignment="center"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/twijfel_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
