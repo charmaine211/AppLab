@@ -34,6 +34,7 @@
     <string name="geweld_type_psychisch">Psychisch Geweld</string>
     <string name="filter_inkomend">Inkomend</string>
     <string name="filter_afgesloten">Afgesloten</string>
+    <string name="filter_pas_toe">Pas Filter Toe</string>
 
     // Array met alle plaatnamen
     <string-array name="plaatsnamen">
