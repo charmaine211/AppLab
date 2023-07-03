@@ -9,7 +9,7 @@ import applab.veiligthuis.data.melding.MeldingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class TestMeldingRepository: MeldingRepository {
+class TestMeldingRepository : MeldingRepository {
 
     private val meldingenList = mutableListOf<Melding>()
     private val meldingenMap = mutableMapOf<String, ArrayList<Melding>>()
@@ -18,20 +18,20 @@ class TestMeldingRepository: MeldingRepository {
         paths: List<String>,
         meldingType: MeldingType,
     ): Flow<List<Melding?>> {
-        var meldingen: ArrayList<Melding> = arrayListOf()
+        val meldingen: ArrayList<Melding> = arrayListOf()
         paths.forEach { path ->
             meldingenMap[path]?.let { meldingen.addAll(it) }
         }
         return flow { emit(meldingen) }
     }
 
-    override fun  getMelding(
+    override fun getMelding(
         meldingKey: String,
         meldingType: MeldingType,
     ): Flow<Melding> {
         var melding: Melding? = null
-        meldingenList.forEach{
-            if(it.key == meldingKey) {
+        meldingenList.forEach {
+            if (it.key == meldingKey) {
                 melding = it
             }
         }
@@ -41,7 +41,7 @@ class TestMeldingRepository: MeldingRepository {
     override fun insertOrUpdateMelding(melding: Melding) {
         meldingenList.add(melding)
         lateinit var paths: List<String>
-        when(melding) {
+        when (melding) {
             is InkomendeMelding -> {
                 paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.INKOMEND.path)
             }
@@ -50,10 +50,10 @@ class TestMeldingRepository: MeldingRepository {
             }
         }
         paths.forEach { path ->
-            if (!meldingenMap.containsKey(path)){
+            if (!meldingenMap.containsKey(path)) {
                 meldingenMap[path] = arrayListOf(melding)
             } else {
-                var list = meldingenMap[path]
+                val list = meldingenMap[path]
                 if (list != null) {
                     list.add(melding)
                     meldingenMap[path] = list
@@ -65,7 +65,7 @@ class TestMeldingRepository: MeldingRepository {
     override fun deleteMelding(melding: Melding) {
         meldingenList.remove(melding)
         lateinit var paths: List<String>
-        when(melding) {
+        when (melding) {
             is InkomendeMelding -> {
                 paths = listOf(MeldingPaths.MELDINGEN.path, MeldingPaths.INKOMEND.path)
             }

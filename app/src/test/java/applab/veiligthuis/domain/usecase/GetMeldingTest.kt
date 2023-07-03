@@ -26,26 +26,30 @@ class GetMeldingTest {
 
         val testMeldingen = mutableListOf<Melding>()
         ('a'..'m').forEachIndexed { index, c ->
-            testMeldingen.add(InkomendeMelding(
-                datum = index.toLong(),
-                status = MeldingStatus.ONBEHANDELD,
-                beschrijving = "test $c",
-                plaatsNaam = "plaats $c",
-                key = c.toString(),
-                typeGeweld = "geweld $c",
-                beroepsmatig = false
-            ))
+            testMeldingen.add(
+                InkomendeMelding(
+                    datum = index.toLong(),
+                    status = MeldingStatus.ONBEHANDELD,
+                    beschrijving = "test $c",
+                    plaatsNaam = "plaats $c",
+                    key = c.toString(),
+                    typeGeweld = "geweld $c",
+                    beroepsmatig = false
+                )
+            )
         }
         ('n'..'z').forEachIndexed { index, c ->
-            testMeldingen.add(AfgeslotenMelding(
-                datum = index.toLong(),
-                status = MeldingStatus.AFGESLOTEN,
-                beschrijving = "test $c",
-                plaatsNaam = "plaats $c",
-                key = c.toString(),
-                typeGeweld = "geweld $c",
-                beroepsmatig = false
-            ))
+            testMeldingen.add(
+                AfgeslotenMelding(
+                    datum = index.toLong(),
+                    status = MeldingStatus.AFGESLOTEN,
+                    beschrijving = "test $c",
+                    plaatsNaam = "plaats $c",
+                    key = c.toString(),
+                    typeGeweld = "geweld $c",
+                    beroepsmatig = false
+                )
+            )
         }
         testMeldingen.shuffle()
         testMeldingen.forEach { testMeldingRepository.insertOrUpdateMelding(it) }
@@ -63,7 +67,7 @@ class GetMeldingTest {
         val meldingKey1 = "a"
         val meldingKey2 = "q"
         val inkomendeMelding = getMelding(meldingKey1, MeldingType.Inkomend).first()
-        assertEquals(inkomendeMelding::class.java ,InkomendeMelding::class.java)
+        assertEquals(inkomendeMelding::class.java, InkomendeMelding::class.java)
         val afgeslotenMelding = getMelding(meldingKey2, MeldingType.Afgesloten).first()
         assertEquals(afgeslotenMelding::class.java, AfgeslotenMelding::class.java)
     }
@@ -71,7 +75,7 @@ class GetMeldingTest {
     @Test(expected = MeldingNotFoundException::class)
     fun `GetMelding - non existing key`() = runBlocking {
         val meldingKey = "abcdef"
-        val melding = getMelding(meldingKey, MeldingType.Inkomend).first()
+        getMelding(meldingKey, MeldingType.Inkomend).first()
     }
 
 

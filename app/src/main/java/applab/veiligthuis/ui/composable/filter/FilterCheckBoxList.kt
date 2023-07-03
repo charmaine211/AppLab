@@ -22,8 +22,16 @@ fun FilterCheckBoxList(
 ) {
     Column(modifier = modifier.padding(bottom = 18.dp)) {
         Divider(modifier = Modifier.padding(bottom = 18.dp))
-        Text(text = headerText, modifier = Modifier.padding(start= 20.dp, bottom = 10.dp), style = MaterialTheme.typography.h1  )
-        CheckBoxList(items = filterItems, onChecked = onItemChecked, modifier = Modifier.padding(start = 20.dp))
+        Text(
+            text = headerText,
+            modifier = Modifier.padding(start = 20.dp, bottom = 10.dp),
+            style = MaterialTheme.typography.h1
+        )
+        CheckBoxList(
+            items = filterItems,
+            onChecked = onItemChecked,
+            modifier = Modifier.padding(start = 20.dp)
+        )
     }
 }
 
@@ -32,6 +40,12 @@ fun FilterCheckBoxList(
 @Composable
 fun FilterListPreview() {
     AppTheme {
-        FilterCheckBoxList(headerText = "Beroepsmatig", filterItems = listOf(CheckBoxItemState(1,false, "Onbehandeld"), CheckBoxItemState(2,false, "In behandeling")), onItemChecked = { a, b ->})
+        FilterCheckBoxList(
+            headerText = "Beroepsmatig",
+            filterItems = listOf(
+                CheckBoxItemState(1, false, "Onbehandeld"),
+                CheckBoxItemState(2, false, "In behandeling")
+            ),
+            onItemChecked = { _, _ -> })
     }
 }
