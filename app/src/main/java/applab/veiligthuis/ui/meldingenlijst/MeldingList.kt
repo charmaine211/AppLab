@@ -33,6 +33,8 @@ fun MeldingList(
     }
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewMeldingList() {
@@ -40,7 +42,7 @@ fun PreviewMeldingList() {
         List(30) { InkomendeMelding(datum = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)) }
     MeldingList(
         list = list,
-        onCardClick = { b -> },
+        onCardClick = { },
     )
 }
 

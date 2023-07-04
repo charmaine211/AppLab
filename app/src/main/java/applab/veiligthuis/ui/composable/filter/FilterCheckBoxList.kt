@@ -9,15 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import applab.veiligthuis.ui.composable.CheckBoxItemState
 import applab.veiligthuis.ui.composable.CheckBoxList
 import applab.veiligthuis.ui.theme.AppTheme
 
 @Composable
 fun FilterCheckBoxList(
     headerText: String,
-    filterItems: List<CheckBoxItemState>,
-    onItemChecked: (Int, Boolean) -> Unit,
+    filterItems: List<String>,
+    checkedItems: List<String>,
+    onItemChecked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.padding(bottom = 18.dp)) {
@@ -30,6 +30,7 @@ fun FilterCheckBoxList(
         CheckBoxList(
             items = filterItems,
             onChecked = onItemChecked,
+            checkedItems = checkedItems,
             modifier = Modifier.padding(start = 20.dp)
         )
     }
@@ -43,9 +44,9 @@ fun FilterListPreview() {
         FilterCheckBoxList(
             headerText = "Beroepsmatig",
             filterItems = listOf(
-                CheckBoxItemState(1, false, "Onbehandeld"),
-                CheckBoxItemState(2, false, "In behandeling")
+                "Onbehandeld", "In behandeling"
             ),
-            onItemChecked = { _, _ -> })
+            checkedItems = listOf(),
+            onItemChecked = { _ -> })
     }
 }

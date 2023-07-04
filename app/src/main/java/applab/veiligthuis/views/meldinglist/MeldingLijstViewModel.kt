@@ -10,7 +10,6 @@ import applab.veiligthuis.domain.usecase.MeldingUseCases
 import applab.veiligthuis.domain.util.MeldingOrder
 import applab.veiligthuis.domain.util.MeldingType
 import applab.veiligthuis.domain.util.OrderType
-import applab.veiligthuis.ui.composable.CheckBoxItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -97,176 +96,160 @@ class MeldingLijstViewModel @Inject constructor(
                 }
             }
             is MeldingLijstEvent.FilterStatus -> {
-                val filterCountChange =
-                    if (event.checked) {
-                        1
-                    } else {
-                        -1
+                viewModelScope.launch {
+                    val updatedStatus: List<String> =
+                        if (_filterState.value.statusFilter.contains(event.status)) {
+                            _filterState.value.statusFilter.minus(event.status)
+                        } else {
+                            _filterState.value.statusFilter.plus(event.status)
+                        }
+                    val filterCountChange =
+                        updatedStatus.size - _filterState.value.statusFilter.size
+
+                    _filterState.update { currentState ->
+                        currentState.copy(
+                            statusFilter = updatedStatus,
+                            filterCountSelected = currentState.filterCountSelected + filterCountChange
+                        )
                     }
-                val status = _filterState.value.statusFilter
-                _filterState.update { currentState ->
-                    currentState.copy(
-                        statusFilter = status.map {
-                            updateCheckItem(
-                                item = it,
-                                id = event.id,
-                                checked = event.checked
-                            )
-                        },
-                        filterCountSelected = currentState.filterCountSelected + filterCountChange
-                    )
                 }
             }
             is MeldingLijstEvent.FilterBeroepsmatig -> {
-                val filterCountChange =
-                    if (event.checked) {
-                        1
-                    } else {
-                        -1
+                viewModelScope.launch {
+                    val updatedBeroepsmatig: List<String> =
+                        if (_filterState.value.beroepsmatigFilter.contains(event.beroepsmatig)) {
+                            _filterState.value.beroepsmatigFilter.minus(event.beroepsmatig)
+                        } else {
+                            _filterState.value.beroepsmatigFilter.plus(event.beroepsmatig)
+                        }
+                    val filterCountChange =
+                        updatedBeroepsmatig.size - _filterState.value.beroepsmatigFilter.size
+
+                    _filterState.update { currentState ->
+                        currentState.copy(
+                            beroepsmatigFilter = updatedBeroepsmatig,
+                            filterCountSelected = currentState.filterCountSelected + filterCountChange
+                        )
                     }
-                val beroepsmatig = _filterState.value.beroepsmatigFilter
-                _filterState.update { currentState ->
-                    currentState.copy(
-                        beroepsmatigFilter = beroepsmatig.map {
-                            updateCheckItem(
-                                item = it,
-                                id = event.id,
-                                checked = event.checked
-                            )
-                        },
-                        filterCountSelected = currentState.filterCountSelected + filterCountChange
-                    )
                 }
             }
             is MeldingLijstEvent.FilterSoortGeweld -> {
-                val filterCountChange =
-                    if (event.checked) {
-                        1
-                    } else {
-                        -1
+                viewModelScope.launch {
+                    val updatedSoortGeweld: List<String> =
+                        if (_filterState.value.soortGeweldFilter.contains(event.geweld)) {
+                            _filterState.value.soortGeweldFilter.minus(event.geweld)
+                        } else {
+                            _filterState.value.soortGeweldFilter.plus(event.geweld)
+                        }
+                    val change = updatedSoortGeweld.size - _filterState.value.soortGeweldFilter.size
+
+                    _filterState.update { currentState ->
+                        currentState.copy(
+                            soortGeweldFilter = updatedSoortGeweld,
+                            filterCountSelected = currentState.filterCountSelected + change
+                        )
                     }
-                val soortGeweld = _filterState.value.soortGeweldFilter
-                _filterState.update { currentState ->
-                    currentState.copy(
-                        soortGeweldFilter = soortGeweld.map {
-                            updateCheckItem(
-                                item = it,
-                                id = event.id,
-                                checked = event.checked
-                            )
-                        },
-                        filterCountSelected = currentState.filterCountSelected + filterCountChange
-                    )
                 }
             }
             is MeldingLijstEvent.FilterDatum -> {
-                val newDatum: String? =
-                    if (event.selected == _filterState.value.datumSelectedFilter) {
-                        null
-                    } else {
-                        event.selected
+                viewModelScope.launch {
+                    val newDatum: String? =
+                        if (event.selected == _filterState.value.datumSelectedFilter) {
+                            null
+                        } else {
+                            event.selected
+                        }
+                    var changeCount = 0
+                    if (_filterState.value.datumSelectedFilter == null) {
+                        changeCount = 1
+                    } else if (_filterState.value.datumSelectedFilter != null && event.selected == _filterState.value.datumSelectedFilter) {
+                        changeCount = -1
                     }
-                var changeCount = 0
-                if (_filterState.value.datumSelectedFilter == null) {
-                    changeCount = 1
-                } else if (_filterState.value.datumSelectedFilter != null && event.selected == _filterState.value.datumSelectedFilter) {
-                    changeCount = -1
+                    _filterState.update { currentState ->
+                        currentState.copy(
+                            datumSelectedFilter = newDatum,
+                            filterCountSelected = currentState.filterCountSelected + changeCount
+                        )
+                    }
                 }
-                _filterState.update { currentState ->
-                    currentState.copy(
-                        datumSelectedFilter = newDatum,
-                        filterCountSelected = currentState.filterCountSelected + changeCount
-                    )
+            }
+            is MeldingLijstEvent.FilterPlaatsen -> {
+                viewModelScope.launch {
+                    val updatedPlaatsen =
+                        if (_filterState.value.filterPlaatsen.contains(event.plaats)) {
+                            _filterState.value.filterPlaatsen.minus(event.plaats)
+                        } else {
+                            _filterState.value.filterPlaatsen.plus(event.plaats)
+                        }
+
+                    val change = updatedPlaatsen.size - _filterState.value.filterPlaatsen.size
+
+                    _filterState.update { currentState ->
+                        currentState.copy(
+                            filterPlaatsen = updatedPlaatsen,
+                            filterCountSelected = currentState.filterCountSelected + change
+                        )
+                    }
                 }
             }
 
             is MeldingLijstEvent.SluitFilter -> {
-                //Status
-                val filterStatusPred = mutableListOf<(Melding) -> Boolean>()
-                if (_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
-                    filterStatusPred.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD || melding.status == MeldingStatus.IN_BEHANDELING }
-                } else if (_filterState.value.statusFilter[0].checked && !_filterState.value.statusFilter[1].checked) {
-                    filterStatusPred.add { melding: Melding -> melding.status == MeldingStatus.ONBEHANDELD }
-                } else if (!_filterState.value.statusFilter[0].checked && _filterState.value.statusFilter[1].checked) {
-                    filterStatusPred.add { melding: Melding -> melding.status == MeldingStatus.IN_BEHANDELING }
-                }
-                // Soort geweld
-                val filterSoortGeweldPred = mutableListOf<(Melding) -> Boolean>()
-                if (_filterState.value.soortGeweldFilter[0].checked) {
-                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Ongecategoriseerd" }
-                }
-                if (_filterState.value.soortGeweldFilter[1].checked) {
-                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Lichamelijk geweld" }
-                }
-                if (_filterState.value.soortGeweldFilter[2].checked) {
-                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Stalking" }
-                }
-                if (_filterState.value.soortGeweldFilter[3].checked) {
-                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Psychisch geweld" }
-                }
-                if (_filterState.value.soortGeweldFilter[4].checked) {
-                    filterSoortGeweldPred.add { melding: Melding -> melding.typeGeweld == "Financieel misbruik" }
-                }
-                val filterDatumPred = mutableListOf<(Melding) -> Boolean>()
-                filterDatumPred.add { melding: Melding ->
-                    melding.datum!! <= LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
-                }
-                // Datum
-                when (_filterState.value.datumSelectedFilter) {
-                    "Vandaag" -> filterDatumPred.add { melding: Melding ->
-                        melding.datum!! > LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) - 86400
-                    }
-                    "Deze Week" -> filterDatumPred.add { melding: Melding ->
-                        melding.datum!! > LocalDateTime.now()
-                            .toEpochSecond(ZoneOffset.UTC) - (86400 * 7)
-                    }
-                    "Deze Maand" -> filterDatumPred.add { melding: Melding ->
-                        melding.datum!! > LocalDateTime.now()
-                            .toEpochSecond(ZoneOffset.UTC) - (86400 * 30)
-                    }
-                    "Afgelopen 6 maanden" -> filterDatumPred.add { melding: Melding ->
-                        melding.datum!! > LocalDateTime.now()
-                            .toEpochSecond(ZoneOffset.UTC) - (86400 * 180)
-                    }
-                }
+                viewModelScope.launch {
+                    val filterStatusPred =
+                        _filterState.value.statusFilter.map { status -> { melding: Melding -> melding.status.status == status } }
 
-                // Beroepsmatig
-                val filterBeroepsmatigPred = mutableListOf<(Melding) -> Boolean>()
-                if (_filterState.value.beroepsmatigFilter[0].checked) {
-                    filterBeroepsmatigPred.add { melding: Melding -> melding.beroepsmatig }
-                }
-                if (_filterState.value.beroepsmatigFilter[1].checked) {
-                    filterBeroepsmatigPred.add { melding: Melding -> !melding.beroepsmatig }
-                }
+                    val filterSoortGeweldPred =
+                        _filterState.value.soortGeweldFilter.map { soortGeweld -> { melding: Melding -> melding.typeGeweld == soortGeweld } }
 
-                _filterState.update { currentState ->
-                    currentState.copy(
-                        filterBeroepsmatigPredicates = filterBeroepsmatigPred,
-                        filterSoortGeweldPredicates = filterSoortGeweldPred,
-                        filterStatusPredicates = filterStatusPred,
-                        filterDatumPredicates = filterDatumPred
+                    val filterBeroepsmatigPred =
+                        _filterState.value.beroepsmatigFilter.map { beroepsmatig -> { melding: Melding -> melding.beroepsmatig == (beroepsmatig == "Ja") } }
+
+
+                    val filterDatumPred = mutableListOf<(Melding) -> Boolean>()
+                    filterDatumPred.add { melding: Melding ->
+                        melding.datum!! <= LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+                    }
+                    // Datum
+                    when (_filterState.value.datumSelectedFilter) {
+                        "Vandaag" -> filterDatumPred.add { melding: Melding ->
+                            melding.datum!! > LocalDateTime.now()
+                                .toEpochSecond(ZoneOffset.UTC) - 86400
+                        }
+                        "Deze Week" -> filterDatumPred.add { melding: Melding ->
+                            melding.datum!! > LocalDateTime.now()
+                                .toEpochSecond(ZoneOffset.UTC) - (86400 * 7)
+                        }
+                        "Deze Maand" -> filterDatumPred.add { melding: Melding ->
+                            melding.datum!! > LocalDateTime.now()
+                                .toEpochSecond(ZoneOffset.UTC) - (86400 * 30)
+                        }
+                        "Afgelopen 6 maanden" -> filterDatumPred.add { melding: Melding ->
+                            melding.datum!! > LocalDateTime.now()
+                                .toEpochSecond(ZoneOffset.UTC) - (86400 * 180)
+                        }
+                    }
+                    _filterState.update { currentState ->
+                        currentState.copy(
+                            filterBeroepsmatigPredicates = filterBeroepsmatigPred,
+                            filterSoortGeweldPredicates = filterSoortGeweldPred,
+                            filterStatusPredicates = filterStatusPred,
+                            filterDatumPredicates = filterDatumPred
+                        )
+                    }
+
+                    getMeldingen(
+                        _uiState.value.meldingOrder,
+                        _uiState.value.meldingType,
+                        _filterState.value.filterStatusPredicates,
+                        _filterState.value.filterSoortGeweldPredicates,
+                        _filterState.value.filterDatumPredicates,
+                        _filterState.value.filterBeroepsmatigPredicates
                     )
                 }
-
-                getMeldingen(
-                    _uiState.value.meldingOrder,
-                    _uiState.value.meldingType,
-                    _filterState.value.filterStatusPredicates,
-                    _filterState.value.filterSoortGeweldPredicates,
-                    _filterState.value.filterDatumPredicates,
-                    _filterState.value.filterBeroepsmatigPredicates
-                )
             }
         }
     }
 
-    private fun updateCheckItem(
-        item: CheckBoxItemState,
-        id: Int,
-        checked: Boolean
-    ): CheckBoxItemState {
-        return if (id == item.id) item.copy(checked = checked) else item
-    }
 
     private fun getMeldingen(
         meldingOrder: MeldingOrder,
@@ -283,7 +266,8 @@ class MeldingLijstViewModel @Inject constructor(
             filterStatusPredicates = filterStatusPredicates,
             filterSoortGeweldPredicates = filterSoortGeweldPrediactes,
             filterDatumPredicates = filterDatumPredicates,
-            filterBeroepsmatigPredicates = filterBeroepsmatigPredicates
+            filterBeroepsmatigPredicates = filterBeroepsmatigPredicates,
+            plaatsen = _filterState.value.filterPlaatsen
         )
             .onEach { meldingen ->
                 _uiState.update { currentState ->

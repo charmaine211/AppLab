@@ -14,16 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import applab.veiligthuis.ui.theme.AppTheme
 
-
-data class CheckBoxItemState(
-    val id: Int = 0,
-    val checked: Boolean = false,
-    val text: String = "",
-)
-
 @Composable
 fun CheckboxItem(
-    item: CheckBoxItemState,
+    displayText: String,
+    isChecked: Boolean,
     onChecked: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -33,18 +27,18 @@ fun CheckboxItem(
             .padding(vertical = 5.dp)
             .height(25.dp)
             .toggleable(
-                value = item.checked,
+                value = isChecked,
                 onValueChange = { toggled -> onChecked(toggled) },
                 role = Role.Checkbox
             )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
-                checked = item.checked,
+                checked = isChecked,
                 onCheckedChange = null,
                 colors = CheckboxDefaults.colors(checkedColor = Color.Black)
             )
-            Text(text = item.text, modifier = modifier.padding(start = 10.dp))
+            Text(text = displayText, modifier = modifier.padding(start = 10.dp))
         }
     }
 }
@@ -53,21 +47,22 @@ fun CheckboxItem(
 @Composable
 fun PreviewCheckBoxItem() {
     AppTheme {
-        CheckboxItem(item = CheckBoxItemState(1, false, "Ongecategoriseerd"), onChecked = {})
+        CheckboxItem(displayText = "Ongecategoriseerd", isChecked = false, onChecked = {})
     }
 }
 
 
 @Composable
 fun CheckBoxList(
-    items: List<CheckBoxItemState>,
-    onChecked: (Int, Boolean) -> Unit,
+    items: List<String>,
+    checkedItems: List<String>,
+    onChecked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
         items.forEach { item ->
-            CheckboxItem(item = item, onChecked = {
-                onChecked(item.id, it)
+            CheckboxItem(displayText = item, isChecked = checkedItems.contains(item), onChecked = {
+                onChecked(item)
             })
         }
     }
@@ -79,8 +74,9 @@ fun PreviewCheckBoxList() {
     AppTheme {
         CheckBoxList(
             items = listOf(
-                CheckBoxItemState(1, false, "Ongecategoriseerd"),
-                CheckBoxItemState(2, false, "Stalking")
-            ), { _, _ -> })
+                "Ongecategoriseerd", "Stalking"
+            ),
+            checkedItems = listOf("Stalking"),
+            onChecked = { _ -> })
     }
 }
