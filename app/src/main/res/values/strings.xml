@@ -1,20 +1,72 @@
 <resources>
     <string name="app_name">VeiligThuis</string>
     <string name="meldingenLijstButton">Meldingen</string>
-    <string name="tipMakenButton">tip aanmaken</string>
-    <string name="tip_categorie_prompt">Select a category</string>
-    <string-array name="tip_categorie_options">
-        <item>LichamelijkGeweld</item>
-        <item>FysiekGeweld</item>
-        <item>FinancieelMisbruik</item>
-        <item>Stalking</item>
-        <item>PsychischGeweld</item>
-    </string-array>
-    <string name="nav_signIn">Sign In</string>
-    <string name="nav_signUp">Sign Up</string>
-    <string name="logo">Logo veilig thuis</string>
+    <string name="maakMeldingButton">Maak een melding</string>
+    <string name="risico_text_fragment">Verkeert u, of iemand in uw omgeving in direct gevaar?</string>
+    <string name="ja_button">Ja</string>
+    <string name="twijfel_button">Ik twijfel</string>
+    <string name="nee_button">Nee</string>
+    <string name="bijlage"></string>
+    <string name="nav_logIn">log in</string>
+    <string name="logIn_password">password</string>
+    <string name="logIn_name">name</string>
+    <string name="meldingOpslaan_button">Maak melding</string>
     <string name="signUp_username">naam</string>
-    <string name="signUp_mobile">GSM nummer</string>
-    <string name="signUp_email">email adres</string>
-    <string name="signUp_password">paswoord</string>
+    <string name="signUp_password">wachtwoord</string>
+    <string name="signUp_mobile">mobielnummer</string>
+    <string name="signUp_email">email</string>
+    <string name="plaatsnaamTekst_spinner">Je woonplaats</string>
+    <string name="privacy_verklaring_text">Privacy verklaring</string>
+    <string name="filter_h1_soort_geweld">Soort Geweld</string>
+    <string name="filter_h1_status">Status</string>
+    <string name="filter_h1_datum">Datum</string>
+    <string name="filter_h1_beroepsmatig">Beroepsmatig</string>
+    <string name="filter_header_title">filter</string>
+    <string name="filter_h1_plaats">Plaats</string>
+    <string name="filter_plaats_description">Ga naar plaatsen</string>
+    <string name="melding_bewerken_edit_button">Pas melding aan</string>
+    <string name="melding_bewerken_back_button">Terug</string>
+    <string name="melding_bewerken_close_melding">Sluit melding af"</string>
+    <string name="geweld_type_ongecategoriseerd">Ongecategoriseerd</string>
+    <string name="geweld_type_financieel_misbruik">Financieel misbruik</string>
+    <string name="geweld_type_lichamelijk">Lichamelijk geweld</string>
+    <string name="geweld_type_stalking">Stalking</string>
+    <string name="geweld_type_psychisch">Psychisch Geweld</string>
+    <string name="filter_inkomend">Inkomend</string>
+    <string name="filter_afgesloten">Afgesloten</string>
+    <string name="filter_pas_toe">Pas Filter Toe</string>
+
+    // Array met alle plaatnamen
+    <string-array name="plaatsnamen">
+        <item>Amsterdam</item>
+        <item>Rotterdam</item>
+        <item>Den Haag</item>
+        <item>Utrecht</item>
+        <item>Groningen</item>
+    </string-array>
+
+    <string-array name="filter_soort_geweld">
+        <item>Ongecategoriseerd</item>
+        <item>Lichamelijk geweld</item>
+        <item>Stalking</item>
+        <item>Psychisch geweld</item>
+        <item>Financieel misbruik</item>
+    </string-array>
+
+    <string-array name="filter_status">
+        <item>Onbehandeld</item>
+        <item>In behandeling</item>
+    </string-array>
+
+    <string-array name="datum_keuzes">
+        <item>Vandaag</item>
+        <item>Deze Week</item>
+        <item>Deze Maand</item>
+        <item>Afgelopen 6 maanden</item>
+    </string-array>
+
+    <string-array name="filter_beroepsmatig">
+        <item>Ja</item>
+        <item>Nee</item>
+    </string-array>
 </resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <applab.veiligthuis.common.VeiligThuisToolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/veiligThuisToolbarHeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="64dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:text=""
+            android:hint="Titel"
+            android:id="@+id/editTextTitel"/>
+
+        <EditText
+            android:layout_marginTop="32dp"
+            android:layout_width="320dp"
+            android:layout_height="160dp"
+            android:text=""
+            android:hint="Omschrijving"
+            android:gravity="left"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:id="@+id/editTextBeschrijving"
+            android:background="@drawable/edit_text_background"
+            />
+
+        <Spinner
+            android:id="@+id/spinner_categorie"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/edit_text_background"
+            />
+
+        <Button
+            android:id="@+id/btn_tipSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:text="Sla tip op"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:background="@drawable/veiligthuis_submit_button"
+            android:textAllCaps="false"
+            />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

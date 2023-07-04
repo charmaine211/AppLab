@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/veilig_thuis_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/veiligThuisToolbarHeight"
+    tools:showIn="@layout/activity_main">
+
+    <ImageView
+        android:id="@+id/home_image_view"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="56dp"
+        android:maxHeight="56dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/veiligthuis_logo" />
+
+    <ImageView
+        android:id="@+id/profile_image_view"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="56dp"
+        android:maxHeight="56dp"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/veiligthuis_gebruiker"
+        android:layout_gravity="end"/>
+
+
+</android.widget.Toolbar>
+
+
+    
