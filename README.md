@@ -21,4 +21,4 @@ For testing the caregiver view in the app, use the following login credentials:
 
 The design of the application is based on the Veilig Thuis website: [veiligthuis.nl](https://veiligthuis.nl). We have ensured that the design is suitable for a mobile app and have created a prototype that can be viewed on [Figma](https://www.figma.com/proto/BQEdSfJhznQVubYN4C01pl/Veilig-Thuis?node-id=50-2&starting-point-node-id=50%3A2&mode=design&t=n1ftaUztJNGYUHSz-1). This provides an overview of the different screens and navigation flows in the app.
 
-For more information about Veilig Thuis and using the app, visit the [Safe at Home website](https://veiligthuis.nl/).
+For more information about Veilig Thuis and using the app, visit the [Veilig Thuis website](https://veiligthuis.nl/).
